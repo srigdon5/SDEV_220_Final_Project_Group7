@@ -20,6 +20,7 @@ class Item(db.Model):
     item_type = db.Column(db.String(5), nullable=False) # the type of item, either book or movie
     status = db.Column(db.String(11), nullable=False) # if the item is checked out, either available or checked out
     title = db.Column(db.String(50), nullable=False) # title of the item
+    genre = db.Column(db.String(30), nullable=False) # genre of content
     
     # constraints on data
     __table_args__ = (
