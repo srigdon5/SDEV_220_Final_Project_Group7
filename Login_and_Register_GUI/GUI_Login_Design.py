@@ -27,10 +27,10 @@ root.title('EVPL Management System')
 root.geometry('1225x750+300+200')
 root.configure(bg="#fff")
 root.resizable(False, False)
-root.iconbitmap("myIcon.ico")
+root.iconbitmap("Login_and_Register_GUI\myIcon.ico")
 
 
-background = PhotoImage(file="background.png")
+background = PhotoImage(file='Login_and_Register_GUI\design.png')
 background_label = Label(root, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 

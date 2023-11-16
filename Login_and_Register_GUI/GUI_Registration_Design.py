@@ -28,10 +28,10 @@ window.title("EVPL Management System - Registration")
 window.geometry('1225x750+300+200')
 window.configure(bg='#fff')
 window.resizable(False, False)
-window.iconbitmap("myIcon.ico")
+window.iconbitmap("Login_and_Register_GUI\myIcon.ico")
 
 
-background = PhotoImage(file="background.png")
+background = PhotoImage(file="Login_and_Register_GUI\design.png")
 background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
