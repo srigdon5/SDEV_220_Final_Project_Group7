@@ -43,7 +43,7 @@ def signin():
     username = user.get()
     password = code.get()
 
-    file = open('datasheet.txt', 'r')
+    file = open('Login_and_Register_GUI\datasheet.txt', 'r')
     d = file.read()
     r = ast.literal_eval(d)
     file.close()
