@@ -1,5 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, ForeignKey, Numeric, CheckConstraint, sessionmaker
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, ForeignKey, Numeric, CheckConstraint
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 
 # create engine and base
 engine = create_engine('sqlite:///data.db')
