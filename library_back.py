@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, ForeignKey, Numeric, CheckConstraint
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, ForeignKey, Numeric, CheckConstraint, sessionmaker
 from sqlalchemy.orm import declarative_base, relationship
 
 # create engine and base
@@ -98,3 +98,36 @@ class Branch(Base):
     
     def __repr__(self):
         return f"{self.branch_id} {self.address} {self.phone}"
+
+
+
+###### SEARCH FUNCTIONS
+def search_items_by_title(search):
+    Session = sessionmaker(bind=engine)
+    
+    with Session() as session:
+        query = (
+            session.query(Item.title, Item.item_type, Item.branch_id, Item.status) # retrieve title, type, branch_id and status
+            .filter(Item.title.ilike(f'%{search}%')) # Case insensitive search
+            .all # retrieves all items
+        )
+        
+        result = [(title, item_type, branch_id, status) for title, item_type, branch_id, status in query]
+    
+    return result
+
+
+def search_items_by_title_branch(search, branch_id):
+    Session = sessionmaker(bind=engine)
+    
+    with Session() as session:
+        query = (
+            session.query(Item.title, Item.item_type, Item.status) # retrieve title, type, and status
+            .filter(Item.title.ilike(f'%{search}%')) # Case insensitive search
+            .filter(Item.branch_id == branch_id) # limits it to a specific branch
+            .all # retrieves all items
+        )
+        
+        result = [(title, item_type, status) for title, item_type, status in query]
+    
+    return result
