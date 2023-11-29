@@ -42,7 +42,7 @@ def signup():
     password = code.get()
     confirm_password = confirm_code.get()
 
-    file = open('datasheet.txt', 'r')
+    file = open('Login_and_Register_GUI\datasheet.txt', 'r')
     d = file.read()
     r = ast.literal_eval(d)
     file.close()
@@ -54,7 +54,7 @@ def signup():
     elif password == confirm_password:
         try:
             # Read existing user data from a file
-            file = open('datasheet.txt', 'r+')
+            file = open('Login_and_Register_GUI\datasheet.txt', 'r+')
             d = file.read()
             r = ast.literal_eval(d)
 
@@ -65,13 +65,13 @@ def signup():
             file.close()
 
             # Write the updated data back to the file and display a success message
-            file = open('datasheet.txt', 'w')
+            file = open('Login_and_Register_GUI\datasheet.txt', 'w')
             w = file.write(str(r))
 
             messagebox.showinfo('Register', 'Successfully Registered!')
         except:
             # Create a new file with default data if there's an issue
-            file = open('datasheet.txt', 'w')
+            file = open('Login_and_Register_GUI\datasheet.txt', 'w')
             pp = str({'Username': 'password'})
             file.write(pp)
             file.close()

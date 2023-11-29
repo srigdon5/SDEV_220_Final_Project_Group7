@@ -27,10 +27,10 @@ root.title('EVPL Management System')
 root.geometry('1225x750+300+200')
 root.configure(bg="#fff")
 root.resizable(False, False)
-root.iconbitmap("Login_and_Register_GUI\myIcon.ico")
+root.iconbitmap("Login_and_Register_GUI\\myIcon.ico")
 
 
-background = PhotoImage(file='Login_and_Register_GUI\design.png')
+background = PhotoImage(file='Login_and_Register_GUI\\design.png')
 background_label = Label(root, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
@@ -43,7 +43,7 @@ def signin():
     username = user.get()
     password = code.get()
 
-    file = open('datasheet.txt', 'r')
+    file = open('Login_and_Register_GUI\\datasheet.txt', 'r')
     d = file.read()
     r = ast.literal_eval(d)
     file.close()
@@ -58,6 +58,8 @@ def signin():
         screen.config(bg="white")
 
         Label(screen, text='Hello!', fg='black', bg='#fff', font=('Calibre(Body)', 50, 'bold')).pack(expand=True)
+        close_window()  # Close the current popup
+        subprocess.Popen(['python', 'Dashboard\\Dashboard_GUI.py'])
 
         screen.mainloop()
     else:
