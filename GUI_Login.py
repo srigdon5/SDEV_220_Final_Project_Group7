@@ -3,7 +3,7 @@ from tkinter import messagebox
 import subprocess
 import ast
 from tkinter import PhotoImage
-
+import os
 
 """
 Program: GUI_Login_Design.py
@@ -27,10 +27,10 @@ root.title('EVPL Management System')
 root.geometry('1225x750+300+200')
 root.configure(bg="#fff")
 root.resizable(False, False)
-root.iconbitmap("Login_and_Register_GUI\\myIcon.ico")
+root.iconbitmap("assets\\images\\myIcon.ico")
 
 
-background = PhotoImage(file='Login_and_Register_GUI\\design.png')
+background = PhotoImage(file='assets\\images\\design.png')
 background_label = Label(root, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
@@ -43,7 +43,7 @@ def signin():
     username = user.get()
     password = code.get()
 
-    file = open('Login_and_Register_GUI\\datasheet.txt', 'r')
+    file = open('assets\\datasheet.txt', 'r')
     d = file.read()
     r = ast.literal_eval(d)
     file.close()
@@ -58,10 +58,16 @@ def signin():
         screen.config(bg="white")
 
         Label(screen, text='Hello!', fg='black', bg='#fff', font=('Calibre(Body)', 50, 'bold')).pack(expand=True)
-        close_window()  # Close the current popup
-        subprocess.Popen(['python', 'Dashboard\\Dashboard_GUI.py'])
+        root.destroy()
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        script_path = os.path.join(script_dir, 'GUI_Dashboard.py')
+        python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'  # Replace with your Python interpreter path
 
-        screen.mainloop()
+        try:
+            subprocess.run([python_interpreter, script_path], check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error launching subprocess: {e}")
+
     else:
         messagebox.showerror('Invalid', 'invalid username or password')
 
@@ -148,7 +154,14 @@ def close_window():
 # Function to open another program
 def register():
     close_window()  # Close the current window
-    subprocess.Popen(['python', 'GUI_Registration_Design.py'])
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Registration.py')
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'  # Replace with your Python interpreter path
+
+    try:
+        subprocess.run([python_interpreter, script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
 
 
 Button(frame, width=19, pady=7, text='Sign in', bg='black', fg='white', border=0, cursor='hand2',

@@ -4,7 +4,7 @@ import ast
 import subprocess
 import ast
 from tkinter import PhotoImage
-
+import os
 
 """
 Program: Dashboard_GUI.py
@@ -32,10 +32,10 @@ window.title("EVPL Management System - Dashboard")
 window.geometry('1225x750+300+200')
 window.configure(bg='#fff')
 window.resizable(False, False)
-window.iconbitmap("Login_and_Register_GUI\\myIcon.ico")
+window.iconbitmap("assets\\images\\myIcon.ico")
 
 
-background = PhotoImage(file="Login_and_Register_GUI\\design.png")
+background = PhotoImage(file="assets\\images\\design.png")
 background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
@@ -67,7 +67,14 @@ def close_window():
 # Function to open another program
 def accounts():
     close_window()  # Close the current window
-    subprocess.Popen(['python', 'Dashboard\\Accounts.py'])
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Accounts.py')
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'  # Replace with your Python interpreter path
+
+    try:
+        subprocess.run([python_interpreter, script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
 
 
 Button(frame, width=39, pady=7, text='Accounts', bg='black', fg='white', border=0, command=accounts).place(x=55, y=25)
@@ -87,7 +94,14 @@ Button(frame, width=39, pady=7, text='Movies', bg='black', fg='white', border=0,
 
 def gotoreturn():
     close_window()  # Close the current window
-    subprocess.Popen(['python', 'Dashboard\\Accounts.py'])
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Accounts.py')
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'  # Replace with your Python interpreter path
+
+    try:
+        subprocess.run([python_interpreter, script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
 
 
 Button(frame, width=39, pady=15, text='Return', bg='grey', fg='white', border=3, command=gotoreturn).place(x=355, y=125)
@@ -107,7 +121,14 @@ Button(frame, width=39, pady=15, text='Remove', bg='grey', fg='white', border=3)
 # Function to open another program
 def signout():
     close_window()  # Close the current window
-    subprocess.Popen(['python', 'Login_and_Register_GUI\\GUI_Login_Design.py'])
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Login.py')
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'  # Replace with your Python interpreter path
+
+    try:
+        subprocess.run([python_interpreter, script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
 
 
 Button(frame, width=39, pady=7, text='Sign Out', bg='white', fg='black', border=3, command=signout).place(x=355, y=425)

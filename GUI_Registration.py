@@ -4,7 +4,7 @@ import ast
 import subprocess
 import ast
 from tkinter import PhotoImage
-
+import os
 
 
 """
@@ -28,10 +28,10 @@ window.title("EVPL Management System - Registration")
 window.geometry('1225x750+300+200')
 window.configure(bg='#fff')
 window.resizable(False, False)
-window.iconbitmap("Login_and_Register_GUI\myIcon.ico")
+window.iconbitmap("assets\\images\\myIcon.ico")
 
 
-background = PhotoImage(file="Login_and_Register_GUI\design.png")
+background = PhotoImage(file="assets\\images\\design.png")
 background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
@@ -42,7 +42,7 @@ def signup():
     password = code.get()
     confirm_password = confirm_code.get()
 
-    file = open('Login_and_Register_GUI\datasheet.txt', 'r')
+    file = open('assets\\datasheet.txt', 'r')
     d = file.read()
     r = ast.literal_eval(d)
     file.close()
@@ -54,7 +54,7 @@ def signup():
     elif password == confirm_password:
         try:
             # Read existing user data from a file
-            file = open('Login_and_Register_GUI\datasheet.txt', 'r+')
+            file = open('assets\\datasheet.txt', 'r+')
             d = file.read()
             r = ast.literal_eval(d)
 
@@ -65,13 +65,13 @@ def signup():
             file.close()
 
             # Write the updated data back to the file and display a success message
-            file = open('Login_and_Register_GUI\datasheet.txt', 'w')
+            file = open('assets\\datasheet.txt', 'w')
             w = file.write(str(r))
 
             messagebox.showinfo('Register', 'Successfully Registered!')
         except:
             # Create a new file with default data if there's an issue
-            file = open('Login_and_Register_GUI\datasheet.txt', 'w')
+            file = open('assets\\datasheet.txt', 'w')
             pp = str({'Username': 'password'})
             file.write(pp)
             file.close()
@@ -80,10 +80,20 @@ def signup():
         # Display an error message if passwords do not match
         messagebox.showinfo('Error:', 'Passwords do not match.')
 
-
-def log():
+def close_window():
     window.destroy()
-    subprocess.Popen(['python', 'GUI_Login_Design.py'])
+
+    
+def log():
+    close_window()  # Close the current window
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Login.py')
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'  # Replace with your Python interpreter path
+
+    try:
+        subprocess.run([python_interpreter, script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
 
 
 # Create a frame for labels and input fields

@@ -4,7 +4,7 @@ from tkinter import ttk
 from tkinter import messagebox
 import ast
 import subprocess
-import ast
+import os
 from tkinter import PhotoImage
 
 
@@ -38,10 +38,10 @@ window.title("EVPL Management System - Customer Accounts")
 window.geometry('1225x750+300+200')
 window.configure(bg='#fff')
 window.resizable(False, False)
-window.iconbitmap("Login_and_Register_GUI\\myIcon.ico")
+window.iconbitmap("assets\\images\\myIcon.ico")
 
 
-background = PhotoImage(file="Login_and_Register_GUI\\design.png")
+background = PhotoImage(file="assets\\images\\design.png")
 background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
@@ -144,7 +144,7 @@ item_title.place(x=650, y=25)
 
 
 """----------------------------------ITEM IMAGE---------------------------------------- """
-img = PhotoImage(file='Dashboard\\books.png')
+img = PhotoImage(file='assets\\images\\books.png')
 img_label = Label(image=img, bg='#f0f0f0')
 img_label.place(x=750, y=220)
 
@@ -164,7 +164,14 @@ def close_window():
 # Function to open another program
 def dashboard():
     close_window()  # Close the current window
-    subprocess.Popen(['python', 'Dashboard\\Dashboard_GUI.py'])
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Dashboard.py')
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'  # Replace with your Python interpreter path
+
+    try:
+        subprocess.run([python_interpreter, script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
 
 
 Button(frame, width=20, pady=7, text='Dashboard', bg='grey', fg='white', border=3,
