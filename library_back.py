@@ -3,7 +3,7 @@ from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 
 # create engine and base
 engine = create_engine('sqlite:///data.db')
-Base = declarative_base(bind=engine)
+Base = declarative_base()
 
 # main item class
 class Item(Base):
@@ -38,7 +38,7 @@ class Book(Base):
     ar = Column(Boolean, nullable=False)  # if the book is part of the Accelerated Reading (AR) program for students
     
     __table_args__ = (
-        CheckConstraint("medium IN ('ebook','paperback','hard cover','large print','audiobook')")
+        (CheckConstraint("medium IN ('ebook','paperback','hard cover','large print','audiobook')"),)
     )
     
     def __repr__(self):
@@ -64,7 +64,7 @@ class Movie(Base):
     medium = Column(String(7), nullable=False)  # format of the item, must be vhs, dvd, or blu-ray 
     
     __table_args__ = (
-        CheckConstraint("medium IN ('vhs','dvd','blu-ray')")
+        (CheckConstraint("medium IN ('vhs','dvd','blu-ray')"),)
     )
     
     def __repr__(self):
