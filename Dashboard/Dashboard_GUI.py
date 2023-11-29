@@ -32,10 +32,10 @@ window.title("EVPL Management System - Dashboard")
 window.geometry('1225x750+300+200')
 window.configure(bg='#fff')
 window.resizable(False, False)
-window.iconbitmap("myIcon.ico")
+window.iconbitmap("Login_and_Register_GUI\\myIcon.ico")
 
 
-background = PhotoImage(file="design.png")
+background = PhotoImage(file="Login_and_Register_GUI\\design.png")
 background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
@@ -67,7 +67,7 @@ def close_window():
 # Function to open another program
 def accounts():
     close_window()  # Close the current window
-    subprocess.Popen(['python', 'Accounts.py'])
+    subprocess.Popen(['python', 'Dashboard\\Accounts.py'])
 
 
 Button(frame, width=39, pady=7, text='Accounts', bg='black', fg='white', border=0, command=accounts).place(x=55, y=25)
@@ -87,7 +87,7 @@ Button(frame, width=39, pady=7, text='Movies', bg='black', fg='white', border=0,
 
 def gotoreturn():
     close_window()  # Close the current window
-    subprocess.Popen(['python', 'Accounts.py'])
+    subprocess.Popen(['python', 'Dashboard\\Accounts.py'])
 
 
 Button(frame, width=39, pady=15, text='Return', bg='grey', fg='white', border=3, command=gotoreturn).place(x=355, y=125)

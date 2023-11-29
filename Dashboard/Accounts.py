@@ -38,10 +38,10 @@ window.title("EVPL Management System - Customer Accounts")
 window.geometry('1225x750+300+200')
 window.configure(bg='#fff')
 window.resizable(False, False)
-window.iconbitmap("myIcon.ico")
+window.iconbitmap("Login_and_Register_GUI\\myIcon.ico")
 
 
-background = PhotoImage(file="design.png")
+background = PhotoImage(file="Login_and_Register_GUI\\design.png")
 background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
@@ -144,7 +144,7 @@ item_title.place(x=650, y=25)
 
 
 """----------------------------------ITEM IMAGE---------------------------------------- """
-img = PhotoImage(file='books.png')
+img = PhotoImage(file='Dashboard\\books.png')
 img_label = Label(image=img, bg='#f0f0f0')
 img_label.place(x=750, y=220)
 
@@ -164,7 +164,7 @@ def close_window():
 # Function to open another program
 def dashboard():
     close_window()  # Close the current window
-    subprocess.Popen(['python', 'Dashboard_GUI.py'])
+    subprocess.Popen(['python', 'Dashboard\\Dashboard_GUI.py'])
 
 
 Button(frame, width=20, pady=7, text='Dashboard', bg='grey', fg='white', border=3,
