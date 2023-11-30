@@ -131,3 +131,9 @@ def search_items_by_title_branch(search, branch_id):
         result = [(title, item_type, status) for title, item_type, status in query]
     
     return result
+
+# item information on specific id
+# book search
+# movie search
+# customer search (by id)
+# items by customer
