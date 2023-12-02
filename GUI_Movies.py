@@ -33,7 +33,7 @@ Goal: Create a GUI for a module that displays available books that can be easily
 
 # Create the main registration window
 window = Tk()
-window.title("EVPL Management System - Customer Accounts")
+window.title("EVPL Management System - Video Inventory")
 window.geometry('1225x750+300+200')
 window.configure(bg='#fff')
 window.resizable(False, False)
