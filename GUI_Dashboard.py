@@ -7,7 +7,7 @@ from tkinter import PhotoImage
 import os
 
 """
-Program: Dashboard_GUI.py
+Program: GUI_Dashboard.py
 Author: J.Swilling
 Goal: Create a Dashboard GUI that can be easily integrated for a Library management system.
 1. Significant constants
@@ -40,7 +40,6 @@ background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
 
-# Create a frame for labels and input fields
 frame = Frame(width=450, highlightbackground="black", highlightthickness=3, height=80, bg="white")
 frame.place(x=400, y=40)
 
@@ -64,12 +63,11 @@ def close_window():
     window.destroy()
 
 
-# Function to open another program
 def accounts():
     close_window()  # Close the current window
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Accounts.py')
-    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'  # Replace with your Python interpreter path
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
 
     try:
         subprocess.run([python_interpreter, script_path], check=True)
@@ -81,22 +79,48 @@ Button(frame, width=39, pady=7, text='Accounts', bg='black', fg='white', border=
 
 
 """----------------------------------Books----------------------------------------"""
-Button(frame, width=39, pady=7, text='Books', bg='black', fg='white', border=0,).place(x=355, y=25)
+
+
+def books():
+    close_window()
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Books.py')
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
+
+    try:
+        subprocess.run([python_interpreter, script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
+
+
+Button(frame, width=39, pady=7, text='Books', bg='black', fg='white', border=0, command=books).place(x=355, y=25)
 
 
 """----------------------------------Movies-------------------------------------"""
-Button(frame, width=39, pady=7, text='Movies', bg='black', fg='white', border=0,).place(x=655, y=25)
 
+
+def movies():
+    close_window()
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Movies.py')
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
+
+    try:
+        subprocess.run([python_interpreter, script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
+
+
+Button(frame, width=39, pady=7, text='Movies', bg='black', fg='white', border=0, command=movies).place(x=655, y=25)
 
 """----------------------------------RETURN---------------------------------------- """
-# Function to open another program
 
 
 def gotoreturn():
-    close_window()  # Close the current window
+    close_window()
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Accounts.py')
-    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'  # Replace with your Python interpreter path
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
 
     try:
         subprocess.run([python_interpreter, script_path], check=True)
@@ -123,7 +147,7 @@ def signout():
     close_window()  # Close the current window
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Login.py')
-    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'  # Replace with your Python interpreter path
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
 
     try:
         subprocess.run([python_interpreter, script_path], check=True)
@@ -134,5 +158,4 @@ def signout():
 Button(frame, width=39, pady=7, text='Sign Out', bg='white', fg='black', border=3, command=signout).place(x=355, y=425)
 
 
-# Start the Tkinter event loop to run the registration GUI
 window.mainloop()

@@ -6,19 +6,22 @@ import ast
 import subprocess
 import os
 from tkinter import PhotoImage
-
+from sqlalchemy.orm import Session, joinedload
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import sessionmaker
+from library_back import Item, Patron, search_items_by_title, search_items_by_title_branch, Base, engine
 
 """
-Program: Accounts.py
+Program: GUI_Accounts.py
 Author: J.Swilling
 Goal: Create a GUI for a module that displays customer accounts that can be easily
  integrated for a Library management system.
  
 1. Significant constants
-    USERNAME
-    ID
-    ACCOUNT_TYPE
-    MAIN_BRANCH
+   USERNAME = "username"
+   ID = "ID"
+   ACCOUNT_TYPE = "account_type"
+   MAIN_BRANCH = "main_branch"
     
 2. The inputs are
     CUSTOMER_ID
@@ -41,6 +44,11 @@ window.resizable(False, False)
 window.iconbitmap("assets\\images\\myIcon.ico")
 
 
+# Create the tables
+Base.metadata.create_all(engine)
+
+Session = sessionmaker(bind=engine)
+
 background = PhotoImage(file="assets\\images\\design.png")
 background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
@@ -52,32 +60,111 @@ frame.place(x=500, y=20)
 
 heading = Label(frame, text='Customer Accounts', fg='black', bg='white',
                 font=('Microsoft YaHei UI Light', 16, 'bold'))
-
 heading.place(x=20, y=18)
 
 """---------------------------------------------------------------------------------"""
 frame = Frame(window, width=1000, highlightbackground="black", highlightthickness=3, height=600, bg='#fff')
 frame.place(x=110, y=120)
 
-"""----------------------------------USERNAME---------------------------------------"""
+"""----------------------------------GET CUSTOMER ITEMS---------------------------------------"""
 
 
-username = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3,)
-username.place(x=55, y=25)
+# Placeholder function to fetch customer information by ID
+# Placeholder function to fetch customer information by ID
+def get_customer_info_by_id(user_id, Session):
+    with Session() as session:
+        try:
+            patron = session.query(Patron).filter_by(patron_id=user_id).first()
+            if patron:
+                return {
+                    'patron_id': patron.patron_id,
+                    'name': patron.name,
+                    'phone': patron.phone,
+                    'account_type': patron.account_type,
+                    'branch_id': patron.branch_id,
+                    'limit_reached': patron.limit_reached
+                }
+            else:
+                return {}  # Return an empty dictionary if no patron is found
+        except SQLAlchemyError as e:
+            print(f"Error fetching customer info: {e}")
+            return {}
 
+
+def get_customer_items(user_id, Session):
+    with Session() as session:
+        try:
+            patron = session.query(Patron).filter_by(patron_id=user_id).first()
+            if patron:
+                return [
+                    {'item_id': patron.item_id, 'fees': patron.fees}
+                ] if patron.item_id else []
+            else:
+                return []  # Return an empty list if no patron is found
+        except SQLAlchemyError as e:
+            print(f"Error fetching customer items: {e}")
+            return []
+
+
+def search():
+    user_id = user.get()
+
+    # Check if the current content is the placeholder text
+    if user_id == 'Enter a User ID':
+        user_id = ''  # Set it to an empty string for searching
+
+    if user_id:
+        customer_info = get_customer_info_by_id(user_id, Session)
+        customer_items = get_customer_items(user_id, Session)
+
+        # Clear labels
+        ID_label.config(text="ID:")
+        User_label.config(text="User:")
+        Phone_label.config(text="Phone:")
+        Account_label.config(text="Account Type:")
+        Branch_label.config(text="Main Branch:")
+        Limit_label.config(text="Account Lock:")
+
+        # Update labels with customer information
+        if customer_info:
+            ID_label.config(text=f"ID: {customer_info.get('patron_id', 'None')}")
+            User_label.config(text=f"User: {customer_info.get('name', 'None')}")
+            Phone_label.config(text=f"Phone: {customer_info.get('phone', 'None')}")
+            Account_label.config(text=f"Account Type: {customer_info.get('account_type', 'None')}")
+            Branch_label.config(text=f"Main Branch: {customer_info.get('branch_id', 'None')}")
+            Limit_label.config(text=f"Account Lock: {customer_info.get('limit_reached', 'None')}")
+
+        # Clear and update Listbox
+        my_listbox.delete(0, END)
+        if not customer_items:
+            my_listbox.insert(END, "No items found for this user.")
+        else:
+            for item in customer_items:
+                my_listbox.insert(END, f"Item ID: {item['item_id']}, Fees: {item['fees']}")
+
+        
+        user.delete(0, 'end')
+        user.insert(0, 'Enter a User ID')
+
+
+search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search)
+search_id.place(x=55, y=25)
 
 """------------------------------------CUSTOMER ID--------------------------------------"""
 # create functions for a responsive placeholder text
 
 
 def on_enter(e):
-    user.delete(0, 'end')
+    name = user.get()
+    if name == 'Enter a User ID':
+        user.delete(0, 'end')
+        user.insert(0, '')  # Clear the entry and move the insertion point to the beginning
 
 
 def on_leave(e):
     name = user.get()
-    if name == '':
-        user.insert(0, 'Enter ID')
+    if not name:  # Check if the user hasn't entered anything
+        user.insert(0, 'Enter a User ID')
 
 
 # creates field for username
@@ -94,8 +181,8 @@ user.bind('<FocusOut>', on_leave)
 ID_label = Label(text="ID:", fg='black', bg='white', font=('Arial', 12))
 ID_label.place(x=140, y=218)
 
-Branch_label = Label(text="User:", fg='black', bg='white', font=('Arial', 12))
-Branch_label.place(x=140, y=265)
+User_label = Label(text="User:", fg='black', bg='white', font=('Arial', 12))
+User_label.place(x=140, y=265)
 
 Phone_label = Label(text="Phone:", fg='black', bg='white', font=('Arial', 12))
 Phone_label.place(x=140, y=315)
@@ -103,8 +190,11 @@ Phone_label.place(x=140, y=315)
 Account_label = Label(text="Account Type:", fg='black', bg='white', font=('Arial', 12))
 Account_label.place(x=140, y=365)
 
-Checkout_label = Label(text="Main Branch:", fg='black', bg='white', font=('Arial', 12))
-Checkout_label.place(x=140, y=415)
+Branch_label = Label(text="Main Branch:", fg='black', bg='white', font=('Arial', 12))
+Branch_label.place(x=140, y=415)
+
+Limit_label = Label(text="Account Lock:", fg='black', bg='white', font=('Arial', 12))
+Limit_label.place(x=140, y=465)
 
 """"---------------------------------CUSTOMER ITEMS---------------------------------"""
 # List box for customer's items
@@ -116,7 +206,7 @@ my_listbox = Listbox(info_frame, width=80, yscrollcommand=my_scrollbar.set, sele
 # Configure scrollbar
 my_scrollbar.config(command=my_listbox.yview)
 my_scrollbar.pack(side=RIGHT, fill=Y)
-info_frame.place(x=140, y=450)
+info_frame.place(x=140, y=500)
 
 my_listbox.pack(pady=15)
 
