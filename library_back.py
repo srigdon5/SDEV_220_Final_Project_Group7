@@ -132,8 +132,76 @@ def search_items_by_title_branch(search, branch_id):
     
     return result
 
-# item information on specific id
-# book search
-# movie search
-# customer search (by id)
-# items by customer
+
+# retrieve all item information based on id
+def get_item_by_id(item_id):
+    Session = sessionmaker(bind=engine)
+    with Session() as session:
+        item = session.query(Item).filter(Item.item_id == item_id).first()
+        
+    return item
+
+
+# search all books based on a search term where the term is the title
+def search_books(search):
+    Session = sessionmaker(bind=engine)
+    with Session() as session:
+        query = (
+            session.query(Item.title, Author.author_name, Book.medium, Book.pages)
+            .join(Author, Author.isbn == Book.isbn) # joining the author table for author info
+            .join(Book, Book.isbn == Item.isbn) # joining the book table for medium and pages
+            .filter(Book.title.ilike(f'%{search}%'))  # Case insensitive search
+            .all()  # Call the method to execute the query
+        )
+        result = [(title, author_name, medium) for title, author_name, medium in query]
+    return result
+
+
+# same as book search but movies
+def search_movies(searhc):
+    Session = sessionmaker(bind=engine)
+    with Session() as session:
+        query = (
+            session.query(Item.title, Movie.medium, Movie.runtime)
+            .join(Movie, Movie.isan == Item.isan) # joining movie table for medium and runtime
+            .filter(Item.title.ilike(f'%{search}%'))  # Case insensitive search
+            .all()  # Call the method to execute the query
+        )
+        result = [(title, author_name, medium) for title, author_name, medium in query]
+    return result
+
+# all customer information by id, including all items chekced out by them, both id and title
+def get_patron_by_id(patron_id):
+    Session = sessionmaker(bind=engine)
+    with Session() as session:
+        result = (
+            session.query(
+                Patron.name,
+                Patron.phone,
+                Patron.account_type,
+                Branch.address,
+                Patron.limit_reached,
+                Item.item_id,
+                Item.title
+            )
+            .join(Branch, Branch.branch_id == Patron.branch_id, isouter=True) # join branch table for address
+            .outerjoin(Item, Item.patron_id == Patron.patron_id) # join item table for item id and title
+            .filter(Patron.patron_id == patron_id) # search based on id
+            .all()
+        )
+
+    if result:
+        patron_info = result[0]
+        checked_out_items = [{'item_id': item.item_id, 'title': item.title} for item in result[1:] if item.item_id]
+
+        result_dict = {
+            'name': patron_info.name,
+            'phone': patron_info.phone,
+            'account_type': patron_info.account_type,
+            'branch_address': patron_info.address,
+            'limit_reached': patron_info.limit_reached,
+            'checked_out_items': checked_out_items
+        }
+        return result_dict
+    else:
+        return None
