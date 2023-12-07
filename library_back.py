@@ -158,7 +158,7 @@ def search_books(search):
 
 
 # same as book search but movies
-def search_movies(searhc):
+def search_movies(search):
     Session = sessionmaker(bind=engine)
     with Session() as session:
         query = (
