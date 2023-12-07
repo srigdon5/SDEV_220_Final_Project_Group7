@@ -239,8 +239,21 @@ img_label = Label(image=img, bg='#f0f0f0')
 img_label.place(x=750, y=220)
 
 """----------------------------------RETURN ITEM---------------------------------------- """
-return_button = Button(frame, width=20, pady=7, text='Return Item(s)', bg='grey', fg='white', border=3
-                       , command=return_selected)
+
+
+def returnitem():
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Return.py')
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
+
+    try:
+        subprocess.run([python_interpreter, script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
+
+
+return_button = Button(frame, width=20, pady=7, text='Return', bg='grey', fg='white', border=3
+                       , command=returnitem)
 
 return_button.place(x=625, y=500)
 

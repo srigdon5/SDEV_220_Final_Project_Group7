@@ -117,9 +117,8 @@ Button(frame, width=39, pady=7, text='Movies', bg='black', fg='white', border=0,
 
 
 def gotoreturn():
-    close_window()
     script_dir = os.path.dirname(os.path.realpath(__file__))
-    script_path = os.path.join(script_dir, 'GUI_Accounts.py')
+    script_path = os.path.join(script_dir, 'GUI_Return.py')
     python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
 
     try:
@@ -132,11 +131,37 @@ Button(frame, width=39, pady=15, text='Return', bg='grey', fg='white', border=3,
 
 
 """----------------------------------ADD---------------------------------------- """
-Button(frame, width=39, pady=15, text='Add', bg='grey', fg='white', border=3).place(x=355, y=225)
+
+
+def additem():
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Add.py')
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
+
+    try:
+        subprocess.run([python_interpreter, script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
+
+
+Button(frame, width=39, pady=15, text='Add', bg='grey', fg='white', border=3, command=additem).place(x=355, y=225)
 
 
 """----------------------------------REMOVE---------------------------------------- """
-Button(frame, width=39, pady=15, text='Remove', bg='grey', fg='white', border=3).place(x=355, y=325)
+
+
+def removeitem():
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Remove.py')
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
+
+    try:
+        subprocess.run([python_interpreter, script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
+
+
+Button(frame, width=39, pady=15, text='Remove', bg='grey', fg='white', border=3, command=removeitem).place(x=355, y=325)
 
 
 """----------------------------------SIGN_OUT---------------------------------------- """

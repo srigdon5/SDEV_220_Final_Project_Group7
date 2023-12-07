@@ -155,9 +155,22 @@ item_runtime = Label(frame, text="Runtime:", fg='black', bg='white', font=('Aria
 item_runtime.place(x=638, y=265)
 
 
-"""----------------------------------RETURN ITEM---------------------------------------- """
+"""----------------------------------CHECKOUT ITEM---------------------------------------- """
+
+
+def checkoutitem():
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Checkout.py')
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
+
+    try:
+        subprocess.run([python_interpreter, script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
+
+
 return_button = Button(frame, width=20, pady=7, text='Checkout', bg='grey',
-                       fg='white', border=3, command=return_selected)
+                       fg='white', border=3, command=checkoutitem)
 
 return_button.place(x=625, y=500)
 
