@@ -90,7 +90,10 @@ fee_drop.place(x=120, y=518)
 remove_btn = Button(frame, width=10, pady=7, text='REMOVE', bg='grey', fg='white', border=3)
 remove_btn.place(x=80, y=600)
 """----------------------------------------------------"""
-cancel_btn = Button(frame, width=10, pady=7, text='CANCEL', bg='grey', fg='white', border=3)
+def abortproc():
+    root.destroy()
+
+cancel_btn = Button(frame, width=10, pady=7, text='CANCEL', bg='grey', fg='white', border=3, command=abortproc)
 cancel_btn.place(x=230, y=600)
 """----------------------------------------------------"""
 root.mainloop()
