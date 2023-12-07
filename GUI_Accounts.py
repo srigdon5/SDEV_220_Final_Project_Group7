@@ -69,7 +69,7 @@ frame.place(x=110, y=120)
 """----------------------------------GET CUSTOMER ITEMS---------------------------------------"""
 
 
-# Placeholder function to fetch customer information by ID
+
 # Placeholder function to fetch customer information by ID
 def get_customer_info_by_id(user_id, Session):
     with Session() as session:
