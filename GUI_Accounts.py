@@ -69,7 +69,6 @@ frame.place(x=110, y=120)
 """----------------------------------GET CUSTOMER ITEMS---------------------------------------"""
 
 
-
 # Placeholder function to fetch customer information by ID
 def get_customer_info_by_id(user_id, Session):
     with Session() as session:
@@ -107,7 +106,12 @@ def get_customer_items(user_id, Session):
 
 
 def search():
-    user_id = user.get()
+    user_id = customer_entry.get()
+    customer_value = customer_entry.get()
+
+    if not validate_customer_id(customer_value):
+        messagebox.showerror("Error", "Customer ID must be valid integer.")
+        return
 
     # Check if the current content is the placeholder text
     if user_id == 'Enter a User ID':
@@ -139,12 +143,11 @@ def search():
         if not customer_items:
             my_listbox.insert(END, "No items found for this user.")
         else:
-            for item in customer_items:
-                my_listbox.insert(END, f"Item ID: {item['item_id']}, Fees: {item['fees']}")
+            for inventory in customer_items:
+                my_listbox.insert(END, f"Item ID: {inventory['item_id']}, Fees: {inventory['fees']}")
 
-        
-        user.delete(0, 'end')
-        user.insert(0, 'Enter a User ID')
+        customer_entry.delete(0, 'end')
+        customer_entry.insert(0, 'Enter a User ID')
 
 
 search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search)
@@ -154,27 +157,31 @@ search_id.place(x=55, y=25)
 # create functions for a responsive placeholder text
 
 
+def validate_customer_id(value):
+    return value.isdigit()
+
+
 def on_enter(e):
-    name = user.get()
+    name = customer_entry.get()
     if name == 'Enter a User ID':
-        user.delete(0, 'end')
-        user.insert(0, '')  # Clear the entry and move the insertion point to the beginning
+        customer_entry.delete(0, 'end')
+        customer_entry.insert(0, '')  # Clear the entry and move the insertion point to the beginning
 
 
 def on_leave(e):
-    name = user.get()
+    name = customer_entry.get()
     if not name:  # Check if the user hasn't entered anything
-        user.insert(0, 'Enter a User ID')
+        customer_entry.insert(0, 'Enter a User ID')
 
 
 # creates field for username
-user = Entry(frame, width=25, fg='black', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
-user.place(x=60, y=95)
-user.insert(0, "Enter a User ID")
+customer_entry = Entry(frame, width=25, fg='black', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
+customer_entry.place(x=60, y=95)
+customer_entry.insert(0, "Enter a User ID")
 
 # bind text field 'Enter ID' to be accessed in function above
-user.bind('<FocusIn>', on_enter)
-user.bind('<FocusOut>', on_leave)
+customer_entry.bind('<FocusIn>', on_enter)
+customer_entry.bind('<FocusOut>', on_leave)
 
 """----------------------------------CUSTOMER INFORMATION---------------------------"""
 # labels for customer information
@@ -201,7 +208,7 @@ Limit_label.place(x=140, y=465)
 info_frame = Frame(width=500, highlightbackground="black", highlightthickness=1, height=250, bg="white")
 my_scrollbar = Scrollbar(info_frame, orient=VERTICAL)
 
-my_listbox = Listbox(info_frame, width=80, yscrollcommand=my_scrollbar.set, selectmode=MULTIPLE)
+my_listbox = Listbox(info_frame, width=80, yscrollcommand=my_scrollbar.set, selectmode=SINGLE)
 
 # Configure scrollbar
 my_scrollbar.config(command=my_listbox.yview)
@@ -216,7 +223,8 @@ my_listbox.insert(END, 'ITEM_ID')
 
 
 # Add list to listbox
-my_list = ['ITEM_ID','ITEM_ID','ITEM_ID','ITEM_ID','ITEM_ID','ITEM_ID','ITEM_ID','ITEM_ID','ITEM_ID','ITEM_ID','ITEM_ID','ITEM_ID','ITEM_ID','ITEM_ID','ITEM_ID','ITEM_ID']
+my_list = ['ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID',
+           'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID']
 
 # Iterate through and insert items from the list
 for item in my_list:
@@ -224,8 +232,8 @@ for item in my_list:
 
 
 def return_selected():
-    for item in reversed(my_listbox.curselection()):
-        my_listbox.delete(item)
+    for select in reversed(my_listbox.curselection()):
+        my_listbox.delete(select)
 
 
 """----------------------------------ITEM TITLE-------------------------------------"""
@@ -252,8 +260,8 @@ def returnitem():
         print(f"Error launching subprocess: {e}")
 
 
-return_button = Button(frame, width=20, pady=7, text='Return', bg='grey', fg='white', border=3
-                       , command=returnitem)
+return_button = Button(frame, width=20, pady=7, text='Return', bg='grey', fg='white', border=3,
+                       command=returnitem)
 
 return_button.place(x=625, y=500)
 
@@ -269,7 +277,7 @@ def dashboard():
     close_window()  # Close the current window
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Dashboard.py')
-    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'  # Replace with your Python interpreter path
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
 
     try:
         subprocess.run([python_interpreter, script_path], check=True)

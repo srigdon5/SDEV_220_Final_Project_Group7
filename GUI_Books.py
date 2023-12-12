@@ -54,31 +54,48 @@ heading = Label(frame, text='Library Inventory', fg='black', bg='white',
                 font=('Microsoft YaHei UI Light', 16, 'bold'))
 heading.place(x=30, y=18)
 
-"""---------------------------------- GET ITEMS BY TYPE : BOOKS -----------------------------------------"""
+"""---------------------------------------------------------------------------"""
 frame = Frame(window, width=1000, highlightbackground="black", highlightthickness=3, height=600, bg='#fff')
 frame.place(x=110, y=120)
 
-"""---------------------------------- SEARCHING BY: ---------------------------------------"""
-
-
-search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3)
-search_id.place(x=55, y=25)
 
 """----------------------------------------TITLE----------------------------------------------------"""
+
+
+def validate_title(value):
+    return len(value) <= 50
+
+
 Title_label = Label(text="Title:", fg='black', bg='white', font=('Arial', 12))
 Title_label.place(x=140, y=218)
 
-user = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
-user.place(x=90, y=95)
-user.insert(0, "Search by title")
+title_var = tk.StringVar()
+title_var.set("Add a Title")
+
+title_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
+title_entry.place(x=90, y=95)
+title_entry.insert(0, "Search by title")
+
+title_entry.bind("<FocusIn>", lambda event: title_entry.delete(0, tk.END))
 
 """----------------------------------------AUTHOR----------------------------------------------------"""
+
+
+def validate_author(value):
+    return len(value) <= 50
+
+
 Author_label = Label(text="Author:", fg='black', bg='white', font=('Arial', 12))
 Author_label.place(x=140, y=265)
 
-user = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
-user.place(x=90, y=143)
-user.insert(0, "Search by author")
+author_var = tk.StringVar()
+author_var.set("Add author")
+
+author_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
+author_entry.place(x=90, y=143)
+author_entry.insert(0, "Search by author")
+
+author_entry.bind("<FocusIn>", lambda event: author_entry.delete(0, tk.END))
 
 
 """----------------------------------------GENRE DROPDOWN----------------------------------------------------"""
@@ -91,12 +108,23 @@ drop.place(x=90, y=192)
 
 
 """----------------------------------------ISBN----------------------------------------------------"""
+
+
+def validate_id_type(value):
+    return len(value) <= 13
+
+
 ISBN_label = Label(text="ISBN:", fg='black', bg='white', font=('Arial', 12))
 ISBN_label.place(x=140, y=365)
 
-user = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
-user.place(x=90, y=242)
-user.insert(0, "Search by isbn")
+isbn_var = tk.StringVar()
+isbn_var.set("ISBN")
+
+isbn_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
+isbn_entry.place(x=90, y=242)
+isbn_entry.insert(0, "Search by isbn")
+
+isbn_entry.bind("<FocusIn>", lambda event: isbn_entry.delete(0, tk.END))
 
 
 """----------------------------------------BRANCH DROPDOWN----------------------------------------------------"""
@@ -114,7 +142,7 @@ info_frame = Frame(width=500, highlightbackground="black", highlightthickness=1,
 info_frame.place(x=140, y=460)
 
 my_scrollbar = Scrollbar(info_frame, orient=VERTICAL)
-my_listbox = Listbox(info_frame, width=80, yscrollcommand=my_scrollbar.set, selectmode=MULTIPLE)
+my_listbox = Listbox(info_frame, width=80, yscrollcommand=my_scrollbar.set, selectmode=SINGLE)
 
 # Configure scrollbar
 my_scrollbar.config(command=my_listbox.yview)
@@ -158,7 +186,7 @@ item_status = Label(frame, text="Status:", fg='black', bg='white', font=('Arial'
 item_status.place(x=775, y=150)
 
 """----------------------------------Title, Author, Pages-------------------------------------"""
-item_title = Label(frame,text='Title:', bg='white', fg='black',font=('Arial', 12))
+item_title = Label(frame, text='Title:', bg='white', fg='black', font=('Arial', 12))
 item_title.place(x=638, y=215)
 
 item_author = Label(frame, text="Author(s):", fg='black', bg='white', font=('Arial', 12))
@@ -185,6 +213,28 @@ return_button = Button(frame, width=20, pady=7, text='Checkout', bg='grey',
                        fg='white', border=3, command=checkoutitem)
 
 return_button.place(x=625, y=500)
+"""---------------------------------- SEARCH ---------------------------------------"""
+
+
+def search_button_click():
+    # Retrieve values from the Entry widgets
+    title_value = title_entry.get()
+    author_value = author_entry.get()
+    isbn_value = isbn_entry.get()
+
+    if not validate_title(title_value):
+        messagebox.showerror("Error", "Title must be 50 characters or less.")
+        return
+    if not validate_author(author_value):
+        messagebox.showerror("Error", "Author must be 50 characters or less.")
+        return
+    if not validate_id_type(isbn_value):
+        messagebox.showerror("Error", "Valid ISBN must be 13 characters long.")
+        return
+
+
+search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search_button_click)
+search_id.place(x=55, y=25)
 
 """----------------------------------BACK TO DASHBOARD---------------------------------------- """
 
@@ -210,6 +260,5 @@ Button(frame, width=20, pady=7, text='Dashboard', bg='grey', fg='white', border=
        command=dashboard).place(x=800, y=500)
 
 """--------------------------------------------------------------------------------"""
-
 # Start the Tkinter event loop to run the registration GUI
 window.mainloop()

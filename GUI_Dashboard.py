@@ -169,15 +169,18 @@ Button(frame, width=39, pady=15, text='Remove', bg='grey', fg='white', border=3,
 
 # Function to open another program
 def signout():
-    close_window()  # Close the current window
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    script_path = os.path.join(script_dir, 'GUI_Login.py')
-    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
+    response = messagebox.askyesno("Logout Confirmation", "Are you sure you would like to log out?")
 
-    try:
-        subprocess.run([python_interpreter, script_path], check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Error launching subprocess: {e}")
+    if response:
+        close_window()  # Close the current window
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        script_path = os.path.join(script_dir, 'GUI_Login.py')
+        python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
+
+        try:
+            subprocess.run([python_interpreter, script_path], check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error launching subprocess: {e}")
 
 
 Button(frame, width=39, pady=7, text='Sign Out', bg='white', fg='black', border=3, command=signout).place(x=355, y=425)

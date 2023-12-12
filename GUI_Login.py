@@ -4,6 +4,9 @@ import subprocess
 import ast
 from tkinter import PhotoImage
 import os
+from tkinter import Tk, Button
+
+
 
 """
 Program: GUI_Login_Design.py
@@ -176,7 +179,18 @@ def user_manual():
 
 
 # Create the link and bind it to the open_user_manual function
-help_link = Button(frame, width=20, pady=7, text='Need help signing in?', bg='white', fg='green', border=0,
+
+def user_manual():
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Manual.py')
+    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'  # Replace with your Python interpreter path
+
+    try:
+        subprocess.run([python_interpreter, script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
+
+help_link = Button(frame, width=20, pady=7, text='Need help?', bg='white', fg='green', border=0,
                    command=user_manual, cursor='hand2')
 help_link.place(x=140, y=320)
 
