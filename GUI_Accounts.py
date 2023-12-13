@@ -66,6 +66,27 @@ heading.place(x=20, y=18)
 frame = Frame(window, width=1000, highlightbackground="black", highlightthickness=3, height=600, bg='#fff')
 frame.place(x=110, y=120)
 
+
+
+"""------------------------------------CUSTOMER ID--------------------------------------"""
+# create functions for a responsive placeholder text
+
+
+def validate_customer_id(value):
+    return value.isdigit()
+
+
+user_var = tk.StringVar()
+user_var.set('Enter a User ID')
+
+customer_entry = Entry(frame, width=25, fg='black', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
+customer_entry.place(x=60, y=95)
+customer_entry.insert(0, 'Enter a User ID')
+
+customer_entry.bind("<FocusIn>", lambda event: customer_entry.delete(0, tk.END) if customer_entry.get() == 'Enter a User ID' else None)
+
+customer_entry.bind("<FocusOut>", lambda event: customer_entry.insert(0, 'Enter a User ID') if not customer_entry.get() else None)
+
 """----------------------------------GET CUSTOMER ITEMS---------------------------------------"""
 
 
@@ -152,25 +173,6 @@ def search():
 
 search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search)
 search_id.place(x=55, y=25)
-
-"""------------------------------------CUSTOMER ID--------------------------------------"""
-# create functions for a responsive placeholder text
-
-
-def validate_customer_id(value):
-    return value.isdigit()
-
-
-user_var = tk.StringVar()
-user_var.set('Enter a User ID')
-
-user_entry = Entry(frame, width=25, fg='black', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
-user_entry.place(x=60, y=95)
-user_entry.insert(0, 'Enter a User ID')
-
-user_entry.bind("<FocusIn>", lambda event: user_entry.delete(0, tk.END) if user_entry.get() == 'Enter a User ID' else None)
-
-user_entry.bind("<FocusOut>", lambda event: user_entry.insert(0, 'Enter a User ID') if not user_entry.get() else None)
 
 """----------------------------------CUSTOMER INFORMATION---------------------------"""
 # labels for customer information

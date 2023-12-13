@@ -44,8 +44,8 @@ background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
 # creates variables to access the input from user in the password and username fields
 def signin():
-    username = user.get()
-    password = code.get()
+    username = user_entry.get()
+    password = pass_entry.get()
 
     file = open('assets\\datasheet.txt', 'r')
     d = file.read()

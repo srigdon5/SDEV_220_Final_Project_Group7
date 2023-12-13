@@ -100,7 +100,7 @@ def validate_id_type():
     else:
         return None
 
-    user.config(validate="key", validatecommand=(entry_validation, '%P'))
+    id_entry.config(validate="key", validatecommand=(entry_validation, '%P'))
 
 
 def validate_isbn(value):

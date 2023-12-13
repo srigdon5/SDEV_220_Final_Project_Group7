@@ -39,9 +39,9 @@ background_label.place(x=12, y=0, relwidth=1, relheight=1)
 """------------------------------------------------------------SIGN UP---------------------------------------------------"""
 # Function for handling user sign-up
 def signup():
-    username = user.get()
-    password = code.get()
-    confirm_password = confirm_code.get()
+    username = user_entry.get()
+    password = pass_entry.get()
+    confirm_password = conf_entry.get()
 
     file = open('assets\\datasheet.txt', 'r')
     d = file.read()
