@@ -106,7 +106,7 @@ date_label.place(x=40, y=200)
 
 date_var = tk.StringVar()
 
-# Comboboxes for day, month, and year
+
 day_combobox = ttk.Combobox(root, values=[str(i).zfill(2) for i in range(1, 32)], width=5)
 day_combobox.current(0)
 day_combobox.place(x=140, y=200)
@@ -146,7 +146,6 @@ condition_entry.place(x=140, y=287)
 
 
 def return_button_click():
-    # Retrieve values from the Entry widgets
     item_value = item_entry.get()
     id_value = staff_entry.get()
     fees_option = fee_entry.get()

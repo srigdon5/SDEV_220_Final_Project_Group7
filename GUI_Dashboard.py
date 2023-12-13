@@ -29,7 +29,6 @@ Goal: Create a Dashboard GUI that can be easily integrated for a Library managem
  Available/Unavailable Items
 """
 
-# Create the main registration window
 window = Tk()
 window.title("EVPL Management System - Dashboard")
 window.geometry('1225x750+300+200')
@@ -67,7 +66,7 @@ def close_window():
 
 
 def accounts():
-    close_window()  # Close the current window
+    close_window()  
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Accounts.py')
 
@@ -166,12 +165,11 @@ Button(frame, width=39, pady=15, text='Remove', bg='grey', fg='white', border=3,
 """----------------------------------SIGN_OUT---------------------------------------- """
 
 
-# Function to open another program
 def signout():
     response = messagebox.askyesno("Logout Confirmation", "Are you sure you would like to log out?")
 
     if response:
-        close_window()  # Close the current window
+        close_window()  
         script_dir = os.path.dirname(os.path.realpath(__file__))
         script_path = os.path.join(script_dir, 'GUI_Login.py')
 

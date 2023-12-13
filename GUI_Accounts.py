@@ -35,7 +35,7 @@ Goal: Create a GUI for a module that displays customer accounts that can be easi
  ISBN/ISAN/Amount Due/DATE
 """
 
-# Create the main registration window
+
 window = Tk()
 window.title("EVPL Management System - Customer Accounts")
 window.geometry('1225x750+300+200')
@@ -44,7 +44,7 @@ window.resizable(False, False)
 window.iconbitmap("assets\\images\\myIcon.ico")
 
 
-# Create the tables
+
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
@@ -54,7 +54,7 @@ background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
 
-# Create a frame for labels and input fields
+
 frame = Frame(width=250, highlightbackground="black", highlightthickness=3, height=80, bg="white")
 frame.place(x=500, y=20)
 
@@ -69,7 +69,7 @@ frame.place(x=110, y=120)
 
 
 """------------------------------------CUSTOMER ID--------------------------------------"""
-# create functions for a responsive placeholder text
+
 
 
 def validate_customer_id(value):
@@ -175,7 +175,7 @@ search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white'
 search_id.place(x=55, y=25)
 
 """----------------------------------CUSTOMER INFORMATION---------------------------"""
-# labels for customer information
+
 ID_label = Label(text="ID:", fg='black', bg='white', font=('Arial', 12))
 ID_label.place(x=140, y=218)
 
@@ -195,13 +195,13 @@ Limit_label = Label(text="Account Lock:", fg='black', bg='white', font=('Arial',
 Limit_label.place(x=140, y=465)
 
 """"---------------------------------CUSTOMER ITEMS---------------------------------"""
-# List box for customer's items
+
 info_frame = Frame(width=500, highlightbackground="black", highlightthickness=1, height=250, bg="white")
 my_scrollbar = Scrollbar(info_frame, orient=VERTICAL)
 
 my_listbox = Listbox(info_frame, width=80, yscrollcommand=my_scrollbar.set, selectmode=SINGLE)
 
-# Configure scrollbar
+
 my_scrollbar.config(command=my_listbox.yview)
 my_scrollbar.pack(side=RIGHT, fill=Y)
 info_frame.place(x=140, y=500)
@@ -209,15 +209,15 @@ info_frame.place(x=140, y=500)
 my_listbox.pack(pady=15)
 
 
-# Add item to listbox
+
 my_listbox.insert(END, 'ITEM_ID')
 
 
-# Add list to listbox
+
 my_list = ['ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID',
            'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID']
 
-# Iterate through and insert items from the list
+
 for item in my_list:
     my_listbox.insert(END, item)
 
@@ -262,9 +262,9 @@ def close_window():
     window.destroy()
 
 
-# Function to open another program
+
 def dashboard():
-    close_window()  # Close the current window
+    close_window()  
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Dashboard.py')
 
@@ -279,5 +279,5 @@ Button(frame, width=20, pady=7, text='Dashboard', bg='grey', fg='white', border=
 
 """--------------------------------------------------------------------------------"""
 
-# Start the Tkinter event loop to run the registration GUI
+
 window.mainloop()

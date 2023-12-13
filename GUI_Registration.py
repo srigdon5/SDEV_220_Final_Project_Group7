@@ -23,7 +23,7 @@ Goal: Create a Registration GUI that can be easily integrated, use for Library m
  Failure/Registered accounts
 """
 
-# Create the main registration window
+
 window = Tk()
 window.title("EVPL Management System - Registration")
 window.geometry('1225x750+300+200')
@@ -37,7 +37,7 @@ background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
 """------------------------------------------------------------SIGN UP---------------------------------------------------"""
-# Function for handling user sign-up
+
 def signup():
     username = user_entry.get()
     password = pass_entry.get()
@@ -54,31 +54,31 @@ def signup():
         messagebox.showinfo('Error:', 'Taken, Please enter a valid username.')
     elif password == confirm_password:
         try:
-            # Read existing user data from a file
+           
             file = open('assets\\datasheet.txt', 'r+')
             d = file.read()
             r = ast.literal_eval(d)
-
-            # Update user data with the new username and password
+           
+           
             dict2 = {username: password}
             r.update(dict2)
             file.truncate(0)
             file.close()
 
-            # Write the updated data back to the file and display a success message
+
             file = open('assets\\datasheet.txt', 'w')
             w = file.write(str(r))
 
             messagebox.showinfo('Register', 'Successfully Registered!')
         except:
-            # Create a new file with default data if there's an issue
+
             file = open('assets\\datasheet.txt', 'w')
             pp = str({'Username': 'password'})
             file.write(pp)
             file.close()
 
     else:
-        # Display an error message if passwords do not match
+
         messagebox.showinfo('Error:', 'Passwords do not match.')
 
 def close_window():
@@ -86,7 +86,7 @@ def close_window():
 
     
 def log():
-    close_window()  # Close the current window
+    close_window()  
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Login.py')
     
@@ -96,7 +96,7 @@ def log():
         print(f"Error launching subprocess: {e}")
 
 """---------------------------------------------------------------------------------------------------------------"""
-# Create a frame for labels and input fields
+
 frame = Frame(width=450, highlightbackground="black", highlightthickness=3, height=80, bg="white")
 frame.place(x=400, y=40)
 
@@ -214,10 +214,10 @@ Button(frame, width=39, pady=7, text='Confirm', bg='black', fg='white', border=0
 label = Label(text='Already have an account ? --', fg='black', bg='white', font=('Microsoft Yahei UI Light', 9))
 label.place(x=520, y=655)
 
-# Link to the Sign-In Page
+
 signin = Button(width=6, text='Log In', border=0, bg='white', cursor='hand2', fg='green', command=log)
 signin.place(x=680, y=655)
 
 
-# Start the Tkinter event loop to run the registration GUI
+
 window.mainloop()

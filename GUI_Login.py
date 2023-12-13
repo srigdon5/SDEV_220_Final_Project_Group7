@@ -24,8 +24,7 @@ Goal: Create a Login GUI that can be easily integrated, use this GUI for a libra
  Login success/Failure/Help/Register an account
 """
 
-""" create project and the dimensions for the login form and generate the window """
-# declaring a separate variable to access tkinter
+
 root = Tk()
 root.title('EVPL Management System')
 root.geometry('1225x750+300+200')
@@ -39,10 +38,8 @@ background_label = Label(root, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
 
-""" define and configure loading screen on successful login"""
 
 
-# creates variables to access the input from user in the password and username fields
 def signin():
     username = user_entry.get()
     password = pass_entry.get()
@@ -52,8 +49,7 @@ def signin():
     r = ast.literal_eval(d)
     file.close()
 
-    # print(r.keys())
-    # print(r.values())
+
 
     if username in r.keys() and password == r[username]:
         screen = Toplevel(root)
@@ -76,7 +72,7 @@ def signin():
         messagebox.showerror('Invalid', 'invalid username or password')
 
 
-""" Frame div area for labels and text input """
+
 frame = Frame(root, width=450, highlightbackground="black", highlightthickness=3, height=80, bg="white")
 frame.place(x=400, y=20)
 
@@ -84,7 +80,7 @@ heading = Label(frame, text='Evansville Vanderburgh Public Library', fg='black',
 heading.place(x=25, y=12)
 
 
-""" Label 1 placement and text """
+
 heading = Label(text='Welcome', fg='black', bg='white', font=('Microsoft YaHei UI Light', 23, 'bold'))
 heading.place(x=550, y=120)
 
@@ -92,7 +88,7 @@ frame = Frame(root, width=450, highlightbackground="black", highlightthickness=3
 frame.place(x=400, y=200)
 
 
-""" Format a seamless input with no borders and placeholder text prompt that deletes on entering text field """
+
 
 """----------------------------------Username---------------------------------------- """
 
@@ -129,14 +125,14 @@ Frame(frame, width=295, height=2, bg='black').place(x=75, y=203)
 """----- Define function and Format buttons for input submission ('Sign in' and 'Sign Up') -------------"""
 
 
-# Function to close the current window
+
 def close_window():
     root.destroy()
 
 
-# Function to open another program
+
 def register():
-    close_window()  # Close the current window
+    close_window() 
 
    
     script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -156,12 +152,12 @@ Button(frame, width=19, pady=7, text='Sign in', bg='black', fg='white', border=0
 (Button(frame, width=19, pady=7, text='Sign up', bg='black', fg='white', border=0, cursor='hand2', command=register).place(x=242, y=254))
 
 
-# Create a function to open the user manual program
+
 def user_manual():
     subprocess.Popen(['python', 'userManual.py'])
 
 
-# Create the link and bind it to the open_user_manual function
+
 
 def user_manual():
     script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -178,5 +174,5 @@ help_link = Button(frame, width=20, pady=7, text='Need help?', bg='white', fg='g
 help_link.place(x=140, y=320)
 
 
-# Start the Tkinter event loop to run the registration GUI
+
 root.mainloop()

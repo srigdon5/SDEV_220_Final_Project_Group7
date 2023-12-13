@@ -32,7 +32,6 @@ Goal: Create a GUI for a module that displays available books that can be easily
  ISBN/ISAN/Amount Due/DATE
 """
 
-# Create the main registration window
 window = Tk()
 window.title("EVPL Management System - Book Inventory")
 window.geometry('1225x750+300+200')
@@ -46,7 +45,6 @@ background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
 
-# Create a frame for labels and input fields
 frame = Frame(width=250, highlightbackground="black", highlightthickness=3, height=80, bg="white")
 frame.place(x=500, y=20)
 
@@ -143,14 +141,12 @@ drop.place(x=90, y=292)
 
 
 """"---------------------------------SHOW FILTERED ITEMS---------------------------------"""
-# List box for customer's items
 info_frame = Frame(width=500, highlightbackground="black", highlightthickness=1, height=250, bg="white")
 info_frame.place(x=140, y=460)
 
 my_scrollbar = Scrollbar(info_frame, orient=VERTICAL)
 my_listbox = Listbox(info_frame, width=80, yscrollcommand=my_scrollbar.set, selectmode=SINGLE)
 
-# Configure scrollbar
 my_scrollbar.config(command=my_listbox.yview)
 my_scrollbar.pack(side=RIGHT, fill=Y)
 
@@ -158,14 +154,11 @@ my_scrollbar.pack(side=RIGHT, fill=Y)
 my_listbox.pack(pady=15)
 
 
-# Add item to listbox
 my_listbox.insert(END, 'ITEM_ID')
 
 
-# Add list to listbox
 my_list = ['ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID']
 
-# Iterate through and insert items from the list
 for item in my_list:
     my_listbox.insert(END, item)
 
@@ -222,7 +215,6 @@ return_button.place(x=625, y=500)
 
 
 def search_button_click():
-    # Retrieve values from the Entry widgets
     title_value = title_entry.get()
     author_value = author_entry.get()
     isbn_value = isbn_entry.get()
@@ -248,9 +240,9 @@ def close_window():
     window.destroy()
 
 
-# Function to open another program
+
 def dashboard():
-    close_window()  # Close the current window
+    close_window()  
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Dashboard.py')
 
@@ -264,5 +256,5 @@ Button(frame, width=20, pady=7, text='Dashboard', bg='grey', fg='white', border=
        command=dashboard).place(x=800, y=500)
 
 """--------------------------------------------------------------------------------"""
-# Start the Tkinter event loop to run the registration GUI
+
 window.mainloop()
