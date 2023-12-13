@@ -1,0 +1,2 @@
+tkcalendar==1.6.2
+# Add any other dependencies here, each on a new line
