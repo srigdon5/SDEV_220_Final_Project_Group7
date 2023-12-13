@@ -157,12 +157,15 @@ def close_window():
 # Function to open another program
 def register():
     close_window()  # Close the current window
+
+    # Get the directory of the current script
     script_dir = os.path.dirname(os.path.realpath(__file__))
+
+    # Relative path to GUI_Registration.py
     script_path = os.path.join(script_dir, 'GUI_Registration.py')
-    
 
     try:
-        subprocess.run([script_path], check=True)
+        subprocess.run(['python', script_path], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error launching subprocess: {e}")
 
