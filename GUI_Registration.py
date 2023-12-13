@@ -88,10 +88,9 @@ def log():
     close_window()  # Close the current window
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Login.py')
-    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'  # Replace with your Python interpreter path
-
+    
     try:
-        subprocess.run([python_interpreter, script_path], check=True)
+        subprocess.run(['python', script_path], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error launching subprocess: {e}")
 

@@ -252,10 +252,9 @@ img_label.place(x=750, y=220)
 def returnitem():
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Return.py')
-    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
 
     try:
-        subprocess.run([python_interpreter, script_path], check=True)
+        subprocess.run(['python', script_path], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error launching subprocess: {e}")
 
@@ -277,10 +276,9 @@ def dashboard():
     close_window()  # Close the current window
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Dashboard.py')
-    python_interpreter = 'C:\\Users\\JSwil\\AppData\\Local\\Programs\\Python\\Python39\\python.exe'
 
     try:
-        subprocess.run([python_interpreter, script_path], check=True)
+        subprocess.run(['python', script_path], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error launching subprocess: {e}")
 
