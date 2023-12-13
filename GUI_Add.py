@@ -6,8 +6,6 @@ from tkinter import PhotoImage, messagebox
 import os
 from tkinter import ttk
 import tkinter as tk
-import tkcalendar
-from tkcalendar import DateEntry
 from tkinter import Tk, Label, ttk, Entry, Button
 
 """
@@ -182,12 +180,25 @@ runtime_entry.insert(0, "Duration (hrs)")
 runtime_entry.bind("<FocusIn>", lambda event: runtime_entry.delete(0, tk.END))
 
 """-----------------------------------------DATE----------------------------------------------"""
-date_label = tk.Label(text="Date:", fg='black', bg='white', font=('Arial', 12))
+date_label = tk.Label(root, text="Date:", fg='black', bg='white', font=('Arial', 12))
 date_label.place(x=40, y=450)
 
+date_var = tk.StringVar()
 
-cal = DateEntry(frame, width=12, background='dark-blue', foreground='white', borderwidth=2, year=2023, month=12, day=7)
-cal.place(x=140, y=437)
+# Comboboxes for day, month, and year
+day_combobox = ttk.Combobox(root, values=[str(i).zfill(2) for i in range(1, 32)], width=5)
+day_combobox.current(0)
+day_combobox.place(x=140, y=450)
+
+month_combobox = ttk.Combobox(root, values=[str(i).zfill(2) for i in range(1, 13)], width=5)
+month_combobox.current(0)
+month_combobox.place(x=200, y=450)
+
+year_combobox = ttk.Combobox(root, values=[str(i) for i in range(2023, 2030)], width=5)
+year_combobox.current(0)
+year_combobox.place(x=260, y=450)
+
+
 """-----------------------------------------USER ID----------------------------------------------"""
 
 
@@ -217,6 +228,12 @@ def add_button_click():
     pages_value = pages_entry.get()
     runtime_value = runtime_entry.get()
     user_id_value = user_id_entry.get()
+    day = day_combobox.get()
+    month = month_combobox.get()
+    year = year_combobox.get()
+
+    selected_date = f"{year}-{month.zfill(2)}-{day.zfill(2)}"
+    date_var.set(selected_date)
 
     # Perform ADD button functionality here
     if not validate_title(title_value):

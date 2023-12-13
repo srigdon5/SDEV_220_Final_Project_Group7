@@ -1,12 +1,12 @@
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox, simpledialog
 import subprocess
 import ast
 from tkinter import PhotoImage
 import os
 from tkinter import ttk
 import tkinter as tk
-from tkcalendar import DateEntry
+
 
 
 """
@@ -97,12 +97,31 @@ drop.place(x=140, y=137)
 
 """-----------------------------------------DATE----------------------------------------------"""
 
-date_label = tk.Label(text="Date:", fg='black', bg='white', font=('Arial', 12))
+date_label = tk.Label(root, text="Date:", fg='black', bg='white', font=('Arial', 12))
+date_label.place(x=40, y=200)
+
+date_var = tk.StringVar()
+
+# Comboboxes for day, month, and year
+day_combobox = ttk.Combobox(root, values=[str(i).zfill(2) for i in range(1, 32)], width=5)
+day_combobox.current(0)
+day_combobox.place(x=140, y=200)
+
+month_combobox = ttk.Combobox(root, values=[str(i).zfill(2) for i in range(1, 13)], width=5)
+month_combobox.current(0)
+month_combobox.place(x=200, y=200)
+
+year_combobox = ttk.Combobox(root, values=[str(i) for i in range(2023, 2030)], width=5)
+year_combobox.current(0)
+year_combobox.place(x=260, y=200)
+
+
+"""date_label = tk.Label(text="Date:", fg='black', bg='white', font=('Arial', 12))
 date_label.place(x=40, y=200)
 
 
 cal = DateEntry(frame, width=12, background='dark-blue', foreground='white', borderwidth=2, year=2023, month=12, day=7)
-cal.place(x=140, y=187)
+cal.place(x=140, y=187)"""
 
 """-----------------------------------------FEES----------------------------------------------"""
 fee_label = Label(text="Fees:", fg='black', bg='white', font=('Arial', 12))
@@ -128,6 +147,12 @@ def return_button_click():
     id_value = staff_entry.get()
     fees_option = fee_entry.get()
     condition = condition_entry.get()
+    day = day_combobox.get()
+    month = month_combobox.get()
+    year = year_combobox.get()
+
+    selected_date = f"{year}-{month.zfill(2)}-{day.zfill(2)}"
+    date_var.set(selected_date)
 
     if not validate_item_id(item_value):
         messagebox.showerror("Error", "Item ID must be valid integer.")
