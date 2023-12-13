@@ -75,7 +75,9 @@ title_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Mic
 title_entry.place(x=95, y=95)
 title_entry.insert(0, "Search by title")
 
-title_entry.bind("<FocusIn>", lambda event: title_entry.delete(0, tk.END))
+title_entry.bind("<FocusIn>", lambda event: title_entry.delete(0, tk.END) if title_entry.get() == "Search by title" else None)
+
+title_entry.bind("<FocusOut>", lambda event: title_entry.insert(0, "Search by title") if not title_entry.get() else None)
 
 """----------------------------------------GENRE DROPDOWN----------------------------------------------------"""
 Author_label = Label(text="Genre:", fg='black', bg='white', font=('Arial', 12))
@@ -103,7 +105,9 @@ isan_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Micr
 isan_entry.place(x=95, y=192)
 isan_entry.insert(0, "Search by isan")
 
-isan_entry.bind("<FocusIn>", lambda event: isan_entry.delete(0, tk.END))
+isan_entry.bind("<FocusIn>", lambda event: isan_entry.delete(0, tk.END) if isan_entry.get() == "Search by isan" else None)
+
+isan_entry.bind("<FocusOut>", lambda event: isan_entry.insert(0, "Search by isan") if not isan_entry.get() else None)
 
 
 """----------------------------------------RUNTIME----------------------------------------------------"""
@@ -127,7 +131,9 @@ runtime_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('M
 runtime_entry.place(x=95, y=242)
 runtime_entry.insert(0, "Search by runtime")
 
-runtime_entry.bind("<FocusIn>", lambda event: runtime_entry.delete(0, tk.END))
+runtime_entry.bind("<FocusIn>", lambda event: runtime_entry.delete(0, tk.END) if runtime_entry.get() == "Search by runtime" else None)
+
+runtime_entry.bind("<FocusOut>", lambda event: runtime_entry.insert(0, "Search by runtime") if not runtime_entry.get() else None)
 
 
 """"---------------------------------SHOW FILTERED ITEMS---------------------------------"""

@@ -5,6 +5,7 @@ import ast
 from tkinter import PhotoImage
 import os
 from tkinter import Tk, Button
+import tkinter as tk
 
 
 
@@ -95,27 +96,16 @@ frame.place(x=400, y=200)
 
 """----------------------------------Username---------------------------------------- """
 
+user_var = tk.StringVar()
+user_var.set('Username')
 
-# create functions for a responsive placeholder text
-def on_enter(e):
-    user.delete(0, 'end')
+user_entry = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
+user_entry.place(x=180, y=98)
+user_entry.insert(0, 'Username')
 
+user_entry.bind("<FocusIn>", lambda event: user_entry.delete(0, tk.END) if user_entry.get() == 'Username' else None)
 
-def on_leave(e):
-    name = user.get()
-    if name == '':
-        user.insert(0, 'Username')
-
-
-# creates field for username
-user = Entry(frame, width=25, fg='black', border=0, bg="white", font=('Microsoft YaHei UI Light', 11))
-user.place(x=180, y=98)
-user.insert(0, 'Username')
-
-# bind text field 'Username' to be accessed in function above
-user.bind('<FocusIn>', on_enter)
-user.bind('<FocusOut>', on_leave)
-
+user_entry.bind("<FocusOut>", lambda event: user_entry.insert(0, 'Username') if not user_entry.get() else None)
 
 Frame(frame, width=295, height=2, bg='black').place(x=75, y=117)
 
@@ -123,26 +113,16 @@ Frame(frame, width=295, height=2, bg='black').place(x=75, y=117)
 """----------------------------------Password---------------------------------------- """
 
 
-# deletes text once text field is clicked
-def on_enter(e):
-    code.delete(0, 'end')
+pass_var = tk.StringVar()
+pass_var.set('Password')
 
+pass_entry = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
+pass_entry.place(x=180, y=182)
+pass_entry.insert(0, 'Password')
 
-# re-iterates the placeholder text once an EMPTY text field is clicked off from
-def on_leave(e):
-    name = code.get()
-    if name == '':
-        code.insert(0, 'Password')
+pass_entry.bind("<FocusIn>", lambda event: pass_entry.delete(0, tk.END) if pass_entry.get() == 'Password' else None)
 
-
-# creates field for password
-code = Entry(frame, width=25, fg='black', border=0, bg="white", font=('Microsoft YaHei UI Light', 11))
-code.place(x=180, y=182)
-code.insert(0, 'Password')
-
-# bind text field 'Password' to be accessed in function above
-code.bind('<FocusIn>', on_enter)
-code.bind('<FocusOut>', on_leave)
+pass_entry.bind("<FocusOut>", lambda event: pass_entry.insert(0, 'Password') if not pass_entry.get() else None)
 
 Frame(frame, width=295, height=2, bg='black').place(x=75, y=203)
 

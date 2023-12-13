@@ -5,6 +5,7 @@ import subprocess
 import ast
 from tkinter import PhotoImage
 import os
+import tkinter as tk
 
 
 """
@@ -35,7 +36,7 @@ background = PhotoImage(file="assets\\images\\design.png")
 background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
-
+"""------------------------------------------------------------SIGN UP---------------------------------------------------"""
 # Function for handling user sign-up
 def signup():
     username = user.get()
@@ -94,7 +95,7 @@ def log():
     except subprocess.CalledProcessError as e:
         print(f"Error launching subprocess: {e}")
 
-
+"""---------------------------------------------------------------------------------------------------------------"""
 # Create a frame for labels and input fields
 frame = Frame(width=450, highlightbackground="black", highlightthickness=3, height=80, bg="white")
 frame.place(x=400, y=40)
@@ -102,7 +103,7 @@ frame.place(x=400, y=40)
 heading = Label(frame, text='Evansville Vanderburgh Public Library', fg='black', bg='white', font=('Microsoft YaHei UI Light', 16, 'bold'))
 heading.place(x=25, y=18)
 
-
+"""------------------------------------------------------------Register---------------------------------------------------"""
 heading = Label(text='Register', fg="black", bg='white', font=('Microsoft Yahei UI Light', 23,
                                                                'bold'))
 heading.place(x=570, y=130)
@@ -112,128 +113,89 @@ frame.place(x=180, y=190)
 
 """----------------------------------First_Name---------------------------------------"""
 
+fname_var = tk.StringVar()
+fname_var.set('First Name')
 
-# create functions for a responsive placeholder text
-def on_enter(e):
-    user.delete(0, 'end')
+fname_entry = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
+fname_entry.place(x=190, y=83)
+fname_entry.insert(0, 'First Name')
 
+fname_entry.bind("<FocusIn>", lambda event: fname_entry.delete(0, tk.END) if fname_entry.get() == 'First Name' else None)
 
-def on_leave(e):
-    if user.get() == '':
-        user.insert(0, 'First Name')
-
-
-# creates field for first name
-user = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
-user.place(x=190, y=83)
-user.insert(0, 'First Name')
-user.bind("<FocusIn>", on_enter)
-user.bind("<FocusOut>", on_leave)
+fname_entry.bind("<FocusOut>", lambda event: fname_entry.insert(0, 'First Name') if not fname_entry.get() else None)
 
 Frame(frame, width=295, height=2, bg='black').place(x=80, y=102)
 """----------------------------------Last_Name----------------------------------------"""
 
+lname_var = tk.StringVar()
+lname_var.set('Last Name')
 
-# create functions for a responsive placeholder text
-def on_enter(e):
-    user.delete(0, 'end')
+lname_entry = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
+lname_entry.place(x=190, y=183)
+lname_entry.insert(0, 'Last Name')
 
+lname_entry.bind("<FocusIn>", lambda event: lname_entry.delete(0, tk.END) if lname_entry.get() == 'Last Name' else None)
 
-def on_leave(e):
-    if user.get() == '':
-        user.insert(0, 'last Name')
+lname_entry.bind("<FocusOut>", lambda event: lname_entry.insert(0, 'Last Name') if not lname_entry.get() else None)
 
-
-# creates field for last name
-user = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
-user.place(x=190, y=183)
-user.insert(0, 'Last Name')
-user.bind("<FocusIn>", on_enter)
-user.bind("<FocusOut>", on_leave)
 
 Frame(frame, width=295, height=2, bg='black').place(x=80, y=203)
 """----------------------------------Phone_Number-------------------------------------"""
 
+phone_var = tk.StringVar()
+phone_var.set('Phone Number')
 
-# create functions for a responsive placeholder text
-def on_enter(e):
-    user.delete(0, 'end')
+phone_entry = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
+phone_entry.place(x=170, y=288)
+phone_entry.insert(0, 'Phone Number')
 
+phone_entry.bind("<FocusIn>", lambda event: phone_entry.delete(0, tk.END) if phone_entry.get() == 'Phone Number' else None)
 
-def on_leave(e):
-    if user.get() == '':
-        user.insert(0, 'Phone Number')
-
-
-# creates field for phone number
-user = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
-user.place(x=170, y=288)
-user.insert(0, 'Phone Number')
-user.bind("<FocusIn>", on_enter)
-user.bind("<FocusOut>", on_leave)
+phone_entry.bind("<FocusOut>", lambda event: phone_entry.insert(0, 'Phone Number') if not phone_entry.get() else None)
 
 Frame(frame, width=295, height=2, bg='black').place(x=80, y=307)
 """----------------------------------Username---------------------------------------- """
 
+user_var = tk.StringVar()
+user_var.set('Create Username')
 
-# create functions for a responsive placeholder text
-def on_enter(e):
-    user.delete(0, 'end')
+user_entry = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
+user_entry.place(x=605, y=83)
+user_entry.insert(0, 'Create Username')
 
+user_entry.bind("<FocusIn>", lambda event: user_entry.delete(0, tk.END) if user_entry.get() == 'Create Username' else None)
 
-def on_leave(e):
-    if user.get() == '':
-        user.insert(0, 'Create Username')
-
-
-# creates field for username
-user = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
-user.place(x=605, y=83)
-user.insert(0, 'Create Username')
-user.bind("<FocusIn>", on_enter)
-user.bind("<FocusOut>", on_leave)
+user_entry.bind("<FocusOut>", lambda event: user_entry.insert(0, 'Create Username') if not user_entry.get() else None)
 
 Frame(frame, width=295, height=2, bg='black').place(x=520, y=102)
 
 """----------------------------------Password---------------------------------------- """
 
+pass_var = tk.StringVar()
+pass_var.set('Create Password')
 
-# create functions for a responsive placeholder text
-def on_enter(e):
-    code.delete(0, 'end')
+pass_entry = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
+pass_entry.place(x=605, y=184)
+pass_entry.insert(0, 'Create Password')
 
+pass_entry.bind("<FocusIn>", lambda event: pass_entry.delete(0, tk.END) if pass_entry.get() == 'Create Password' else None)
 
-def on_leave(e):
-    if code.get() == '':
-        code.insert(0, 'Create Password')
-
-
-code = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
-code.place(x=605, y=184)
-code.insert(0, 'Create Password')
-code.bind("<FocusIn>", on_enter)
-code.bind("<FocusOut>", on_leave)
+pass_entry.bind("<FocusOut>", lambda event: pass_entry.insert(0, 'Create Password') if not pass_entry.get() else None)
 
 Frame(frame, width=295, height=2, bg='black').place(x=520, y=203)
 
 """----------------------------------Confirm Password---------------------------------------- """
 
+conf_var = tk.StringVar()
+conf_var.set('Confirm Password')
 
-# create functions for a responsive placeholder text
-def on_enter(e):
-    confirm_code.delete(0, 'end')
+conf_entry = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
+conf_entry.place(x=605, y=288)
+conf_entry.insert(0, 'Confirm Password')
 
+conf_entry.bind("<FocusIn>", lambda event: conf_entry.delete(0, tk.END) if conf_entry.get() == 'Confirm Password' else None)
 
-def on_leave(e):
-    if confirm_code.get() == '':
-        confirm_code.insert(0, 'Confirm Password')
-
-
-confirm_code = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
-confirm_code.place(x=605, y=288)
-confirm_code.insert(0, 'Confirm Password')
-confirm_code.bind("<FocusIn>", on_enter)
-confirm_code.bind("<FocusOut>", on_leave)
+conf_entry.bind("<FocusOut>", lambda event: conf_entry.insert(0, 'Confirm Password') if not pass_entry.get() else None)
 
 Frame(frame, width=295, height=2, bg='black').place(x=520, y=307)
 """----------------------------------Policy Agreement-------------------------------"""

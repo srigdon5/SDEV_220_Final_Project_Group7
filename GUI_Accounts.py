@@ -161,27 +161,16 @@ def validate_customer_id(value):
     return value.isdigit()
 
 
-def on_enter(e):
-    name = customer_entry.get()
-    if name == 'Enter a User ID':
-        customer_entry.delete(0, 'end')
-        customer_entry.insert(0, '')  # Clear the entry and move the insertion point to the beginning
+user_var = tk.StringVar()
+user_var.set('Enter a User ID')
 
+user_entry = Entry(frame, width=25, fg='black', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
+user_entry.place(x=60, y=95)
+user_entry.insert(0, 'Enter a User ID')
 
-def on_leave(e):
-    name = customer_entry.get()
-    if not name:  # Check if the user hasn't entered anything
-        customer_entry.insert(0, 'Enter a User ID')
+user_entry.bind("<FocusIn>", lambda event: user_entry.delete(0, tk.END) if user_entry.get() == 'Enter a User ID' else None)
 
-
-# creates field for username
-customer_entry = Entry(frame, width=25, fg='black', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
-customer_entry.place(x=60, y=95)
-customer_entry.insert(0, "Enter a User ID")
-
-# bind text field 'Enter ID' to be accessed in function above
-customer_entry.bind('<FocusIn>', on_enter)
-customer_entry.bind('<FocusOut>', on_leave)
+user_entry.bind("<FocusOut>", lambda event: user_entry.insert(0, 'Enter a User ID') if not user_entry.get() else None)
 
 """----------------------------------CUSTOMER INFORMATION---------------------------"""
 # labels for customer information

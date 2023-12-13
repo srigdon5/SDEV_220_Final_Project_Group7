@@ -76,7 +76,9 @@ title_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Mic
 title_entry.place(x=90, y=95)
 title_entry.insert(0, "Search by title")
 
-title_entry.bind("<FocusIn>", lambda event: title_entry.delete(0, tk.END))
+title_entry.bind("<FocusIn>", lambda event: title_entry.delete(0, tk.END) if title_entry.get() == "Search by title" else None)
+
+title_entry.bind("<FocusOut>", lambda event: title_entry.insert(0, "Search by title") if not title_entry.get() else None)
 
 """----------------------------------------AUTHOR----------------------------------------------------"""
 
@@ -95,7 +97,9 @@ author_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Mi
 author_entry.place(x=90, y=143)
 author_entry.insert(0, "Search by author")
 
-author_entry.bind("<FocusIn>", lambda event: author_entry.delete(0, tk.END))
+author_entry.bind("<FocusIn>", lambda event: author_entry.delete(0, tk.END) if author_entry.get() == "Search by author" else None)
+
+author_entry.bind("<FocusOut>", lambda event: author_entry.insert(0, "Search by author") if not author_entry.get() else None)
 
 
 """----------------------------------------GENRE DROPDOWN----------------------------------------------------"""
@@ -124,7 +128,9 @@ isbn_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Micr
 isbn_entry.place(x=90, y=242)
 isbn_entry.insert(0, "Search by isbn")
 
-isbn_entry.bind("<FocusIn>", lambda event: isbn_entry.delete(0, tk.END))
+isbn_entry.bind("<FocusIn>", lambda event: isbn_entry.delete(0, tk.END) if isbn_entry.get() == "Search by isbn" else None)
+
+isbn_entry.bind("<FocusOut>", lambda event: isbn_entry.insert(0, "Search by isbn") if not isbn_entry.get() else None)
 
 
 """----------------------------------------BRANCH DROPDOWN----------------------------------------------------"""

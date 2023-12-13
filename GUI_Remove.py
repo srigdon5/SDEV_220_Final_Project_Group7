@@ -66,13 +66,15 @@ item_label = Label(text="Item ID:", fg='black', bg='white', font=('Arial', 12))
 item_label.place(x=40, y=50)
 
 item_var = tk.StringVar()
-item_var.set("Enter Item ID")
+item_var.set('Enter Item ID')
 
 item_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 item_entry.place(x=140, y=37)
-item_entry.insert(0, "Enter Item ID")
+item_entry.insert(0, 'Enter Item ID')
 
-item_entry.bind("<FocusIn>", lambda event: item_entry.delete(0, tk.END))
+item_entry.bind("<FocusIn>", lambda event: item_entry.delete(0, tk.END) if item_entry.get() == 'Enter Item ID' else None)
+
+item_entry.bind("<FocusOut>", lambda event: item_entry.insert(0, 'Enter Item ID') if not item_entry.get() else None)
 
 
 """-----------------------------------------STAFF ID----------------------------------------------"""
@@ -92,7 +94,9 @@ id_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Micros
 id_entry.place(x=140, y=87)
 id_entry.insert(0, "Enter Staff ID")
 
-id_entry.bind("<FocusIn>", lambda event: id_entry.delete(0, tk.END))
+id_entry.bind("<FocusIn>", lambda event: id_entry.delete(0, tk.END) if id_entry.get() == "Enter Staff ID" else None)
+
+id_entry.bind("<FocusOut>", lambda event: id_entry.insert(0, "Enter Staff ID") if not id_entry.get() else None)
 
 
 """-----------------------------------------BRANCH----------------------------------------------"""

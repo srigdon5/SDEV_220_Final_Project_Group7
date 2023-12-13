@@ -55,13 +55,15 @@ item_label = Label(text="Item ID:", fg='black', bg='white', font=('Arial', 12))
 item_label.place(x=40, y=50)
 
 item_var = tk.StringVar()
-item_var.set("Enter Item ID")
+item_var.set('Enter Item ID')
 
 item_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 item_entry.place(x=140, y=37)
-item_entry.insert(0, "Enter Item ID")
+item_entry.insert(0, 'Enter Item ID')
 
-item_entry.bind("<FocusIn>", lambda event: item_entry.delete(0, tk.END))
+item_entry.bind("<FocusIn>", lambda event: item_entry.delete(0, tk.END) if item_entry.get() == 'Enter Item ID' else None)
+
+item_entry.bind("<FocusOut>", lambda event: item_entry.insert(0, 'Enter Item ID') if not item_entry.get() else None)
 """-----------------------------------------CUSTOMER ID----------------------------------------------"""
 
 
@@ -75,13 +77,15 @@ user_label = Label(text="User ID:", fg='black', bg='white', font=('Arial', 12))
 user_label.place(x=40, y=100)
 
 customer_var = tk.StringVar()
-customer_var.set("Enter Customer's ID")
+customer_var.set("Enter Customer ID")
 
 customer_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 customer_entry.place(x=140, y=87)
-customer_entry.insert(0, "Enter Customer's ID")
+customer_entry.insert(0, "Enter Customer ID")
 
-customer_entry.bind("<FocusIn>", lambda event: customer_entry.delete(0, tk.END))
+customer_entry.bind("<FocusIn>", lambda event: customer_entry.delete(0, tk.END) if customer_entry.get() == 'Enter Customer ID' else None)
+
+customer_entry.bind("<FocusOut>", lambda event: customer_entry.insert(0, 'Enter Customer ID') if not customer_entry.get() else None)
 
 """-----------------------------------------BRANCH----------------------------------------------"""
 Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))

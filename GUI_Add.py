@@ -52,7 +52,9 @@ title_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Mic
 title_entry.place(x=140, y=37)
 title_entry.insert(0, "Add a Title")
 
-title_entry.bind("<FocusIn>", lambda event: title_entry.delete(0, tk.END))
+title_entry.bind("<FocusIn>", lambda event: title_entry.delete(0, tk.END) if title_entry.get() == "Add a Title" else None)
+
+title_entry.bind("<FocusOut>", lambda event: title_entry.insert(0, "Add a Title") if not title_entry.get() else None)
 
 
 """-----------------------------------------AUTHOR----------------------------------------------"""
@@ -72,7 +74,9 @@ author_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Mi
 author_entry.place(x=140, y=87)
 author_entry.insert(0, "Add author")
 
-author_entry.bind("<FocusIn>", lambda event: author_entry.delete(0, tk.END))
+author_entry.bind("<FocusIn>", lambda event: author_entry.delete(0, tk.END) if author_entry.get() == "Add author" else None)
+
+author_entry.bind("<FocusOut>", lambda event: author_entry.insert(0, "Add author") if not author_entry.get() else None)
 
 
 """-----------------------------------------GENRE----------------------------------------------"""
@@ -121,13 +125,15 @@ ID_label = Label(text="ID:", fg='black', bg='white', font=('Arial', 12))
 ID_label.place(x=40, y=250)
 
 id_var = tk.StringVar()
-id_var.set("Enter Item ID")
+id_var.set('Enter Item ID')
 
 id_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 id_entry.place(x=140, y=237)
-id_entry.insert(0, "Enter the item ID")
+id_entry.insert(0, 'Enter Item ID')
 
-id_entry.bind("<FocusIn>", lambda event: id_entry.delete(0, tk.END))
+id_entry.bind("<FocusIn>", lambda event: id_entry.delete(0, tk.END) if id_entry.get() == 'Enter Item ID' else None)
+
+id_entry.bind("<FocusOut>", lambda event: id_entry.insert(0, 'Enter Item ID') if not id_entry.get() else None)
 
 """-----------------------------------------BRANCH----------------------------------------------"""
 Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
@@ -154,7 +160,9 @@ pages_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Mic
 pages_entry.place(x=140, y=337)
 pages_entry.insert(0, "# of pages")
 
-pages_entry.bind("<FocusIn>", lambda event: pages_entry.delete(0, tk.END))
+pages_entry.bind("<FocusIn>", lambda event: pages_entry.delete(0, tk.END) if pages_entry.get() == '# of pages' else None)
+
+pages_entry.bind("<FocusOut>", lambda event: pages_entry.insert(0, '# of pages') if not pages_entry.get() else None)
 
 """-----------------------------------------RUNTIME----------------------------------------------"""
 
@@ -177,7 +185,9 @@ runtime_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('M
 runtime_entry.place(x=140, y=387)
 runtime_entry.insert(0, "Duration (hrs)")
 
-runtime_entry.bind("<FocusIn>", lambda event: runtime_entry.delete(0, tk.END))
+runtime_entry.bind("<FocusIn>", lambda event: runtime_entry.delete(0, tk.END) if runtime_entry.get() == 'Duration (hrs)' else None)
+
+runtime_entry.bind("<FocusOut>", lambda event: runtime_entry.insert(0, 'Duration (hrs)') if not runtime_entry.get() else None)
 
 """-----------------------------------------DATE----------------------------------------------"""
 date_label = tk.Label(root, text="Date:", fg='black', bg='white', font=('Arial', 12))
@@ -216,7 +226,9 @@ user_id_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('M
 user_id_entry.place(x=140, y=487)
 user_id_entry.insert(0, "Enter Staff ID")
 
-user_id_entry.bind("<FocusIn>", lambda event: user_id_entry.delete(0, tk.END))
+user_id_entry.bind("<FocusIn>", lambda event: user_id_entry.delete(0, tk.END) if user_id_entry.get() == 'Enter Staff ID' else None)
+
+user_id_entry.bind("<FocusOut>", lambda event: user_id_entry.insert(0, 'Enter Staff ID') if not user_id_entry.get() else None)
 
 """-----------------------------------------ADD/CANCEL----------------------------------------------"""
 
