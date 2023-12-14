@@ -73,7 +73,7 @@ class Movie(Base):
 class Patron(Base):
     __tablename__ = 'patron'
     patron_id = Column(Integer, primary_key=True, autoincrement=True)  # pk of patron class, will autoincrement
-    branch_id = Column(Integer, ForeignKey('branch.branch_id'), nullable=False)  # branch _id of their home branch
+    branch_name = Column(Integer, ForeignKey('branch.branch_name'), nullable=False)  # branch _id of their home branch
     patron_name = Column(String(30), nullable=False)  # name of the patron
     phone = Column(String(14), nullable=False)  # contact phone of patron
     account_type = Column(String(5), nullable=False)  # The account type for determining check out limits, must be child or adult
