@@ -104,11 +104,10 @@ def search():
         customer_info = get_patron_by_id(user_id)
         
         if customer_info:
-            ID_label.config(text=f"ID: {customer_info.get('patron_id', 'None')}")
             User_label.config(text=f"User: {customer_info.get('name', 'None')}")
             Phone_label.config(text=f"Phone: {customer_info.get('phone', 'None')}")
             Account_label.config(text=f"Account Type: {customer_info.get('account_type', 'None')}")
-            Branch_label.config(text=f"Main Branch: {customer_info.get('branch_id', 'None')}")
+            Branch_label.config(text=f"Main Branch: {customer_info.get('branch_name', 'None')}")
             Limit_label.config(text=f"Account Lock: {customer_info.get('limit_reached', 'None')}")
         else:
             messagebox.showinfo("Info", "No information found for this user.")
@@ -123,11 +122,10 @@ def search():
 
         # Update labels with customer information
         if customer_info:
-            ID_label.config(text=f"ID: {customer_info.get('patron_id', 'None')}")
             User_label.config(text=f"User: {customer_info.get('name', 'None')}")
             Phone_label.config(text=f"Phone: {customer_info.get('phone', 'None')}")
             Account_label.config(text=f"Account Type: {customer_info.get('account_type', 'None')}")
-            Branch_label.config(text=f"Main Branch: {customer_info.get('branch_id', 'None')}")
+            Branch_label.config(text=f"Main Branch: {customer_info.get('branch_name', 'None')}")
             Limit_label.config(text=f"Account Lock: {customer_info.get('limit_reached', 'None')}")
 
         # Clear and update Listbox
