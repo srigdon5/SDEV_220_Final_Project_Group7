@@ -112,15 +112,15 @@ Frame(frame, width=295, height=2, bg='black').place(x=75, y=117)
 pass_var = tk.StringVar()
 pass_var.set('Password')
 
-pass_entry = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
+pass_entry = tk.Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11), show='')
 pass_entry.place(x=180, y=182)
 pass_entry.insert(0, 'Password')
 
-pass_entry.bind("<FocusIn>", lambda event: pass_entry.delete(0, tk.END) if pass_entry.get() == 'Password' else None)
+pass_entry.bind("<FocusIn>", lambda event: (pass_entry.delete(0, tk.END), pass_entry.config(show='')) if pass_entry.get() == 'Password' else None)
+pass_entry.bind("<Key>", lambda event: pass_entry.config(show='*'))
+pass_entry.bind("<FocusOut>", lambda event: (pass_entry.insert(0, 'Password'), pass_entry.config(show='')) if not pass_entry.get() else None)
 
-pass_entry.bind("<FocusOut>", lambda event: pass_entry.insert(0, 'Password') if not pass_entry.get() else None)
-
-Frame(frame, width=295, height=2, bg='black').place(x=75, y=203)
+tk.Frame(frame, width=295, height=2, bg='black').place(x=75, y=203)
 
 """----- Define function and Format buttons for input submission ('Sign in' and 'Sign Up') -------------"""
 
