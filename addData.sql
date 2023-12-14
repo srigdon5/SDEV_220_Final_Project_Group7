@@ -1,7 +1,7 @@
 -- SQLite
 
 --Branches
-INSERT INTO branch (name, address, phone)
+INSERT INTO branch (branch_name, address, phone)
 VALUES
     ("Central", "200 SE Martin Luther King Blvd.", "812.428.8200"),
     ("East", "840 E. Chandler Ave.", "812.428.8231"),
@@ -14,7 +14,7 @@ VALUES
     ("Washington Square-McCollough", "1108 Washington Square Mall", "812.428.8236");
     
 -- Patrons
-INSERT INTO patron (branch_id, name, phone, account_type, limit_reached, fees)
+INSERT INTO patron (branch_id, patron_name, phone, account_type, limit_reached, fees)
 VALUES
     (1, "Bob Ross", "123.456.7890", "Adult", FALSE, 0),
     (1, "Rob Boss", "567.890.1234", "Child", FALSE, 0),

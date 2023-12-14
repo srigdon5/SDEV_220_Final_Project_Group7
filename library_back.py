@@ -74,7 +74,7 @@ class Patron(Base):
     __tablename__ = 'patron'
     patron_id = Column(Integer, primary_key=True, autoincrement=True)  # pk of patron class, will autoincrement
     branch_id = Column(Integer, ForeignKey('branch.branch_id'), nullable=False)  # branch _id of their home branch
-    name = Column(String(30), nullable=False)  # name of the patron
+    patron_name = Column(String(30), nullable=False)  # name of the patron
     phone = Column(String(14), nullable=False)  # contact phone of patron
     account_type = Column(String(5), nullable=False)  # The account type for determining check out limits, must be child or adult
     limit_reached = Column(Boolean, nullable=False, default=False)  # Boolean indicating if the patron is at their check out limit
@@ -92,7 +92,7 @@ class Patron(Base):
 class Branch(Base):
     __tablename__ = 'branch'
     branch_id = Column(Integer, primary_key=True, autoincrement=True)  # pk of branch table, will auto increment
-    name = Column(String(30), nullable=False) # name of branch location
+    branch_name = Column(String(30), nullable=False) # name of branch location
     address = Column(String(100), nullable=False)  # address of branch location
     phone = Column(String(14), nullable=False)  # phone number of branch
     
@@ -179,10 +179,10 @@ def get_patron_by_id(patron_id):
     with Session() as session:
         result = (
             session.query(
-                Patron.name,
+                Patron.patron_name,
                 Patron.phone,
                 Patron.account_type,
-                Branch.address,
+                Branch.branch_name,
                 Patron.limit_reached,
                 Item.item_id,
                 Item.title
@@ -198,10 +198,10 @@ def get_patron_by_id(patron_id):
         checked_out_items = [{'item_id': item.item_id, 'title': item.title} for item in result[1:] if item.item_id]
 
         result_dict = {
-            'name': patron_info.name,
+            'name': patron_info.patron_name,
             'phone': patron_info.phone,
             'account_type': patron_info.account_type,
-            'branch_address': patron_info.address,
+            'branch_name': patron_info.branch_name,
             'limit_reached': patron_info.limit_reached,
             'checked_out_items': checked_out_items
         }
