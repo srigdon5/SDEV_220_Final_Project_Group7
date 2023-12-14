@@ -9,7 +9,7 @@ from tkinter import PhotoImage
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import sessionmaker
-from library_back import Item, Patron, search_items_by_title, search_items_by_title_branch, Base, engine
+from library_back import Item, Patron, get_patron_by_id, search_items_by_title, search_items_by_title_branch, Base, engine
 
 """
 Program: GUI_Accounts.py
@@ -87,44 +87,6 @@ customer_entry.bind("<FocusIn>", lambda event: customer_entry.delete(0, tk.END) 
 
 customer_entry.bind("<FocusOut>", lambda event: customer_entry.insert(0, 'Enter a User ID') if not customer_entry.get() else None)
 
-"""----------------------------------GET CUSTOMER ITEMS---------------------------------------"""
-
-
-# Placeholder function to fetch customer information by ID
-def get_customer_info_by_id(user_id, Session):
-    with Session() as session:
-        try:
-            patron = session.query(Patron).filter_by(patron_id=user_id).first()
-            if patron:
-                return {
-                    'patron_id': patron.patron_id,
-                    'name': patron.name,
-                    'phone': patron.phone,
-                    'account_type': patron.account_type,
-                    'branch_id': patron.branch_id,
-                    'limit_reached': patron.limit_reached
-                }
-            else:
-                return {}  # Return an empty dictionary if no patron is found
-        except SQLAlchemyError as e:
-            print(f"Error fetching customer info: {e}")
-            return {}
-
-
-def get_customer_items(user_id, Session):
-    with Session() as session:
-        try:
-            patron = session.query(Patron).filter_by(patron_id=user_id).first()
-            if patron:
-                return [
-                    {'item_id': patron.item_id, 'fees': patron.fees}
-                ] if patron.item_id else []
-            else:
-                return []  # Return an empty list if no patron is found
-        except SQLAlchemyError as e:
-            print(f"Error fetching customer items: {e}")
-            return []
-
 """----------------------------------SEARCH---------------------------------------"""
 def search():
     user_id = customer_entry.get()
@@ -139,8 +101,17 @@ def search():
         user_id = ''  # Set it to an empty string for searching
 
     if user_id:
-        customer_info = get_customer_info_by_id(user_id, Session)
-        customer_items = get_customer_items(user_id, Session)
+        customer_info = get_patron_by_id(user_id)
+        
+        if customer_info:
+            ID_label.config(text=f"ID: {customer_info.get('patron_id', 'None')}")
+            User_label.config(text=f"User: {customer_info.get('name', 'None')}")
+            Phone_label.config(text=f"Phone: {customer_info.get('phone', 'None')}")
+            Account_label.config(text=f"Account Type: {customer_info.get('account_type', 'None')}")
+            Branch_label.config(text=f"Main Branch: {customer_info.get('branch_id', 'None')}")
+            Limit_label.config(text=f"Account Lock: {customer_info.get('limit_reached', 'None')}")
+        else:
+            messagebox.showinfo("Info", "No information found for this user.")
 
         # Clear labels
         ID_label.config(text="ID:")
