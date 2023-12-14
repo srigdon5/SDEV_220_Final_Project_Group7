@@ -177,38 +177,31 @@ def search_movies(search):
 def get_patron_by_id(patron_id):
     Session = sessionmaker(bind=engine)
     with Session() as session:
-        result = (
-            session.query(
-                Patron.patron_name,
-                Patron.phone,
-                Patron.account_type,
-                Branch.branch_name,
-                Patron.limit_reached,
-                Item.item_id,
-                Item.title
-            )
-            .join(Branch, Branch.branch_id == Patron.branch_id, isouter=True) # join branch table for address
-            .outerjoin(Item, Item.patron_id == Patron.patron_id) # join item table for item id and title
-            .filter(Patron.patron_id == patron_id) # search based on id
-            .all()
-        )
+        # get patron info
+        patron = session.query(Patron).filter(Patron.patron_id == patron_id).first()
+        patron_name = patron.patron_name
+        phone = patron.phone
+        account_type = patron.account_type
+        limit_reached = patron.limit_reached
+        
+        # get branch info
+        branch_id = patron.branch_id
+        branch = session.query(Branch).filter(Branch.branch_id == branch_id).first()
+        branch_name = branch.branch_name
+        
+        # get items
+        items = session.query(Item.title).filter(Item.patron_id == patron_id).all()
 
-    if result:
-        patron_info = result[0]
-        checked_out_items = [{'item_id': item.item_id, 'title': item.title} for item in result[1:] if item.item_id]
-
-        result_dict = {
-            'name': patron_info.patron_name,
-            'phone': patron_info.phone,
-            'account_type': patron_info.account_type,
-            'branch_name': patron_info.branch_name,
-            'limit_reached': patron_info.limit_reached,
-            'checked_out_items': checked_out_items
+    result_dict = {
+        'name': patron_name,
+        'phone': phone,
+        'account_type': account_type,
+        'branch_name': branch_name,
+        'limit_reached': limit_reached,
+        'checked_out_items': items
         }
-        return result_dict
-    else:
-        return None
-
+    print(result_dict)
+    return result_dict
 
 # Add patron
 def add_patron(branch_id, name, phone, account_type):
