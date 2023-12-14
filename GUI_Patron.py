@@ -7,6 +7,7 @@ import os
 from tkinter import ttk
 import tkinter as tk
 from tkinter import Tk, Label, ttk, Entry, Button
+from library_back import Item, Patron, add_patron
 
 """
 Program: GUI_Patron.py
@@ -63,9 +64,9 @@ Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
 Branch_label.place(x=40, y=100)
 
 
-drop = ttk.Combobox(frame, values=["North Branch", "South Branch", "East Branch", "West Branch", ""], width=30)
-drop.current(0)
-drop.place(x=145, y=87)
+branch_name = ttk.Combobox(frame, values=["Central Branch", "East Branch", "McCollough Branch", "North Park Branch", "Oaklyn Branch", "Red Bank Branch", "Stringtown Branch", "West Branch", "Washington Square-McCollough Branch"], width=30)
+branch_name.current(0)
+branch_name.place(x=145, y=87)
 
 
 """----------------------------------First_Name---------------------------------------"""
@@ -129,9 +130,9 @@ acct_label = Label(text="Account Type:", fg='black', bg='white', font=('Arial', 
 acct_label.place(x=40, y=300)
 
 
-acct_drop = ttk.Combobox(frame, values=["Customer", "Employee", ""], width=30)
-acct_drop.current(0)
-acct_drop.place(x=145, y=287)
+account_type = ttk.Combobox(frame, values=["Adult", "Child"], width=30)
+account_type.current(0)
+account_type.place(x=145, y=287)
 """-----------------------------------------Limit----------------------------------------------"""
 
 limit_label = Label(text="Limit:", fg='black', bg='white', font=('Arial', 12))
@@ -162,45 +163,14 @@ year_combobox = ttk.Combobox(root, values=[str(i) for i in range(2023, 2030)], w
 year_combobox.current(0)
 year_combobox.place(x=265, y=400)
 
-
-"""-----------------------------------------FEES----------------------------------------------"""
-def validate_fees(value):
-    try:
-        fee_amount = float(value)
-
-        if "{:.2f}".format(fee_amount) == value:
-            return True
-        else:
-            return False
-    except ValueError:
-        return False
-       
-
-fee_label = Label(text="Fees:", fg='black', bg='white', font=('Arial', 12))
-fee_label.place(x=40, y=450)
-
-fee_var = tk.StringVar()
-fee_var.set('$0.00')
-
-fee_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
-fee_entry.place(x=140, y=440)
-fee_entry.insert(0, '$0.00')
-
-fee_entry.bind("<FocusIn>", lambda event: fee_entry.delete(0, tk.END) if fee_entry.get() == '$0.00' else None)
-
-fee_entry.bind("<FocusOut>", lambda event: fee_entry.insert(0, '$0.00') if not fee_entry.get() else None)
-
-
 """-----------------------------------------ADD/CANCEL----------------------------------------------"""
-
 
 def add_button_click():
     # Retrieve values from the Entry widgets
-    patron_id_value = id_entry.get()
     fname_value = fname_entry.get()
     lname_value = lname_entry.get()
+    patron_name = str(fname_value + lname_value)
     phone_value = phone_entry.get()
-    fee_value = fee_entry.get()
     day = day_combobox.get()
     month = month_combobox.get()
     year = year_combobox.get()
@@ -209,9 +179,6 @@ def add_button_click():
     date_var.set(selected_date)
 
     # Perform ADD button functionality here
-    if not validate_id(patron_id_value):
-        messagebox.showerror("Error", "Patron ID must be numeric.")
-        return
     if not validate_name(fname_value):
         messagebox.showerror("Error", "First name must be 30 characters or less.")
         return
@@ -221,11 +188,13 @@ def add_button_click():
     if not validate_phone(phone_value):
         messagebox.showerror("Error", "Phone number must be a 10-digit numeric value without dashes.")
         return
-    if not validate_fees(fee_value):
-        messagebox.showerror("Error", "Fees need to be entered in float ($0.00) format.")
-        return
 
+    success = add_patron(branch_name, patron_name, phone_value, account_type)
 
+    if success:
+        messagebox.showinfo("Success", "Information added to the database successfully.")
+    else:
+        messagebox.showerror("Error", "Failed to add information to the database.")
 add_btn = Button(frame, width=10, pady=7, text='ADD', bg='grey', fg='white', border=3, command=add_button_click)
 add_btn.place(x=80, y=520)
 
