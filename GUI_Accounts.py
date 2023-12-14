@@ -125,7 +125,7 @@ def get_customer_items(user_id, Session):
             print(f"Error fetching customer items: {e}")
             return []
 
-
+"""----------------------------------SEARCH---------------------------------------"""
 def search():
     user_id = customer_entry.get()
     customer_value = customer_entry.get()
@@ -171,8 +171,23 @@ def search():
         customer_entry.insert(0, 'Enter a User ID')
 
 
-search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search)
-search_id.place(x=55, y=25)
+search_id = Button(frame, width=20, pady=7, text='Search', bg='grey', fg='white', border=3, command=search)
+search_id.place(x=65, y=25)
+
+"""----------------------------------ADD PATRON---------------------------------------"""
+def patron(): 
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Patron.py')
+
+    try:
+        subprocess.run(['python', script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
+
+
+
+patron_add = Button(frame, width=20, pady=7, text='Add Account', bg='grey', fg='white', border=3, command=patron)
+patron_add.place(x=260, y=25)
 
 """----------------------------------CUSTOMER INFORMATION---------------------------"""
 
