@@ -130,10 +130,10 @@ def search():
 
         # Clear and update Listbox
         my_listbox.delete(0, END)
-        if not customer_items:
+        if not customer_info.checked_out_items:
             my_listbox.insert(END, "No items found for this user.")
         else:
-            for inventory in customer_items:
+            for inventory in customer_info.checked_out_items:
                 my_listbox.insert(END, f"Item ID: {inventory['item_id']}, Fees: {inventory['fees']}")
 
         customer_entry.delete(0, 'end')
