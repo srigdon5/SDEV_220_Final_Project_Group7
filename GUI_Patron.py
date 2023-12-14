@@ -107,7 +107,14 @@ lname_entry.bind("<FocusOut>", lambda event: lname_entry.insert(0, 'Last Name') 
 
 """-----------------------------------------Phone Number----------------------------------------------"""
 def validate_phone(value):
-    return len(value) == 10 and value.isdigit()
+    dot_count = value.count('.')
+
+    digits = value.replace('.', '')
+    
+    if len(digits) == 10 and dot_count == 2:
+        return True
+    else:
+        return False
     
 
 phone_label = Label(text="Phone:", fg='black', bg='white', font=('Arial', 12))
@@ -118,7 +125,7 @@ phone_var.set('Phone Number')
 
 phone_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 phone_entry.place(x=145, y=237)
-phone_entry.insert(0, 'Phone Number')
+phone_entry.insert(0, 'Phone Number (xxx.xxx.xxxx)')
 
 phone_entry.bind("<FocusIn>", lambda event: phone_entry.delete(0, tk.END) if phone_entry.get() == 'Phone Number' else None)
 
@@ -169,7 +176,7 @@ def add_button_click():
     # Retrieve values from the Entry widgets
     fname_value = fname_entry.get()
     lname_value = lname_entry.get()
-    patron_name = str(fname_value + lname_value)
+    patron_name = str(fname_value + " " + lname_value)
     phone_value = phone_entry.get()
     day = day_combobox.get()
     month = month_combobox.get()
@@ -186,7 +193,7 @@ def add_button_click():
         messagebox.showerror("Error", "Last name must be 30 characters or less.")
         return
     if not validate_phone(phone_value):
-        messagebox.showerror("Error", "Phone number must be a 10-digit numeric value without dashes.")
+        messagebox.showerror("Error", "Phone number must be a 10-digit numeric value following the example given.")
         return
 
     success = add_patron(branch_name, patron_name, phone_value, account_type)
@@ -195,6 +202,7 @@ def add_button_click():
         messagebox.showinfo("Success", "Information added to the database successfully.")
     else:
         messagebox.showerror("Error", "Failed to add information to the database.")
+
 add_btn = Button(frame, width=10, pady=7, text='ADD', bg='grey', fg='white', border=3, command=add_button_click)
 add_btn.place(x=80, y=520)
 
