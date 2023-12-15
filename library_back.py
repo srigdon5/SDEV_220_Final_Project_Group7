@@ -117,9 +117,9 @@ def search_books(title=None, author=None, genre=None, isbn=None, branch_id=None)
             .join(Branch, Branch.branch_id == Item.branch_id) # joining branch table
             .filter(Item.title.ilike(f'%{title}%') if title else True)  # Case insensitive search, only active is value not None
             .filter(Author.author_name.ilike(f'%{author}%') if author else True)  # Case insensitive search, only active is value not None 
-            .filter(Item.isbn == isbn if isbn else True)  # Case insensitive search, only active is value not None
-            .filter(Item.genre.ilike(f'%{genre}%') if genre else True)  # Case insensitive search, only active is value not None
-            .filter(Item.branch_id == branch_id if branch_id else True)  # Case insensitive search, only active is value not None
+            .filter(Item.isbn == isbn if isbn else True)  # Looks for exact isbn, only active is value not None
+            .filter(Item.genre == genre if genre else True)  # looks for exact genre, only active is value not None
+            .filter(Item.branch_id == branch_id if branch_id else True)  # looks for exact branch, only active is value not None
             .all()  # Call the method to execute the query
         )
         print(query)
@@ -127,17 +127,21 @@ def search_books(title=None, author=None, genre=None, isbn=None, branch_id=None)
 
 
 # same as book search but movies
-def search_movies(search):
+def search_movies(title=None, genre=None, isan=None, runtime=None, branch=None):
     Session = sessionmaker(bind=engine)
     with Session() as session:
         query = (
-            session.query(Item.title, Movie.medium, Movie.runtime)
+            session.query(Item.item_id, Item.title, Movie.medium, Movie.runtime, Branch.branch_name, Item.status)
             .join(Movie, Movie.isan == Item.isan) # joining movie table for medium and runtime
-            .filter(Item.title.ilike(f'%{search}%'))  # Case insensitive search
+            .join(Branch, Branch.branch_id == Item.branch_id)
+            .filter(Item.title.ilike(f'%{title}%') if title else True) # Case insensitive search, only active if value not None
+            .filter(Item.genre == genre if genre else True) # looks for exact genre, only active if value not None
+            .filter(Item.isan == isan if isan else True) # looks for exact isan, only active if value not None
+            .filter(Movie.runtime <= runtime if runtime else True) # looks for runtime <= specified runtime, only active if value not None
+            .filter(Branch.branch_id == branch if branch else True) # looks for exact branch 
             .all()  # Call the method to execute the query
         )
-        result = [(title, author_name, medium) for title, author_name, medium in query]
-    return result
+    return query
 
 
 # all customer information by id, including all items chekced out by them, both id and title

@@ -6,6 +6,7 @@ import ast
 import subprocess
 import os
 from tkinter import PhotoImage
+from library_back import get_branch_names, get_genres, search_movies
 
 """
 Program: GUI_Movies.py
@@ -68,12 +69,12 @@ title_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Mic
 title_entry.place(x=95, y=95)
 
 """----------------------------------------GENRE DROPDOWN----------------------------------------------------"""
-Author_label = Label(text="Genre:", fg='black', bg='white', font=('Arial', 12))
-Author_label.place(x=140, y=265)
+Genre_label = Label(text="Genre:", fg='black', bg='white', font=('Arial', 12))
+Genre_label.place(x=140, y=265)
 
-genre_drop = ttk.Combobox(frame,
-                          values=["", "Historical Fiction",
-                                  "Family", "Fantasy", "Mystery", "Myth", "Thriller"], width=30)
+genres = get_genres()
+genres.insert(0, "")
+genre_drop = ttk.Combobox(frame,values=genres, width=30)
 
 genre_drop.current(0)
 genre_drop.place(x=95, y=143)
