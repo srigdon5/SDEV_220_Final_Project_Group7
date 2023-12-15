@@ -6,9 +6,7 @@ from tkinter import PhotoImage
 import os
 from tkinter import ttk
 import tkinter as tk
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, ForeignKey, Numeric, CheckConstraint, func
-from sqlalchemy.orm import declarative_base, relationship, sessionmaker
-from library_back import Item, Patron, add_patron, get_branch_names
+from library_back import Item, Patron, return_item, get_branch_names
 
 
 """
@@ -165,20 +163,10 @@ def return_button_click():
     if not validate_staff_id(id_value):
         messagebox.showerror("Error", "Staff ID must be valid integer.")
         return
-    
-    def return_item(item_id, patron_id):
-        Session = sessionmaker(bind=engine)
-        with Session() as session:
-            item = session.query(Item).filter(Item.item_id == item_id).first()
-            if not item or item.status == 'available':
-                return False
 
-        item.status = 'available'
+    return_item()
+    messagebox.showinfo("Success", "The item has been added back into our inventory.")
 
-        item.patron_id = None
-        
-        session.commit()
-        
     if fees_option == "Unpaid":
         reminder_message = "Caution: If unpaid, a separate bill must be sent."
 
