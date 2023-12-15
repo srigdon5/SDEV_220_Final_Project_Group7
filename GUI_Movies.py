@@ -176,6 +176,7 @@ def search_button_click():
     genre_value = genre_drop.grab_current()  # Get the selected genre
     isan_value = isan_entry.get()
     runtime_value = runtime_entry.get()
+    branch_value = branch_drop.grab_current()
 
     if not title_value.strip() and genre_value == "" and not isan_value.strip() and not runtime_value.strip():
         messagebox.showerror("Error", "All fields cannot be empty.")
