@@ -195,9 +195,9 @@ return_button.place(x=625, y=500)
 def search_button_click():
     title_value = title_entry.get()
     author_value = author_entry.get()
-    genre_value = genre_drop.grab_current()  # Get the selected genre
+    genre_value = genre_drop.grab_current()  
     isbn_value = isbn_entry.get()
-    branch_value = branch_drop.grab_current()  # Get the selected branch
+    branch_value = branch_drop.grab_current()  
 
     if not title_value.strip() and not author_value.strip() and not isbn_value.strip() and genre_value == "" and branch_value == "":
         messagebox.showerror("Error", "All fields cannot be empty.")
