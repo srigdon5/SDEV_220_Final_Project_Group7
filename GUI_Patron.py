@@ -137,9 +137,9 @@ acct_label = Label(text="Account Type:", fg='black', bg='white', font=('Arial', 
 acct_label.place(x=40, y=300)
 
 
-account_type = ttk.Combobox(frame, values=["Adult", "Child"], width=30)
-account_type.current(0)
-account_type.place(x=145, y=287)
+account = ttk.Combobox(frame, values=["Adult", "Child"], width=30)
+account.current(0)
+account.place(x=145, y=287)
 """-----------------------------------------Limit----------------------------------------------"""
 
 limit_label = Label(text="Limit:", fg='black', bg='white', font=('Arial', 12))
@@ -181,6 +181,9 @@ def add_button_click():
     day = day_combobox.get()
     month = month_combobox.get()
     year = year_combobox.get()
+    account_type = account.get()
+    branch_id = branch_name.current()
+    branch_id += 1
 
     selected_date = f"{year}-{month.zfill(2)}-{day.zfill(2)}"
     date_var.set(selected_date)
@@ -196,13 +199,10 @@ def add_button_click():
         messagebox.showerror("Error", "Phone number must be a 10-digit numeric value following the example given.")
         return
 
-    success = add_patron(branch_name, patron_name, phone_value, account_type)
+    add_patron(branch_id, patron_name, phone_value, account_type)
 
-    if success:
-        messagebox.showinfo("Success", "Information added to the database successfully.")
-    else:
-        messagebox.showerror("Error", "Failed to add information to the database.")
-
+    messagebox.showinfo("Success", "Information added to the database successfully.")
+    
 add_btn = Button(frame, width=10, pady=7, text='ADD', bg='grey', fg='white', border=3, command=add_button_click)
 add_btn.place(x=80, y=520)
 
