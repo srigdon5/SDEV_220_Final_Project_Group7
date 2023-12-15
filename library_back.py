@@ -326,11 +326,16 @@ def check_out(item_id, patron_id):
 def return_item(item_id, patron_id):
     Session = sessionmaker(bind=engine)
     with Session() as session:
-        # retrieve the item and partron
+        # retrieve the item
         item = session.query(Item).filter(Item.item_id == item_id).first()
-        patron = session.query(Patron).filter(Patron.patron_id == patron_id).first()
         if not item or item.status == 'available':
             return False
+        
+        # retrieve the patron
+        patron = session.query(Patron).filter(Patron.patron_id == patron_id).first()
+        if not patron:
+            return False
+        
         
         # change status
         item.status = 'available'
