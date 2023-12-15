@@ -36,28 +36,6 @@ frame = Frame(root, width=397, highlightbackground="black", highlightthickness=3
 
 
 frame.place(x=1, y=10)
-"""-----------------------------------------Patron ID----------------------------------------------"""
-
-
-def validate_id(value):
-    return value.isdigit()
-
-
-id_label = Label(text="Patron ID:", fg='black', bg='white', font=('Arial', 12))
-id_label.place(x=40, y=50)
-
-id_var = tk.StringVar()
-id_var.set("Add Patron ID")
-
-id_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
-id_entry.place(x=145, y=37)
-id_entry.insert(0, "Add Patron ID")
-
-id_entry.bind("<FocusIn>", lambda event: id_entry.delete(0, tk.END) if id_entry.get() == "Add Patron ID" else None)
-
-id_entry.bind("<FocusOut>", lambda event: id_entry.insert(0, "Add Patron ID") if not id_entry.get() else None)
-
-
 """-----------------------------------------BRANCH----------------------------------------------"""
 
 Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
@@ -140,35 +118,6 @@ acct_label.place(x=40, y=300)
 account = ttk.Combobox(frame, values=["Adult", "Child"], width=30)
 account.current(0)
 account.place(x=145, y=287)
-"""-----------------------------------------Limit----------------------------------------------"""
-
-limit_label = Label(text="Limit:", fg='black', bg='white', font=('Arial', 12))
-limit_label.place(x=40, y=350)
-
-
-drop = ttk.Combobox(frame, values=["0/3", "1/3", "2/3", "3/3", ""], width=30)
-drop.current(0)
-drop.place(x=145, y=337)
-
-
-"""-----------------------------------------DATE----------------------------------------------"""
-
-date_label = tk.Label(root, text="Date:", fg='black', bg='white', font=('Arial', 12))
-date_label.place(x=40, y=400)
-
-date_var = tk.StringVar()
-
-day_combobox = ttk.Combobox(root, values=[str(i).zfill(2) for i in range(1, 32)], width=5)
-day_combobox.current(0)
-day_combobox.place(x=145, y=400)
-
-month_combobox = ttk.Combobox(root, values=[str(i).zfill(2) for i in range(1, 13)], width=5)
-month_combobox.current(0)
-month_combobox.place(x=205, y=400)
-
-year_combobox = ttk.Combobox(root, values=[str(i) for i in range(2023, 2030)], width=5)
-year_combobox.current(0)
-year_combobox.place(x=265, y=400)
 
 """-----------------------------------------ADD/CANCEL----------------------------------------------"""
 
