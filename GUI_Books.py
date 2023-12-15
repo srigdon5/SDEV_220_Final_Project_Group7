@@ -6,7 +6,6 @@ import ast
 import subprocess
 import os
 from tkinter import PhotoImage
-from library_back import Item, Patron, search_items_by_title, get_branch_names
 
 """
 Program: GUI_Books.py
@@ -39,11 +38,9 @@ window.configure(bg='#fff')
 window.resizable(False, False)
 window.iconbitmap("assets\\images\\myIcon.ico")
 
-
 background = PhotoImage(file="assets\\images\\design.png")
 background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
-
 
 frame = Frame(width=250, highlightbackground="black", highlightthickness=3, height=80, bg="white")
 frame.place(x=500, y=20)
@@ -56,7 +53,6 @@ heading.place(x=30, y=18)
 frame = Frame(window, width=1000, highlightbackground="black", highlightthickness=3, height=600, bg='#fff')
 frame.place(x=110, y=120)
 
-
 """----------------------------------------TITLE----------------------------------------------------"""
 
 
@@ -67,16 +63,10 @@ def validate_title(value):
 Title_label = Label(text="Title:", fg='black', bg='white', font=('Arial', 12))
 Title_label.place(x=140, y=218)
 
-title_var = tk.StringVar()
-title_var.set("Add a Title")
 
 title_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 title_entry.place(x=90, y=95)
-title_entry.insert(0, "")
 
-title_entry.bind("<FocusIn>", lambda event: title_entry.delete(0, tk.END) if title_entry.get() == "Search by title" else None)
-
-title_entry.bind("<FocusOut>", lambda event: title_entry.insert(0, "Search by title") if not title_entry.get() else None)
 
 """----------------------------------------AUTHOR----------------------------------------------------"""
 
@@ -88,26 +78,21 @@ def validate_author(value):
 Author_label = Label(text="Author:", fg='black', bg='white', font=('Arial', 12))
 Author_label.place(x=140, y=265)
 
-author_var = tk.StringVar()
-author_var.set("Add author")
 
 author_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 author_entry.place(x=90, y=143)
-author_entry.insert(0, "")
-
-author_entry.bind("<FocusIn>", lambda event: author_entry.delete(0, tk.END) if author_entry.get() == "Search by author" else None)
-
-author_entry.bind("<FocusOut>", lambda event: author_entry.insert(0, "Search by author") if not author_entry.get() else None)
 
 
 """----------------------------------------GENRE DROPDOWN----------------------------------------------------"""
 Genre_label = Label(text="Genre:", fg='black', bg='white', font=('Arial', 12))
 Genre_label.place(x=140, y=315)
 
-genre_drop = ttk.Combobox(frame, values=["", "Myths", "Mystery", "Thriller", "Historical", "Historical Fiction"], width=30)
+genre_drop = ttk.Combobox(frame,
+                          values=["", "Historical Fiction",
+                                  "Family", "Fantasy", "Mystery", "Myth", "Thriller"], width=30)
+
 genre_drop.current(0)
 genre_drop.place(x=90, y=192)
-
 
 """----------------------------------------ISBN----------------------------------------------------"""
 
@@ -119,26 +104,22 @@ def validate_id_type(value):
 ISBN_label = Label(text="ISBN:", fg='black', bg='white', font=('Arial', 12))
 ISBN_label.place(x=140, y=365)
 
-isbn_var = tk.StringVar()
-isbn_var.set("ISBN")
 
 isbn_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 isbn_entry.place(x=90, y=242)
-isbn_entry.insert(0, "")
-
-isbn_entry.bind("<FocusIn>", lambda event: isbn_entry.delete(0, tk.END) if isbn_entry.get() == "Search by isbn" else None)
-
-isbn_entry.bind("<FocusOut>", lambda event: isbn_entry.insert(0, "Search by isbn") if not isbn_entry.get() else None)
 
 
 """----------------------------------------BRANCH DROPDOWN----------------------------------------------------"""
 Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
 Branch_label.place(x=140, y=415)
 
-branch_drop = ttk.Combobox(frame, values=get_branch_names(), width=30)
+branch_drop = ttk.Combobox(frame, values=["", "Central", "East", "West", "North Park", "Oaklyn",
+                                          "Red Bank", "Stringtown", "West", "McCollough",
+                                          "Washington Square-McCollough"], width=30)
+
+
 branch_drop.current(0)
 branch_drop.place(x=90, y=292)
-
 
 """"---------------------------------SHOW FILTERED ITEMS---------------------------------"""
 info_frame = Frame(width=500, highlightbackground="black", highlightthickness=1, height=250, bg="white")
@@ -150,12 +131,9 @@ my_listbox = Listbox(info_frame, width=80, yscrollcommand=my_scrollbar.set, sele
 my_scrollbar.config(command=my_listbox.yview)
 my_scrollbar.pack(side=RIGHT, fill=Y)
 
-
 my_listbox.pack(pady=15)
 
-
 my_listbox.insert(END, 'ITEM_ID')
-
 
 my_list = ['ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID']
 
@@ -202,7 +180,7 @@ def checkoutitem():
     script_path = os.path.join(script_dir, 'GUI_Checkout.py')
 
     try:
-        subprocess.run(['python' , script_path], check=True)
+        subprocess.run(['python', script_path], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error launching subprocess: {e}")
 
@@ -217,34 +195,26 @@ return_button.place(x=625, y=500)
 def search_button_click():
     title_value = title_entry.get()
     author_value = author_entry.get()
+    genre_value = genre_drop.grab_current()  # Get the selected genre
     isbn_value = isbn_entry.get()
+    branch_value = branch_drop.grab_current()  # Get the selected branch
 
-    if title_value is None:
-        pass 
-    else:
-        if not validate_title(title_value):
-            messagebox.showerror("Error", "Title must be 50 characters or less.")
-            return
-    if author_value is None:
-        pass
-    else:
-        if not validate_author(author_value):
-            messagebox.showerror("Error", "Author must be 50 characters or less.")
-            return
-    if isbn_value is None:
-        pass
-    else:
-        if not validate_id_type(isbn_value):
-            messagebox.showerror("Error", "Valid ISBN must be 13 characters long.")
-            return
+    if not title_value.strip() and not author_value.strip() and not isbn_value.strip() and genre_value == "" and branch_value == "":
+        messagebox.showerror("Error", "All fields cannot be empty.")
+        return
 
-    items_found = search_items_by_title(title_value)
+    if title_value.strip() and not validate_title(title_value):
+        messagebox.showerror("Error", "Title must be 50 characters or less.")
+        return
 
-    if items_found:
-        items_info = '\n'.join([f"Title: {item.title}, Item Type: {item.item_type}, Status: {item.status}" for item in items_found])
-        messagebox.showinfo("Search Results", f"Items Found:\n{items_info}")
-    else:
-        messagebox.showinfo("Search Results", "No items found with that title.")
+    if author_value.strip() and not validate_author(author_value):
+        messagebox.showerror("Error", "Author must be 50 characters or less.")
+        return
+
+    if isbn_value.strip() and not validate_id_type(isbn_value):
+        messagebox.showerror("Error", "Valid ISBN must be 13 characters long.")
+        return
+
 
 search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search_button_click)
 search_id.place(x=55, y=25)
@@ -256,9 +226,8 @@ def close_window():
     window.destroy()
 
 
-
 def dashboard():
-    close_window()  
+    close_window()
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Dashboard.py')
 

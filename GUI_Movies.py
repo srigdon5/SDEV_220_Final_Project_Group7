@@ -6,7 +6,6 @@ import ast
 import subprocess
 import os
 from tkinter import PhotoImage
-from library_back import Item, Patron, get_genres
 
 """
 Program: GUI_Movies.py
@@ -39,23 +38,21 @@ window.configure(bg='#fff')
 window.resizable(False, False)
 window.iconbitmap("assets\\images\\myIcon.ico")
 
-
 background = PhotoImage(file="assets\\images\\design.png")
 background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
-
 
 frame = Frame(width=250, highlightbackground="black", highlightthickness=3, height=80, bg="white")
 frame.place(x=500, y=20)
 
 heading = Label(frame, text='Library Inventory', fg='black', bg='white',
-font=('Microsoft YaHei UI Light', 16, 'bold'))
+                font=('Microsoft YaHei UI Light', 16, 'bold'))
+
 heading.place(x=30, y=18)
 
 """---------------------------------- GET ITEMS BY TYPE : MOVIE -----------------------------------------"""
 frame = Frame(window, width=1000, highlightbackground="black", highlightthickness=3, height=600, bg='#fff')
 frame.place(x=110, y=120)
-
 
 """----------------------------------------TITLE----------------------------------------------------"""
 
@@ -67,25 +64,19 @@ def validate_title(value):
 Title_label = Label(text="Title:", fg='black', bg='white', font=('Arial', 12))
 Title_label.place(x=140, y=218)
 
-title_var = tk.StringVar()
-title_var.set("Add a Title")
-
 title_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 title_entry.place(x=95, y=95)
-title_entry.insert(0, "")
-
-title_entry.bind("<FocusIn>", lambda event: title_entry.delete(0, tk.END) if title_entry.get() == "Search by title" else None)
-
-title_entry.bind("<FocusOut>", lambda event: title_entry.insert(0, "Search by title") if not title_entry.get() else None)
 
 """----------------------------------------GENRE DROPDOWN----------------------------------------------------"""
 Author_label = Label(text="Genre:", fg='black', bg='white', font=('Arial', 12))
 Author_label.place(x=140, y=265)
 
-drop = ttk.Combobox(frame, values=get_genres, width=30)
-drop.current(0)
-drop.place(x=95, y=143)
+genre_drop = ttk.Combobox(frame,
+                          values=["", "Historical Fiction",
+                                  "Family", "Fantasy", "Mystery", "Myth", "Thriller"], width=30)
 
+genre_drop.current(0)
+genre_drop.place(x=95, y=143)
 
 """----------------------------------------ISAN----------------------------------------------------"""
 
@@ -97,17 +88,8 @@ def validate_id_type(value):
 isan_label = Label(text="ISAN:", fg='black', bg='white', font=('Arial', 12))
 isan_label.place(x=140, y=315)
 
-isan_var = tk.StringVar()
-isan_var.set("ISBN")
-
 isan_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 isan_entry.place(x=95, y=192)
-isan_entry.insert(0, "")
-
-isan_entry.bind("<FocusIn>", lambda event: isan_entry.delete(0, tk.END) if isan_entry.get() == "Search by isan" else None)
-
-isan_entry.bind("<FocusOut>", lambda event: isan_entry.insert(0, "Search by isan") if not isan_entry.get() else None)
-
 
 """----------------------------------------RUNTIME----------------------------------------------------"""
 
@@ -123,17 +105,8 @@ def validate_runtime(value):
 run_label = Label(text="Runtime:", fg='black', bg='white', font=('Arial', 12))
 run_label.place(x=140, y=365)
 
-runtime_var = tk.StringVar()
-runtime_var.set("Duration (hrs)")
-
 runtime_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 runtime_entry.place(x=95, y=242)
-runtime_entry.insert(0, "")
-
-runtime_entry.bind("<FocusIn>", lambda event: runtime_entry.delete(0, tk.END) if runtime_entry.get() == "Search by runtime" else None)
-
-runtime_entry.bind("<FocusOut>", lambda event: runtime_entry.insert(0, "Search by runtime") if not runtime_entry.get() else None)
-
 
 """"---------------------------------SHOW FILTERED ITEMS---------------------------------"""
 info_frame = Frame(width=500, highlightbackground="black", highlightthickness=1, height=280, bg="white")
@@ -147,9 +120,7 @@ info_frame.place(x=140, y=450)
 
 my_listbox.pack(pady=15)
 
-
 my_listbox.insert(END, 'ITEM_ID')
-
 
 my_list = ['ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID']
 
@@ -165,26 +136,7 @@ def return_selected():
 """----------------------------------ITEM IMAGE---------------------------------------- """
 img = PhotoImage(file='assets\\images\\movies.png')
 img_label = Label(image=img, bg='#f0f0f0')
-img_label.place(x=750, y=160)
-
-
-"""----------------------------------Branch, ISAN, Status-------------------------------------"""
-item_branch = Label(frame, text="Branch:", fg='black', bg='white', font=('Arial', 12))
-item_branch.place(x=775, y=50)
-
-item_isan = Label(frame, text="ISAN:", fg='black', bg='white', font=('Arial', 12))
-item_isan.place(x=775, y=100)
-
-item_status = Label(frame, text="Status:", fg='black', bg='white', font=('Arial', 12))
-item_status.place(x=775, y=150)
-
-
-"""----------------------------------Title, Runtime-------------------------------------"""
-item_title = Label(frame, text='Title:', bg='white', fg='black', font=('Arial', 12))
-item_title.place(x=638, y=215)
-
-item_runtime = Label(frame, text="Runtime:", fg='black', bg='white', font=('Arial', 12))
-item_runtime.place(x=638, y=265)
+img_label.place(x=750, y=200)
 
 
 """----------------------------------CHECKOUT ITEM---------------------------------------- """
@@ -209,23 +161,29 @@ return_button.place(x=625, y=500)
 
 def search_button_click():
     title_value = title_entry.get()
+    genre_value = genre_drop.grab_current()  # Get the selected genre
     isan_value = isan_entry.get()
     runtime_value = runtime_entry.get()
 
-    if not validate_title(title_value):
+    if not title_value.strip() and genre_value == "" and not isan_value.strip() and not runtime_value.strip():
+        messagebox.showerror("Error", "All fields cannot be empty.")
+        return
+
+    if title_value.strip() and not validate_title(title_value):
         messagebox.showerror("Error", "Title must be 50 characters or less.")
         return
-    if not validate_id_type(isan_value):
+
+    if isan_value.strip() and not validate_id_type(isan_value):
         messagebox.showerror("Error", "Valid ISAN must be 12 characters long.")
         return
-    if not validate_runtime(runtime_value):
+
+    if runtime_value.strip() and not validate_runtime(runtime_value):
         messagebox.showerror("Error", "Runtime must be a valid floating-point number.")
         return
 
 
 search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search_button_click)
 search_id.place(x=55, y=25)
-
 
 """----------------------------------BACK TO DASHBOARD---------------------------------------- """
 
@@ -235,7 +193,7 @@ def close_window():
 
 
 def dashboard():
-    close_window()  
+    close_window()
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Dashboard.py')
 

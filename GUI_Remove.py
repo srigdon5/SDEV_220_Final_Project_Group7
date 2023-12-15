@@ -8,7 +8,6 @@ from tkinter import ttk
 import tkinter as tk
 
 
-
 """
 Program: GUI_Remove.py
 Author: J.Swilling
@@ -19,28 +18,21 @@ Goal: to add a submenu to the "remove" option in Dashboard.py.
 2. The inputs are
     - User input through the GUI, including:
         - Item ID
-        - Staff ID
-        - Branch selection
-        - Date
-        - Details
-        - Fees selection
 
 3. Computations:
     - Validation of user inputs:
         - Checking if Item ID is a valid integer.
-        - Checking if Staff ID is a valid integer.
-        - Checking if Details field does not exceed 100 characters.
 
 4. The outputs are
     - Displayed through the GUI:
         - Feedback messages for validation errors.
-        - If fees are set to "Unpaid," a reminder message is displayed about updating dues for the customer's account.
+        
 """
 
 
 root = Tk()
 root.title('EVPL Management System - Remove Item')
-root.geometry('400x700+300+200')
+root.geometry('400x200+300+200')
 root.configure(bg="#fff")
 root.resizable(False, False)
 root.iconbitmap("assets\\images\\myIcon.ico")
@@ -52,7 +44,7 @@ background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
 """------------------------------------------------------------------------------------------"""
 
-frame = Frame(root, width=397, highlightbackground="black", highlightthickness=3, height=680, bg='#fff')
+frame = Frame(root, width=397, highlightbackground="black", highlightthickness=3, height=200, bg='#fff')
 frame.place(x=1, y=10)
 
 """-----------------------------------------ITEM ID----------------------------------------------"""
@@ -77,107 +69,71 @@ item_entry.bind("<FocusIn>", lambda event: item_entry.delete(0, tk.END) if item_
 item_entry.bind("<FocusOut>", lambda event: item_entry.insert(0, 'Enter Item ID') if not item_entry.get() else None)
 
 
-"""-----------------------------------------STAFF ID----------------------------------------------"""
-
-
-def validate_staff_id(value):
-    return value.isdigit()
-
-
-user_label = Label(text="User ID:", fg='black', bg='white', font=('Arial', 12))
-user_label.place(x=40, y=100)
-
-staff_var = tk.StringVar()
-staff_var.set("Enter Staff ID")
-
-id_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
-id_entry.place(x=140, y=87)
-id_entry.insert(0, "Enter Staff ID")
-
-id_entry.bind("<FocusIn>", lambda event: id_entry.delete(0, tk.END) if id_entry.get() == "Enter Staff ID" else None)
-
-id_entry.bind("<FocusOut>", lambda event: id_entry.insert(0, "Enter Staff ID") if not id_entry.get() else None)
-
-
-"""-----------------------------------------BRANCH----------------------------------------------"""
-Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
-Branch_label.place(x=40, y=150)
-
-
-drop = ttk.Combobox(frame, values=["North Branch", "South Branch", "East Branch", "West Branch", ""], width=30)
-drop.current(0)
-drop.place(x=140, y=137)
-
-"""-----------------------------------------DATE----------------------------------------------"""
-date_label = tk.Label(root, text="Date:", fg='black', bg='white', font=('Arial', 12))
-date_label.place(x=40, y=200)
-
-date_var = tk.StringVar()
-
-day_combobox = ttk.Combobox(root, values=[str(i).zfill(2) for i in range(1, 32)], width=5)
-day_combobox.current(0)
-day_combobox.place(x=140, y=200)
-
-month_combobox = ttk.Combobox(root, values=[str(i).zfill(2) for i in range(1, 13)], width=5)
-month_combobox.current(0)
-month_combobox.place(x=200, y=200)
-
-year_combobox = ttk.Combobox(root, values=[str(i) for i in range(2023, 2030)], width=5)
-year_combobox.current(0)
-year_combobox.place(x=260, y=200)
-
-
-"""-----------------------------------------DETAILS----------------------------------------------"""
-
-
-def validate_detail(value):
-    return len(value) <= 100
-
-
-detail_label = Label(text="Details:", fg='black', bg='white', font=('Arial', 12))
-detail_label.place(x=40, y=250)
-
-
-detail_entry = Text(frame, width=40, height=10, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
-detail_entry.place(x=40, y=277)
-
-
-"""-----------------------------------------FEES----------------------------------------------"""
-fee_label = Label(text="Fees:", fg='black', bg='white', font=('Arial', 12))
-fee_label.place(x=40, y=527)
-
-
-fee_entry = ttk.Combobox(frame, values=["Paid", "Unpaid", "Waived"], width=30)
-fee_entry.current(0)
-fee_entry.place(x=120, y=518)
 """-----------------------------------------REMOVE/CANCEL----------------------------------------------"""
 
 
 def remove_button_click():
     # Retrieve values from the Entry widgets
     item_value = item_entry.get()
-    id_value = id_entry.get()
-    detail_value = detail_entry.get("1.0", "end-1c")
-    fees_option = fee_entry.get()
 
     if not validate_item_id(item_value):
-        messagebox.showerror("Error", "Item ID must be valid integer.")
+        messagebox.showerror("Error", "Item ID must be a valid integer.")
         return
-    if not validate_staff_id(id_value):
-        messagebox.showerror("Error", "Staff ID must be valid integer.")
-        return
-    if not validate_detail(detail_value):
-        messagebox.showerror("Error", "(Details) field may not exceed 100 characters.")
-        return
-    if fees_option == "Unpaid":
-        reminder_message = "Caution: Update dues for the customer's account! If unpaid, a separate bill must be sent."
-        messagebox.showinfo("Unpaid Fees Reminder", reminder_message)
+
+    # Fetch item details (title and branches) based on item ID (you'll need to implement this)
+    item_details = fetch_item_details(item_value)
+
+    if item_details:
+        # Create a confirmation popup window
+        confirmation_window = Toplevel(root)
+        confirmation_window.title("Confirm Remove")
+
+        # Display item details in the confirmation window
+        title_label = Label(confirmation_window, text="Title:", font=('Arial', 12))
+        title_label.pack()
+        title_value = Label(confirmation_window, text=item_details["title"])
+        title_value.pack()
+
+        branches_label = Label(confirmation_window, text="Branches:", font=('Arial', 12))
+        branches_label.pack()
+        branches_value = Label(confirmation_window, text=", ".join(item_details["branches"]))
+        branches_value.pack()
+
+        # Add a confirmation button to proceed with removal
+        confirm_button = Button(confirmation_window, text="Confirm", command=lambda: confirm_removal(item_value))
+        confirm_button.pack()
+
+    else:
+        messagebox.showerror("Error", "Item not found.")
+
+
+def confirm_removal(item_id):
+    # Perform the actual removal of the item (you'll need to implement this)
+    remove_item(item_id)
+    messagebox.showinfo("Success", "Item removed successfully.")
+    # Close the confirmation window
+    confirmation_window.destroy()
+
+
+# Replace these functions with your actual implementation
+
+
+def fetch_item_details(item_id):
+    # Replace with your logic to fetch item details
+    # Return a dictionary containing title and branches
+    # Example: {"title": "Sample Title", "branches": ["Branch1", "Branch2"]}
+    pass
+
+
+def remove_item(item_id):
+    # Replace with your logic to remove the item
+    pass
 
 
 remove_btn = Button(frame, width=10, pady=7, text='REMOVE', bg='grey', fg='white', border=3,
                     command=remove_button_click)
 
-remove_btn.place(x=80, y=600)
+remove_btn.place(x=80, y=100)
 """----------------------------------------------------"""
 
 
@@ -186,6 +142,6 @@ def abortproc():
 
 
 cancel_btn = Button(frame, width=10, pady=7, text='CANCEL', bg='grey', fg='white', border=3, command=abortproc)
-cancel_btn.place(x=230, y=600)
+cancel_btn.place(x=230, y=100)
 """----------------------------------------------------"""
 root.mainloop()

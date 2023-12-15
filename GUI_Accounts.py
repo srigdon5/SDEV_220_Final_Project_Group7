@@ -9,7 +9,8 @@ from tkinter import PhotoImage
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import sessionmaker
-from library_back import Item, Patron, get_patron_by_id, search_items_by_title, search_items_by_title_branch, Base, engine
+from library_back import Item, Patron, get_patron_by_id, search_items_by_title, search_items_by_title_branch
+from library_back import Base, engine
 
 """
 Program: GUI_Accounts.py
@@ -44,15 +45,14 @@ window.resizable(False, False)
 window.iconbitmap("assets\\images\\myIcon.ico")
 
 
-
 Base.metadata.create_all(engine)
+
 
 Session = sessionmaker(bind=engine)
 
 background = PhotoImage(file="assets\\images\\design.png")
 background_label = Label(window, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
-
 
 
 frame = Frame(width=250, highlightbackground="black", highlightthickness=3, height=80, bg="white")
@@ -67,9 +67,7 @@ frame = Frame(window, width=1000, highlightbackground="black", highlightthicknes
 frame.place(x=110, y=120)
 
 
-
 """------------------------------------CUSTOMER ID--------------------------------------"""
-
 
 
 def validate_customer_id(value):
@@ -88,6 +86,8 @@ customer_entry.bind("<FocusIn>", lambda event: customer_entry.delete(0, tk.END) 
 customer_entry.bind("<FocusOut>", lambda event: customer_entry.insert(0, 'Enter a User ID') if not customer_entry.get() else None)
 
 """----------------------------------SEARCH---------------------------------------"""
+
+
 def search():
     user_id = customer_entry.get()
     customer_value = customer_entry.get()
@@ -134,7 +134,7 @@ def search():
             my_listbox.insert(END, "No items found for this user.")
         else:
             for inventory in customer_info["checked_out_items"]:
-                my_listbox.insert(END, f"Item ID: {inventory[0]} | Item Name: {inventory[1]}")
+                my_listbox.insert(END, f"Item Name: {inventory[0]}")
 
         customer_entry.delete(0, 'end')
         customer_entry.insert(0, 'Enter a User ID')
@@ -144,6 +144,8 @@ search_id = Button(frame, width=20, pady=7, text='Search', bg='grey', fg='white'
 search_id.place(x=65, y=25)
 
 """----------------------------------ADD PATRON---------------------------------------"""
+
+
 def patron(): 
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Patron.py')
@@ -154,9 +156,42 @@ def patron():
         print(f"Error launching subprocess: {e}")
 
 
-
 patron_add = Button(frame, width=20, pady=7, text='Add Account', bg='grey', fg='white', border=3, command=patron)
 patron_add.place(x=260, y=25)
+
+"""----------------------------------PAY FEES---------------------------------------- """
+
+
+def payfee():
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Fees.py')
+
+    try:
+        subprocess.run(['python', script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
+
+
+pay_fee_btn = Button(frame, width=20, pady=7, text='Pay Fee', bg='grey', fg='white', border=3, command=payfee)
+
+pay_fee_btn.place(x=625, y=25)
+
+"""----------------------------------ADD FEES---------------------------------------- """
+
+def addfee():
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    script_path = os.path.join(script_dir, 'GUI_Fees.py')
+
+    try:
+        subprocess.run(['python', script_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error launching subprocess: {e}")
+
+
+add_fee_btn = Button(frame, width=20, pady=7, text='Add Fee', bg='grey', fg='white', border=3, command=addfee)
+
+add_fee_btn.place(x=800, y=25)
+
 
 """----------------------------------CUSTOMER INFORMATION---------------------------"""
 
@@ -178,6 +213,9 @@ Branch_label.place(x=140, y=415)
 Limit_label = Label(text="Account Lock:", fg='black', bg='white', font=('Arial', 12))
 Limit_label.place(x=140, y=465)
 
+fee_label = Label(text="Total Fee(s):", fg='black', bg='white', font=('Arial', 12))
+fee_label.place(x=340, y=465)
+
 """"---------------------------------CUSTOMER ITEMS---------------------------------"""
 
 info_frame = Frame(width=500, highlightbackground="black", highlightthickness=1, height=250, bg="white")
@@ -193,9 +231,7 @@ info_frame.place(x=140, y=500)
 my_listbox.pack(pady=15)
 
 
-
 my_listbox.insert(END, 'ITEM_ID')
-
 
 
 my_list = ['ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID',
@@ -209,11 +245,6 @@ for item in my_list:
 def return_selected():
     for select in reversed(my_listbox.curselection()):
         my_listbox.delete(select)
-
-
-"""----------------------------------ITEM TITLE-------------------------------------"""
-item_title = Label(frame, width=39, pady=7, text='Item Title', bg='black', fg='white', border=0,)
-item_title.place(x=650, y=25)
 
 
 """----------------------------------ITEM IMAGE---------------------------------------- """
@@ -244,7 +275,6 @@ return_button.place(x=625, y=500)
 
 def close_window():
     window.destroy()
-
 
 
 def dashboard():

@@ -8,7 +8,6 @@ from tkinter import Tk, Button
 import tkinter as tk
 
 
-
 """
 Program: GUI_Login_Design.py
 Author: J.Swilling
@@ -38,10 +37,8 @@ background_label = Label(root, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
 
-
-
 def signin():
-    username = user_entry.get()
+    username = user_entry.get().lower()  # Convert the entered username to lowercase
     password = pass_entry.get()
 
     file = open('assets\\datasheet.txt', 'r')
@@ -49,19 +46,20 @@ def signin():
     r = ast.literal_eval(d)
     file.close()
 
+    stored_username = None
+    stored_password = None
 
+    # Check if the username exists (case-insensitive) and retrieve the stored username and password
+    for stored_user, stored_pass in r.items():
+        if stored_user.lower() == username:
+            stored_username = stored_user
+            stored_password = stored_pass
+            break
 
-    if username in r.keys() and password == r[username]:
-        screen = Toplevel(root)
-        screen.title("App")
-        screen.geometry('925x500+300+200')
-        screen.config(bg="white")
-
-        Label(screen, text='Hello!', fg='black', bg='#fff', font=('Calibre(Body)', 50, 'bold')).pack(expand=True)
+    if stored_username and password == stored_password:
         root.destroy()
         script_dir = os.path.dirname(os.path.realpath(__file__))
         script_path = os.path.join(script_dir, 'GUI_Dashboard.py')
-        
 
         try:
             subprocess.run(['python', script_path], check=True)
@@ -72,13 +70,13 @@ def signin():
         messagebox.showerror('Invalid', 'invalid username or password')
 
 
-
 frame = Frame(root, width=450, highlightbackground="black", highlightthickness=3, height=80, bg="white")
 frame.place(x=400, y=20)
 
-heading = Label(frame, text='Evansville Vanderburgh Public Library', fg='black', bg='white', font=('Microsoft YaHei UI Light', 16, 'bold'))
+heading = Label(frame, text='Evansville Vanderburgh Public Library', fg='black', bg='white', font=('Microsoft YaHei '
+                                                                                                   'UI Light', 16,
+                                                                                                   'bold'))
 heading.place(x=25, y=12)
-
 
 
 heading = Label(text='Welcome', fg='black', bg='white', font=('Microsoft YaHei UI Light', 23, 'bold'))
@@ -86,8 +84,6 @@ heading.place(x=550, y=120)
 
 frame = Frame(root, width=450, highlightbackground="black", highlightthickness=3, height=450, bg="white")
 frame.place(x=400, y=200)
-
-
 
 
 """----------------------------------Username---------------------------------------- """
@@ -125,18 +121,14 @@ tk.Frame(frame, width=295, height=2, bg='black').place(x=75, y=203)
 """----- Define function and Format buttons for input submission ('Sign in' and 'Sign Up') -------------"""
 
 
-
 def close_window():
     root.destroy()
-
 
 
 def register():
     close_window() 
 
-   
     script_dir = os.path.dirname(os.path.realpath(__file__))
-
     
     script_path = os.path.join(script_dir, 'GUI_Registration.py')
 
@@ -152,27 +144,19 @@ Button(frame, width=19, pady=7, text='Sign in', bg='black', fg='white', border=0
 (Button(frame, width=19, pady=7, text='Sign up', bg='black', fg='white', border=0, cursor='hand2', command=register).place(x=242, y=254))
 
 
-
-def user_manual():
-    subprocess.Popen(['python', 'userManual.py'])
-
-
-
-
 def user_manual():
     script_dir = os.path.dirname(os.path.realpath(__file__))
     script_path = os.path.join(script_dir, 'GUI_Manual.py')
-    
 
     try:
         subprocess.run(['python', script_path], check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error launching subprocess: {e}")
 
+
 help_link = Button(frame, width=20, pady=7, text='Need help?', bg='white', fg='green', border=0,
                    command=user_manual, cursor='hand2')
 help_link.place(x=140, y=320)
-
 
 
 root.mainloop()
