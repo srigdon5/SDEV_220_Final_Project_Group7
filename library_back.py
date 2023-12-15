@@ -214,18 +214,6 @@ def add_book(branch_id, isbn, title, genre, medium, pages, author_name):
         session.commit()
 
 
-# Remove Book
-def remove_book(item_id, isbn):
-    Session = sessionmaker(bind=engine)
-    with Session() as session:
-        # remove item
-        session.query(Item).filter(Item.item_id == item_id).delete()
-        
-        # remove book details
-        session.query(Book).filter(Book.isbn == isbn).delete()
-        session.commit()
-
-
 # Add movie
 def add_movie(branch_id, isan, title, genre, runtime, medium):
     Session = sessionmaker(bind=engine)
@@ -242,15 +230,28 @@ def add_movie(branch_id, isan, title, genre, runtime, medium):
         session.commit()
 
 
-# Remove Movie
-def remove_movie(item_id, isan):
+# Remove Item
+def remove_item(item_id):
     Session = sessionmaker(bind=engine)
     with Session() as session:
+        # get item
+        item = session.query(Item).filter(Item.item_id == item_id).first()
+        if not item:
+            return False
+        isbn = item.isbn
+        isan = item.isan
+        
         # remove item
         session.query(Item).filter(Item.item_id == item_id).delete()
         
-        # remove book details
-        session.query(Movie).filter(Movie.isan == isan).delete()
+        # remove book details if book
+        if isbn:
+            session.query(Book).filter(Book.isbn == isbn).delete()
+        
+        # remove movie details if movie
+        if isan:
+            session.query(Movie).filter(Movie.isan == isan).delete()
+            
         session.commit()
 
  

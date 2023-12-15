@@ -6,7 +6,7 @@ from tkinter import PhotoImage
 import os
 from tkinter import ttk
 import tkinter as tk
-from library_back import Item, Patron
+from library_back import remove_item
 """
 Program: GUI_Remove.py
 Author: J.Swilling
