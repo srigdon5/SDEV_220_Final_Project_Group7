@@ -176,15 +176,17 @@ def add_button_click():
     if not validate_title(title_value):
         messagebox.showerror("Error", "Title must be 50 characters or less.")
         return
-    if not validate_author(author_value):
-        messagebox.showerror("Error", "Author must be 50 characters or less.")
-        return
-    if not validate_pages(pages_value):
-        messagebox.showerror("Error", "Pages must be valid integer.")
-        return
-    if not validate_runtime(runtime_value):
-        messagebox.showerror("Error", "Runtime must be a valid floating-point number.")
-        return
+    if id_value == "ISBN":
+        if not validate_author(author_value):
+            messagebox.showerror("Error", "Author must be 50 characters or less.")
+            return
+        if not validate_pages(pages_value):
+            messagebox.showerror("Error", "Pages must be valid integer.")
+            return
+    if id_value == "ISAN":
+        if not validate_runtime(runtime_value):
+            messagebox.showerror("Error", "Runtime must be a valid floating-point number.")
+            return
     if not validate_id_type(id_value):
         messagebox.showerror("Error", "User ID must be valid integer.")
         return
