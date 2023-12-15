@@ -42,17 +42,10 @@ def validate_title(value):
 Title_label = Label(text="Title:", fg='black', bg='white', font=('Arial', 12))
 Title_label.place(x=40, y=50)
 
-title_var = tk.StringVar()
-title_var.set("Add a Title")
 
 title_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 title_entry.place(x=140, y=37)
-title_entry.insert(0, "Add a Title")
 
-title_entry.bind("<FocusIn>",
-                 lambda event: title_entry.delete(0, tk.END) if title_entry.get() == "Add a Title" else None)
-
-title_entry.bind("<FocusOut>", lambda event: title_entry.insert(0, "Add a Title") if not title_entry.get() else None)
 
 """-----------------------------------------AUTHOR----------------------------------------------"""
 
@@ -64,46 +57,27 @@ def validate_author(value):
 Author_label = Label(text="Author:", fg='black', bg='white', font=('Arial', 12))
 Author_label.place(x=40, y=100)
 
-author_var = tk.StringVar()
-author_var.set("Add author")
 
 author_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 author_entry.place(x=140, y=87)
-author_entry.insert(0, "Add author")
 
-author_entry.bind("<FocusIn>",
-                  lambda event: author_entry.delete(0, tk.END) if author_entry.get() == "Add author" else None)
-
-author_entry.bind("<FocusOut>", lambda event: author_entry.insert(0, "Add author") if not author_entry.get() else None)
 
 """-----------------------------------------GENRE----------------------------------------------"""
 genre_label = Label(text="Genre:", fg='black', bg='white', font=('Arial', 12))
 genre_label.place(x=40, y=150)
 
-genre_var = tk.StringVar()
-genre_var.set("Add genre")
 
 genre_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 genre_entry.place(x=140, y=137)
-genre_entry.insert(0, "Add genre")
 
-genre_entry.bind("<FocusIn>", lambda event: genre_entry.delete(0, tk.END) if genre_entry.get() == "Add genre" else None)
-
-genre_entry.bind("<FocusOut>", lambda event: genre_entry.insert(0, "Add genre") if not genre_entry.get() else None)
 """-----------------------------------------ITEM_ID----------------------------------------------"""
 id_label = Label(text="ISBN/ISAN:", fg='black', bg='white', font=('Arial', 12))
 id_label.place(x=40, y=250)
 
-id_var = tk.StringVar()
-id_var.set('Enter Item ID')
 
 id_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 id_entry.place(x=140, y=237)
-id_entry.insert(0, 'Enter Item ID')
 
-id_entry.bind("<FocusIn>", lambda event: id_entry.delete(0, tk.END) if id_entry.get() == 'Enter Item ID' else None)
-
-id_entry.bind("<FocusOut>", lambda event: id_entry.insert(0, 'Enter Item ID') if not id_entry.get() else None)
 
 """-----------------------------------------BRANCH----------------------------------------------"""
 Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
