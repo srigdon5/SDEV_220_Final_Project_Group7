@@ -6,7 +6,7 @@ import ast
 import subprocess
 import os
 from tkinter import PhotoImage
-from library_back import Item, Patron, search_items_by_title, search_items_by_title_branch
+from library_back import Item, Patron, search_items_by_title, search_items_by_title_branch, get_item_by_id, get_genres, get_branch_names
 
 """
 Program: GUI_Books.py
@@ -88,9 +88,9 @@ author_entry.place(x=90, y=143)
 Genre_label = Label(text="Genre:", fg='black', bg='white', font=('Arial', 12))
 Genre_label.place(x=140, y=315)
 
-genre_drop = ttk.Combobox(frame,
-                          values=["", "Historical Fiction",
-                                  "Family", "Fantasy", "Mystery", "Myth", "Thriller"], width=30)
+genre_list = get_genres()
+genre_list.insert(0, "")
+genre_drop = ttk.Combobox(frame, values=genre_list, width=30)
 
 genre_drop.current(0)
 genre_drop.place(x=90, y=192)
@@ -114,9 +114,9 @@ isbn_entry.place(x=90, y=242)
 Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
 Branch_label.place(x=140, y=415)
 
-branch_drop = ttk.Combobox(frame, values=["", "Central", "East", "West", "North Park", "Oaklyn",
-                                          "Red Bank", "Stringtown", "West", "McCollough",
-                                          "Washington Square-McCollough"], width=30)
+branches = get_branch_names()
+branches.insert(0, "")
+branch_drop = ttk.Combobox(frame, values=branches, width=30)
 
 
 branch_drop.current(0)
