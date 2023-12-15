@@ -104,60 +104,26 @@ class Branch(Base):
 Base.metadata.create_all(engine) # initialize database if there isn't one
 
 
-###### SEARCH FUNCTIONS
-def search_items_by_title(search):
-    Session = sessionmaker(bind=engine)
-    
-    with Session() as session:
-        query = (
-            session.query(Item.title, Item.item_type, Item.branch_id, Item.status) # retrieve title, type, branch_id and status
-            .filter(Item.title.ilike(f'%{search}%')) # Case insensitive search
-            .all # retrieves all items
-        )
-        
-        result = [(title, item_type, branch_id, status) for title, item_type, branch_id, status in query]
-    
-    return result
+###### QUERY FUNCTIONS
 
-
-def search_items_by_title_branch(search, branch_id):
-    Session = sessionmaker(bind=engine)
-    
-    with Session() as session:
-        query = (
-            session.query(Item.title, Item.item_type, Item.status) # retrieve title, type, and status
-            .filter(Item.title.ilike(f'%{search}%')) # Case insensitive search
-            .filter(Item.branch_id == branch_id) # limits it to a specific branch
-            .all # retrieves all items
-        )
-        
-        result = [(title, item_type, status) for title, item_type, status in query]
-    
-    return result
-
-
-# retrieve all item information based on id
-def get_item_by_id(item_id):
-    Session = sessionmaker(bind=engine)
-    with Session() as session:
-        item = session.query(Item).filter(Item.item_id == item_id).first()
-        
-    return item
-
-
-# search all books based on a search term where the term is the title
-def search_books(search):
+# search all books based either title, author, genre, isbn, branch, or any combination
+def search_books(title=None, author=None, genre=None, isbn=None, branch_id=None):
     Session = sessionmaker(bind=engine)
     with Session() as session:
         query = (
-            session.query(Item.title, Author.author_name, Book.medium, Book.pages)
-            .join(Author, Author.isbn == Book.isbn) # joining the author table for author info
+            session.query(Item.title, Author.author_name, Book.medium, Book.pages, Branch.branch_name, Item.status)
             .join(Book, Book.isbn == Item.isbn) # joining the book table for medium and pages
-            .filter(Book.title.ilike(f'%{search}%'))  # Case insensitive search
+            .join(Author, Author.author_id == Book.author_id) # joining the author table for author info
+            .join(Branch, Branch.branch_id == Item.branch_id) # joining branch table
+            .filter(Item.title.ilike(f'%{title}%') if title else True)  # Case insensitive search, only active is value not None
+            .filter(Author.author_name.ilike(f'%{author}%') if author else True)  # Case insensitive search, only active is value not None 
+            .filter(Item.isbn == isbn if isbn else True)  # Case insensitive search, only active is value not None
+            .filter(Item.genre.ilike(f'%{genre}%') if genre else True)  # Case insensitive search, only active is value not None
+            .filter(Item.branch_id == branch_id if branch_id else True)  # Case insensitive search, only active is value not None
             .all()  # Call the method to execute the query
         )
-        result = [(title, author_name, medium) for title, author_name, medium in query]
-    return result
+        print(query)
+    return query
 
 
 # same as book search but movies

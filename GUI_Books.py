@@ -6,7 +6,7 @@ import ast
 import subprocess
 import os
 from tkinter import PhotoImage
-from library_back import Item, Patron, search_items_by_title, search_items_by_title_branch, get_item_by_id, get_genres, get_branch_names
+from library_back import Item, Patron, search_books, get_genres, get_branch_names
 
 """
 Program: GUI_Books.py
@@ -58,7 +58,7 @@ frame.place(x=110, y=120)
 
 
 def validate_title(value):
-    return len(value) <= 50
+    return len(value) <= 300
 
 
 Title_label = Label(text="Title:", fg='black', bg='white', font=('Arial', 12))
@@ -176,16 +176,17 @@ return_button.place(x=625, y=500)
 def search_button_click():
     title_value = title_entry.get()
     author_value = author_entry.get()
-    genre_value = genre_drop.grab_current()  
+    genre_value = genre_drop.get() 
     isbn_value = isbn_entry.get()
-    branch_value = branch_drop.grab_current()  
+    branch_value = branch_drop.current() 
 
+    # Validate inputs
     if not title_value.strip() and not author_value.strip() and not isbn_value.strip() and genre_value == "" and branch_value == "":
         messagebox.showerror("Error", "All fields cannot be empty.")
         return
 
     if title_value.strip() and not validate_title(title_value):
-        messagebox.showerror("Error", "Title must be 50 characters or less.")
+        messagebox.showerror("Error", "Title must be 300 characters or less.")
         return
 
     if author_value.strip() and not validate_author(author_value):
@@ -196,7 +197,24 @@ def search_button_click():
         messagebox.showerror("Error", "Valid ISBN must be 13 characters long.")
         return
 
-    search_items_by_title(title_value, author_value, isbn_value, genre_value, branch_value)
+    # turn empty strings to None for search function
+    if title_value == "":
+        title_value = None
+    
+    if author_value == "":
+        author_value = None
+    
+    if genre_value == "":
+        genre_value = None    
+    
+    if isbn_value == "":
+        isbn_value = None
+        
+    if branch_value == 0:
+        branch_value = None
+    
+    print(f"title: {title_value}, author {author_value}, genre {genre_value}, isbn: {isbn_value}, branch {branch_value}")
+    search_books(title=title_value, author=author_value, genre=genre_value, isbn=isbn_value, branch_id=branch_value)
 
 search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search_button_click)
 search_id.place(x=55, y=25)
