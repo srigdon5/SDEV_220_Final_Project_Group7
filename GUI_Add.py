@@ -126,11 +126,11 @@ runtime_entry.place(x=140, y=337)
 
 
 def validate_isbn(value):
-    return len(value) <= 13 and value.isdigit()
+    return len(value) <= 13
 
 
 def validate_isan(value):
-    return len(value) <= 12 and value.isdigit()
+    return len(value) <= 12
 
 
 def validate_id_type(*args):
