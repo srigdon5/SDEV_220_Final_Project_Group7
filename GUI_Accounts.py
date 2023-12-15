@@ -9,7 +9,7 @@ from tkinter import PhotoImage
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import sessionmaker
-from library_back import Item, Patron, get_patron_by_id, search_items_by_title, search_items_by_title_branch
+from library_back import Item, Patron, get_patron_by_id, add_fee, pay_fee
 from library_back import Base, engine
 
 """

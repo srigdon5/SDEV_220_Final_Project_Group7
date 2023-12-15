@@ -25,8 +25,6 @@
     * The window successfully checks out items and places them under a patron's list, but the 
        function doesn't check to see if the patron already has 3 items out. It requires an 
        honest input. Database doesn't update with limit being reached either. Currently the database shows that Bob Ross has four items checked out
+    * Query doesn't check to see if item_id exists.
 
-5. GUI_Movies
-    * The function get_genres() does not list out the genres like how get_branch_names() does
-        * Once corrected, can be replicated in GUI_Books (Only just now realized that this  function was here)
 """

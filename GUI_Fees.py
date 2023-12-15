@@ -7,7 +7,8 @@ from tkinter import PhotoImage
 import os
 from tkinter import ttk
 import tkinter as tk
-
+from library_back import Item, Patron, get_patron_by_id, add_fee, pay_fee
+from library_back import Base, engine
 
 """
 Program: GUI_Checkout.py
@@ -47,7 +48,10 @@ frame.place(x=1, y=10)
 
 
 def validate_fee(value):
-    return value.isdigit()
+    dot_count = value.count('.')
+    if dot_count <= 1 and value.replace('.', '', 1).isdigit():
+        return True
+    return False
 
 
 fee_label = Label(text="Fee Amount:", fg='black', bg='white', font=('Arial', 12))
@@ -85,13 +89,16 @@ def pay_button_click():
     fee_value = fee_entry.get()
     patron_value = patron_entry.get()
 
-    if not validate_item_id(fee_value):
+    if not validate_fee(fee_value):
         messagebox.showerror("Error", "Item ID must be valid integer.")
         return
-    if not validate_customer_id(patron_value):
+    if not validate_patron_id(patron_value):
         messagebox.showerror("Error", "Customer ID must be valid integer.")
         return
 
+    pay_fee(patron_value, fee_value)
+
+    messagebox.showinfo("Success", "The payment was made towards the balance")
 
 pay_btn = Button(frame, width=10, pady=7, text='PAY', bg='grey', fg='white', border=3, command=pay_button_click)
 
@@ -103,13 +110,16 @@ def add_button_click():
     fee_value = fee_entry.get()
     patron_value = patron_entry.get()
 
-    if not validate_item_id(fee_value):
-        messagebox.showerror("Error", "Item ID must be valid integer.")
+    if not validate_fee(fee_value):
+        messagebox.showerror("Error", "Fee amount must be valid integer.")
         return
-    if not validate_customer_id(patron_value):
+    if not validate_patron_id(patron_value):
         messagebox.showerror("Error", "Customer ID must be valid integer.")
         return
+    
+    add_fee(patron_value, fee_value)
 
+    messagebox.showinfo("Success", "The fee has been added to their account")
 
 add_btn = Button(frame, width=10, pady=7, text='ADD', bg='grey', fg='white', border=3, command=add_button_click)
 

@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, ForeignKey, Numeric, CheckConstraint, func
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from decimal import Decimal
 
 # create engine and base
 engine = create_engine('sqlite:///data.db')
@@ -336,6 +337,7 @@ def add_fee(patron_id, fees):
         patron.limit_reached = True
         
         # add fees
+        fees = Decimal(str(fees))
         patron.fees += fees
         
         session.commit()
@@ -349,6 +351,7 @@ def pay_fee(patron_id, payment):
         if not patron:
             return False
         
+        payment = Decimal(str(payment))
         patron.fees -= payment
         
         # check for balance and unlock account if 0
