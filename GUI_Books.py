@@ -6,7 +6,7 @@ import ast
 import subprocess
 import os
 from tkinter import PhotoImage
-
+from library_back import Item, Patron, search_items_by_title, get_branch_names
 
 """
 Program: GUI_Books.py
@@ -104,7 +104,7 @@ author_entry.bind("<FocusOut>", lambda event: author_entry.insert(0, "Search by 
 Genre_label = Label(text="Genre:", fg='black', bg='white', font=('Arial', 12))
 Genre_label.place(x=140, y=315)
 
-drop = ttk.Combobox(frame, values=["Action", "Comedy", "Horror", ""], width=30)
+drop = ttk.Combobox(frame, values=["Myths", "Mystery", "Thriller", "Historical", "Historical Fiction"], width=30)
 drop.current(0)
 drop.place(x=90, y=192)
 
@@ -135,7 +135,7 @@ isbn_entry.bind("<FocusOut>", lambda event: isbn_entry.insert(0, "Search by isbn
 Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
 Branch_label.place(x=140, y=415)
 
-drop = ttk.Combobox(frame, values=["North Branch", "South Branch", "East Branch", "West Branch", ""], width=30)
+drop = ttk.Combobox(frame, values=get_branch_names(), width=30)
 drop.current(0)
 drop.place(x=90, y=292)
 
@@ -229,7 +229,15 @@ def search_button_click():
         messagebox.showerror("Error", "Valid ISBN must be 13 characters long.")
         return
 
+    items_found = search_items_by_title(title_value)
 
+    # Process the found items (example: displaying them in a messagebox)
+    if items_found:
+        items_info = '\n'.join([f"Title: {item.title}, Item Type: {item.item_type}, Status: {item.status}" for item in items_found])
+        messagebox.showinfo("Search Results", f"Items Found:\n{items_info}")
+    else:
+        messagebox.showinfo("Search Results", "No items found with that title.")
+        
 search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search_button_click)
 search_id.place(x=55, y=25)
 
