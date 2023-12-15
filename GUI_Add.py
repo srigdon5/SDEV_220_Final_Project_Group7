@@ -91,7 +91,7 @@ genre_entry.bind("<FocusIn>", lambda event: genre_entry.delete(0, tk.END) if gen
 
 genre_entry.bind("<FocusOut>", lambda event: genre_entry.insert(0, "Add genre") if not genre_entry.get() else None)
 """-----------------------------------------ITEM_ID----------------------------------------------"""
-id_label = Label(text="ID:", fg='black', bg='white', font=('Arial', 12))
+id_label = Label(text="ISBN/ISAN:", fg='black', bg='white', font=('Arial', 12))
 id_label.place(x=40, y=250)
 
 id_var = tk.StringVar()
