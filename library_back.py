@@ -111,7 +111,7 @@ def search_books(title=None, author=None, genre=None, isbn=None, branch_id=None)
     Session = sessionmaker(bind=engine)
     with Session() as session:
         query = (
-            session.query(Item.title, Author.author_name, Book.medium, Book.pages, Branch.branch_name, Item.status)
+            session.query(Item.item_id, Item.title, Author.author_name, Book.medium, Book.pages, Branch.branch_name, Item.status)
             .join(Book, Book.isbn == Item.isbn) # joining the book table for medium and pages
             .join(Author, Author.author_id == Book.author_id) # joining the author table for author info
             .join(Branch, Branch.branch_id == Item.branch_id) # joining branch table
