@@ -127,20 +127,16 @@ info_frame = Frame(width=500, highlightbackground="black", highlightthickness=1,
 info_frame.place(x=140, y=460)
 
 my_scrollbar = Scrollbar(info_frame, orient=VERTICAL)
-my_listbox = Listbox(info_frame, width=80, yscrollcommand=my_scrollbar.set, selectmode=SINGLE)
+my_scrollbar_horizontal = Scrollbar(info_frame, orient=HORIZONTAL)
+my_listbox = Listbox(info_frame, width=80, yscrollcommand=my_scrollbar.set, xscrollcommand=my_scrollbar_horizontal.set, selectmode=SINGLE)
 
 my_scrollbar.config(command=my_listbox.yview)
 my_scrollbar.pack(side=RIGHT, fill=Y)
 
+my_scrollbar_horizontal.config(command=my_listbox.xview)
+my_scrollbar_horizontal.pack(side=BOTTOM, fill=X)
+
 my_listbox.pack(pady=15)
-
-my_listbox.insert(END, 'ITEM_ID')
-
-my_list = ['ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID']
-
-for item in my_list:
-    my_listbox.insert(END, item)
-
 
 def return_selected():
     for items in reversed(my_listbox.curselection()):
@@ -213,8 +209,9 @@ def search_button_click():
     if branch_value == 0:
         branch_value = None
     
-    print(f"title: {title_value}, author {author_value}, genre {genre_value}, isbn: {isbn_value}, branch {branch_value}")
-    search_books(title=title_value, author=author_value, genre=genre_value, isbn=isbn_value, branch_id=branch_value)
+    search_results = search_books(title=title_value, author=author_value, genre=genre_value, isbn=isbn_value, branch_id=branch_value)
+    for item in search_results:
+        my_listbox.insert(END, f"ID: {item[0]} | Title: {item[1]} | Author: {item[2]} | Medium: {item[3]} | Pages: {item[4]} | Branch {item[5]} | Availability: {item[6]}")
 
 search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search_button_click)
 search_id.place(x=55, y=25)
