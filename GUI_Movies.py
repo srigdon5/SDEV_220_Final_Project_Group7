@@ -6,6 +6,7 @@ import ast
 import subprocess
 import os
 from tkinter import PhotoImage
+from library_back import Item, Patron, get_genres
 
 """
 Program: GUI_Movies.py
@@ -71,7 +72,7 @@ title_var.set("Add a Title")
 
 title_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 title_entry.place(x=95, y=95)
-title_entry.insert(0, "Search by title")
+title_entry.insert(0, "")
 
 title_entry.bind("<FocusIn>", lambda event: title_entry.delete(0, tk.END) if title_entry.get() == "Search by title" else None)
 
@@ -81,7 +82,7 @@ title_entry.bind("<FocusOut>", lambda event: title_entry.insert(0, "Search by ti
 Author_label = Label(text="Genre:", fg='black', bg='white', font=('Arial', 12))
 Author_label.place(x=140, y=265)
 
-drop = ttk.Combobox(frame, values=["Action", "Comedy", "Horror"], width=30)
+drop = ttk.Combobox(frame, values=get_genres, width=30)
 drop.current(0)
 drop.place(x=95, y=143)
 
@@ -101,7 +102,7 @@ isan_var.set("ISBN")
 
 isan_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 isan_entry.place(x=95, y=192)
-isan_entry.insert(0, "Search by isan")
+isan_entry.insert(0, "")
 
 isan_entry.bind("<FocusIn>", lambda event: isan_entry.delete(0, tk.END) if isan_entry.get() == "Search by isan" else None)
 
@@ -127,7 +128,7 @@ runtime_var.set("Duration (hrs)")
 
 runtime_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 runtime_entry.place(x=95, y=242)
-runtime_entry.insert(0, "Search by runtime")
+runtime_entry.insert(0, "")
 
 runtime_entry.bind("<FocusIn>", lambda event: runtime_entry.delete(0, tk.END) if runtime_entry.get() == "Search by runtime" else None)
 
