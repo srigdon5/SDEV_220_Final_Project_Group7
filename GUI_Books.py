@@ -72,7 +72,7 @@ title_var.set("Add a Title")
 
 title_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 title_entry.place(x=90, y=95)
-title_entry.insert(0, "Search by title")
+title_entry.insert(0, "")
 
 title_entry.bind("<FocusIn>", lambda event: title_entry.delete(0, tk.END) if title_entry.get() == "Search by title" else None)
 
@@ -93,7 +93,7 @@ author_var.set("Add author")
 
 author_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 author_entry.place(x=90, y=143)
-author_entry.insert(0, "Search by author")
+author_entry.insert(0, "")
 
 author_entry.bind("<FocusIn>", lambda event: author_entry.delete(0, tk.END) if author_entry.get() == "Search by author" else None)
 
@@ -104,9 +104,9 @@ author_entry.bind("<FocusOut>", lambda event: author_entry.insert(0, "Search by 
 Genre_label = Label(text="Genre:", fg='black', bg='white', font=('Arial', 12))
 Genre_label.place(x=140, y=315)
 
-drop = ttk.Combobox(frame, values=["Myths", "Mystery", "Thriller", "Historical", "Historical Fiction"], width=30)
-drop.current(0)
-drop.place(x=90, y=192)
+genre_drop = ttk.Combobox(frame, values=["", "Myths", "Mystery", "Thriller", "Historical", "Historical Fiction"], width=30)
+genre_drop.current(0)
+genre_drop.place(x=90, y=192)
 
 
 """----------------------------------------ISBN----------------------------------------------------"""
@@ -124,7 +124,7 @@ isbn_var.set("ISBN")
 
 isbn_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 isbn_entry.place(x=90, y=242)
-isbn_entry.insert(0, "Search by isbn")
+isbn_entry.insert(0, "")
 
 isbn_entry.bind("<FocusIn>", lambda event: isbn_entry.delete(0, tk.END) if isbn_entry.get() == "Search by isbn" else None)
 
@@ -135,9 +135,9 @@ isbn_entry.bind("<FocusOut>", lambda event: isbn_entry.insert(0, "Search by isbn
 Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
 Branch_label.place(x=140, y=415)
 
-drop = ttk.Combobox(frame, values=get_branch_names(), width=30)
-drop.current(0)
-drop.place(x=90, y=292)
+branch_drop = ttk.Combobox(frame, values=get_branch_names(), width=30)
+branch_drop.current(0)
+branch_drop.place(x=90, y=292)
 
 
 """"---------------------------------SHOW FILTERED ITEMS---------------------------------"""
@@ -240,7 +240,6 @@ def search_button_click():
 
     items_found = search_items_by_title(title_value)
 
-    # Process the found items (example: displaying them in a messagebox)
     if items_found:
         items_info = '\n'.join([f"Title: {item.title}, Item Type: {item.item_type}, Status: {item.status}" for item in items_found])
         messagebox.showinfo("Search Results", f"Items Found:\n{items_info}")
