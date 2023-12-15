@@ -101,6 +101,9 @@ def remove_button_click():
         # Add a confirmation button to proceed with removal
         confirm_button = Button(confirmation_window, text="Confirm", command=lambda: confirm_removal(item_value))
         confirm_button.pack()
+        # Close the confirmation window
+        confirmation_window.destroy()
+
 
     else:
         messagebox.showerror("Error", "Item not found.")
@@ -110,9 +113,7 @@ def confirm_removal(item_id):
     # Perform the actual removal of the item (you'll need to implement this)
     remove_item(item_id)
     messagebox.showinfo("Success", "Item removed successfully.")
-    # Close the confirmation window
-    confirmation_window.destroy()
-
+    
 
 # Replace these functions with your actual implementation
 

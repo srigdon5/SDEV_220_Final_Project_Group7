@@ -7,6 +7,7 @@ import os
 from tkinter import ttk
 import tkinter as tk
 from tkinter import Tk, Label, ttk, Entry, Button
+from library_back import add_book, add_movie
 
 """
 Program: GUI_Add.py
@@ -181,6 +182,7 @@ id_var.set("ISBN")  # Set the default value
 id_drop = ttk.Combobox(frame, textvariable=id_var, values=["", "ISBN", "ISAN"], width=30)
 id_drop.current(0)
 id_drop.place(x=140, y=187)
+selected_id_type = id_drop
 
 # Bind the validate_id_type function to the ID Type variable
 id_var.trace_add('write', validate_id_type)
@@ -211,10 +213,13 @@ def add_button_click():
     if not validate_runtime(runtime_value):
         messagebox.showerror("Error", "Runtime must be a valid floating-point number.")
         return
-    if not validate_user_id(user_id_value):
+    if not validate_id_type(id_value):
         messagebox.showerror("Error", "User ID must be valid integer.")
         return
-
+    
+    #Calling the appropriate Add function
+    if id_value == "ISBN":
+        add_book()
 
 add_btn = Button(frame, width=10, pady=7, text='ADD', bg='grey', fg='white', border=3, command=add_button_click)
 add_btn.place(x=80, y=400)
