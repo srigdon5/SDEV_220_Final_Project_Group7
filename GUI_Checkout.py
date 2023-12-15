@@ -7,7 +7,7 @@ from tkinter import PhotoImage
 import os
 from tkinter import ttk
 import tkinter as tk
-
+from library_back import Item, Patron, check_out, get_branch_names
 
 
 """
@@ -92,7 +92,7 @@ Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
 Branch_label.place(x=40, y=150)
 
 
-drop = ttk.Combobox(frame, values=["North Branch", "South Branch", "East Branch", "West Branch", ""], width=30)
+drop = ttk.Combobox(frame, values=get_branch_names(), width=30)
 drop.current(0)
 drop.place(x=140, y=137)
 
@@ -122,15 +122,17 @@ year_combobox.place(x=260, y=200)
 
 def checkout_button_click():
     global checkout_count
-    item_value = item_entry.get()
-    customer_value = customer_entry.get()
+    item_id = item_entry.get()
+    patron_id = customer_entry.get()
 
-    if not validate_item_id(item_value):
+    if not validate_item_id(item_id):
         messagebox.showerror("Error", "Item ID must be valid integer.")
         return
-    if not validate_customer_id(customer_value):
+    if not validate_customer_id(patron_id):
         messagebox.showerror("Error", "Customer ID must be valid integer.")
         return
+
+    check_out(item_id, patron_id)
 
     checkout_count = simpledialog.askinteger("Checkout Count", "Please enter your current checkout count (1, 2, or 3):",
                                              minvalue=1, maxvalue=3)
