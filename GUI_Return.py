@@ -6,7 +6,9 @@ from tkinter import PhotoImage
 import os
 from tkinter import ttk
 import tkinter as tk
-
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, ForeignKey, Numeric, CheckConstraint, func
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from library_back import Item, Patron, add_patron, get_branch_names
 
 
 """
@@ -95,7 +97,7 @@ Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
 Branch_label.place(x=40, y=150)
 
 
-drop = ttk.Combobox(frame, values=["North Branch", "South Branch", "East Branch", "West Branch", ""], width=30)
+drop = ttk.Combobox(frame, values=get_branch_names(), width=30)
 drop.current(0)
 drop.place(x=140, y=137)
 
@@ -163,6 +165,20 @@ def return_button_click():
     if not validate_staff_id(id_value):
         messagebox.showerror("Error", "Staff ID must be valid integer.")
         return
+    
+    def return_item(item_id, patron_id):
+        Session = sessionmaker(bind=engine)
+        with Session() as session:
+            item = session.query(Item).filter(Item.item_id == item_id).first()
+            if not item or item.status == 'available':
+                return False
+
+        item.status = 'available'
+
+        item.patron_id = None
+        
+        session.commit()
+        
     if fees_option == "Unpaid":
         reminder_message = "Caution: If unpaid, a separate bill must be sent."
 
