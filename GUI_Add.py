@@ -102,6 +102,10 @@ page_label.place(x=40, y=300)
 pages_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 pages_entry.place(x=140, y=287)
 
+"""-----------------------------------------MEDIUM-----------------------------------------------"""
+
+
+
 
 """-----------------------------------------RUNTIME----------------------------------------------"""
 
@@ -168,9 +172,11 @@ def add_button_click():
     author_value = author_entry.get()
     genre_value = genre_entry.get()
     id_value = id_drop.grab_current()
+    item_value = id_entry.get()
     branch_value = branch_drop.grab_current()
     pages_value = pages_entry.get()
     runtime_value = runtime_entry.get()
+    medium_value = medium.grab_current()
 
     # Perform ADD button functionality here
     if not validate_title(title_value):
@@ -187,13 +193,12 @@ def add_button_click():
         if not validate_runtime(runtime_value):
             messagebox.showerror("Error", "Runtime must be a valid floating-point number.")
             return
-    if not validate_id_type(id_value):
-        messagebox.showerror("Error", "User ID must be valid integer.")
-        return
     
     #Calling the appropriate Add function
     if id_value == "ISBN":
-        add_book(branch_value, id_value, title_value, genre_value,)
+        add_book(branch_value, item_value, title_value, genre_value, medium_value, pages_value, author_value)
+    else:
+        add_movie(branch_value, item_value, title_value, genre_value, runtime_value, medium_value)
 
 add_btn = Button(frame, width=10, pady=7, text='ADD', bg='grey', fg='white', border=3, command=add_button_click)
 add_btn.place(x=80, y=400)
