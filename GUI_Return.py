@@ -6,7 +6,7 @@ from tkinter import PhotoImage
 import os
 from tkinter import ttk
 import tkinter as tk
-
+from library_back import Item, Patron, return_item
 
 """
 Program: GUI_Checkout.py
@@ -104,6 +104,9 @@ def return_button_click():
         messagebox.showerror("Error", "Patron ID must be valid integer.")
         return
 
+    return_item(item_value, patron_value)
+
+    messagebox.showinfo("Success", "Thank you for returning the items")
 
 remove_btn = Button(frame, width=10, pady=7, text='RETURN', bg='grey', fg='white', border=3,
                     command=return_button_click)
