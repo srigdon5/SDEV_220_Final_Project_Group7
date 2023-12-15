@@ -7,7 +7,7 @@ import os
 from tkinter import ttk
 import tkinter as tk
 from tkinter import Tk, Label, ttk, Entry, Button
-from library_back import Item, Patron, add_patron
+from library_back import Item, Patron, add_patron, get_branch_names
 
 """
 Program: GUI_Patron.py
@@ -64,7 +64,7 @@ Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
 Branch_label.place(x=40, y=100)
 
 
-branch_name = ttk.Combobox(frame, values=["Central Branch", "East Branch", "McCollough Branch", "North Park Branch", "Oaklyn Branch", "Red Bank Branch", "Stringtown Branch", "West Branch", "Washington Square-McCollough Branch"], width=30)
+branch_name = ttk.Combobox(frame, values=get_branch_names(), width=30)
 branch_name.current(0)
 branch_name.place(x=145, y=87)
 
