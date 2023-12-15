@@ -219,15 +219,24 @@ def search_button_click():
     author_value = author_entry.get()
     isbn_value = isbn_entry.get()
 
-    if not validate_title(title_value):
-        messagebox.showerror("Error", "Title must be 50 characters or less.")
-        return
-    if not validate_author(author_value):
-        messagebox.showerror("Error", "Author must be 50 characters or less.")
-        return
-    if not validate_id_type(isbn_value):
-        messagebox.showerror("Error", "Valid ISBN must be 13 characters long.")
-        return
+    if title_value is None:
+        pass 
+    else:
+        if not validate_title(title_value):
+            messagebox.showerror("Error", "Title must be 50 characters or less.")
+            return
+    if author_value is None:
+        pass
+    else:
+        if not validate_author(author_value):
+            messagebox.showerror("Error", "Author must be 50 characters or less.")
+            return
+    if isbn_value is None:
+        pass
+    else:
+        if not validate_id_type(isbn_value):
+            messagebox.showerror("Error", "Valid ISBN must be 13 characters long.")
+            return
 
     items_found = search_items_by_title(title_value)
 
@@ -237,7 +246,7 @@ def search_button_click():
         messagebox.showinfo("Search Results", f"Items Found:\n{items_info}")
     else:
         messagebox.showinfo("Search Results", "No items found with that title.")
-        
+
 search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search_button_click)
 search_id.place(x=55, y=25)
 
