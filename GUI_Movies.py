@@ -8,6 +8,7 @@ import os
 from tkinter import PhotoImage
 from library_back import get_branch_names, get_genres, search_movies
 
+
 """
 Program: GUI_Movies.py
 Author: J.Swilling
@@ -109,6 +110,17 @@ run_label.place(x=140, y=365)
 runtime_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 runtime_entry.place(x=95, y=242)
 
+"""----------------------------------------BRANCH DROPDOWN----------------------------------------------------"""
+Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
+Branch_label.place(x=140, y=415)
+
+branches = get_branch_names()
+branches.insert(0, "")
+branch_drop = ttk.Combobox(frame, values=branches, width=30)
+
+
+branch_drop.current(0)
+branch_drop.place(x=95, y=292)
 """"---------------------------------SHOW FILTERED ITEMS---------------------------------"""
 info_frame = Frame(width=500, highlightbackground="black", highlightthickness=1, height=280, bg="white")
 my_scrollbar = Scrollbar(info_frame, orient=VERTICAL)
@@ -157,7 +169,7 @@ def search_button_click():
     genre_value = genre_drop.get()
     isan_value = isan_entry.get()
     runtime_value = runtime_entry.get()
-    branch_value = None
+    branch_value = branch_drop.grab_current()
 
     if not title_value.strip() and genre_value == "" and not isan_value.strip() and not runtime_value.strip():
         messagebox.showerror("Error", "All fields cannot be empty.")
