@@ -79,41 +79,23 @@ def remove_button_click():
         messagebox.showerror("Error", "Item ID must be a valid integer.")
         return
 
-    # Fetch item details (title and branches) based on item ID (you'll need to implement this)
-    item_details = fetch_item_details(item_value)
+    # Create a confirmation popup window
+    confirmation_window = Toplevel(root)
+    confirmation_window.title("Confirm Remove")
 
-    if item_details:
-        # Create a confirmation popup window
-        confirmation_window = Toplevel(root)
-        confirmation_window.title("Confirm Remove")
-
-        # Display item details in the confirmation window
-        title_label = Label(confirmation_window, text="Title:", font=('Arial', 12))
-        title_label.pack()
-        title_value = Label(confirmation_window, text=item_details["title"])
-        title_value.pack()
-
-        branches_label = Label(confirmation_window, text="Branches:", font=('Arial', 12))
-        branches_label.pack()
-        branches_value = Label(confirmation_window, text=", ".join(item_details["branches"]))
-        branches_value.pack()
-
-        # Add a confirmation button to proceed with removal
-        confirm_button = Button(confirmation_window, text="Confirm", command=lambda: confirm_removal(item_value))
-        confirm_button.pack()
-        # Close the confirmation window
-        confirmation_window.destroy()
-
-
-    else:
-        messagebox.showerror("Error", "Item not found.")
-
+    # Add a confirmation button to proceed with removal
+    confirm_button = Button(confirmation_window, text="Confirm", command=lambda: confirm_removal(item_value))
+    confirm_button.pack()
+    # Close the confirmation window
+    confirmation_window.destroy()
 
 def confirm_removal(item_id):
     # Perform the actual removal of the item (you'll need to implement this)
-    remove_item(item_id)
-    messagebox.showinfo("Success", "Item removed successfully.")
-    
+    removal = remove_item(item_id)
+    if removal == True:
+        messagebox.showinfo("Success", "Item removed successfully.")
+    else:
+        messagebox.showerror("Error", "Item not found.")
 
 # Replace these functions with your actual implementation
 
