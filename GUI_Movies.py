@@ -121,14 +121,6 @@ info_frame.place(x=140, y=450)
 
 my_listbox.pack(pady=15)
 
-my_listbox.insert(END, 'ITEM_ID')
-
-my_list = ['ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID']
-
-for item in my_list:
-    my_listbox.insert(END, item)
-
-
 def return_selected():
     for items in reversed(my_listbox.curselection()):
         my_listbox.delete(items)
@@ -162,9 +154,10 @@ return_button.place(x=625, y=500)
 
 def search_button_click():
     title_value = title_entry.get()
-    genre_value = genre_drop.grab_current()  # Get the selected genre
+    genre_value = genre_drop.get()
     isan_value = isan_entry.get()
     runtime_value = runtime_entry.get()
+    branch_value = None
 
     if not title_value.strip() and genre_value == "" and not isan_value.strip() and not runtime_value.strip():
         messagebox.showerror("Error", "All fields cannot be empty.")
@@ -181,8 +174,17 @@ def search_button_click():
     if runtime_value.strip() and not validate_runtime(runtime_value):
         messagebox.showerror("Error", "Runtime must be a valid floating-point number.")
         return
-
-
+    
+    # set values to None if blank
+    if title_value == "":
+        title_value = None
+        
+    if genre_value == "":
+        genre_value = None
+        
+    if isan_value == "":
+        isan_value = None
+        
 search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search_button_click)
 search_id.place(x=55, y=25)
 
