@@ -190,7 +190,7 @@ def get_patron_by_id(patron_id):
         branch_name = branch.branch_name
         
         # get items
-        items = session.query(Item.title).filter(Item.patron_id == patron_id).all()
+        items = session.query(Item.item_id, Item.title).filter(Item.patron_id == patron_id).all()
 
     result_dict = {
         'name': patron_name,
@@ -200,14 +200,13 @@ def get_patron_by_id(patron_id):
         'limit_reached': limit_reached,
         'checked_out_items': items
         }
-    print(result_dict)
-    return result_dict
+    return result_dict # returns a dict, checked out items is a list of tuples
 
 # Add patron
-def add_patron(branch_name, patron_name, phone_value, account_type):
+def add_patron(branch_id, patron_name, phone_value, account_type):
     Session = sessionmaker(bind=engine)
     with Session() as session:
-        new_patron = Patron(patron_name=patron_name, branch_name=branch_name, phone=phone_value, account_type=account_type) # create patron object
+        new_patron = Patron(patron_name=patron_name, branch_id=branch_id, phone=phone_value, account_type=account_type) # create patron object
         session.add(new_patron) # write it to the database
         session.commit() # commit changes
         session.refresh(new_patron) # refresh to get the id
@@ -365,3 +364,25 @@ def remove_patron(patron_id):
     with Session() as session:
         # remove patron
         session.query(Patron).filter(Patron.patron_id == patron_id).delete()
+        session.commit()
+
+
+# get branch names
+def get_branch_names():
+    Session = sessionmaker(bind=engine)
+    with Session() as session:
+        branch_names = session.query(Branch.branch_name).all()
+        branch_names = [branch_name[0] for branch_name in branch_names]
+        return branch_names # returns list of branch names
+
+    
+# get genres
+def get_genres():
+    Session = sessionmaker(bind=engine)
+    with Session() as session:
+        genres = session.query(Item.genre).distinct().all()
+        genres = [genre[0] for genre in genres]
+        return genres # returns a list of genres
+    
+get_branch_names()
+get_genres()
