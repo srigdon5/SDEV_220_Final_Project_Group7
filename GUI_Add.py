@@ -111,17 +111,9 @@ def validate_pages(value):
 page_label = Label(text="Page(s):", fg='black', bg='white', font=('Arial', 12))
 page_label.place(x=40, y=300)
 
-pages_var = tk.StringVar()
-pages_var.set("# of pages")
-
 pages_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 pages_entry.place(x=140, y=287)
-pages_entry.insert(0, "# of pages")
 
-pages_entry.bind("<FocusIn>",
-                 lambda event: pages_entry.delete(0, tk.END) if pages_entry.get() == '# of pages' else None)
-
-pages_entry.bind("<FocusOut>", lambda event: pages_entry.insert(0, '# of pages') if not pages_entry.get() else None)
 
 """-----------------------------------------RUNTIME----------------------------------------------"""
 
@@ -134,21 +126,13 @@ def validate_runtime(value):
         return False
 
 
+
 run_label = Label(text="Runtime:", fg='black', bg='white', font=('Arial', 12))
 run_label.place(x=40, y=350)
 
-runtime_var = tk.StringVar()
-runtime_var.set("Duration (hrs)")
-
 runtime_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 runtime_entry.place(x=140, y=337)
-runtime_entry.insert(0, "Duration (hrs)")
 
-runtime_entry.bind("<FocusIn>",
-                   lambda event: runtime_entry.delete(0, tk.END) if runtime_entry.get() == 'Duration (hrs)' else None)
-
-runtime_entry.bind("<FocusOut>",
-                   lambda event: runtime_entry.insert(0, 'Duration (hrs)') if not runtime_entry.get() else None)
 
 """-----------------------------------------ID TYPE----------------------------------------------"""
 

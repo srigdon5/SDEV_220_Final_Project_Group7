@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import scrolledtext
 
+
 def display_user_manual():
     manual_window = tk.Tk()
     manual_window.title('EVPL Management System - User Manual')
@@ -30,7 +31,7 @@ def display_user_manual():
 
        c. Returning Items from Customers:
           - Visit "Return" in the Dashboard.
-          - Input item and staff details, branch, date, fees, and condition.
+          - Input item and staff details.
           - Click "RETURN."
 
        d. Checking Out Items to Customers:
@@ -38,11 +39,23 @@ def display_user_manual():
           - Enter item and customer details.
           - Click "CHECKOUT."
 
-       e. Tracking Fees, Due Dates, and Checkout Limits:
-          - View and manage fees, due dates, and checkout limits in the respective sections.
+       e. Tracking Fees:
+          - View and manage fees in the respective sections.
 
        f. Browsing the Library's System:
-          - Explore available items using the "BROWSE" feature.
+          - Explore available items using the "Search" feature.
+
+       g. Adding Patrons:
+          - To add a new patron, go to the "Add Patron" section.
+          - Provide patron details and click "ADD PATRON."
+
+       h. Adding Fees:
+          - To add fees to a patron's account, visit the "Manage Fees" section.
+          - Enter the patron's ID and fee amount, then click "ADD FEE."
+
+       i. Paying Fees:
+          - To pay fees, go to the "Manage Fees" section.
+          - Enter the patron's ID and the amount to pay, then click "PAY FEE."
 
     For further assistance or information, please contact EVPL Library directly:
     - By phone: [800-444-3333]
