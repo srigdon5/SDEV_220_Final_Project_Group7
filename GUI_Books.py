@@ -6,6 +6,7 @@ import ast
 import subprocess
 import os
 from tkinter import PhotoImage
+from library_back import Item, Patron, search_items_by_title, search_items_by_title_branch
 
 """
 Program: GUI_Books.py
@@ -215,6 +216,7 @@ def search_button_click():
         messagebox.showerror("Error", "Valid ISBN must be 13 characters long.")
         return
 
+    search_items_by_title(title_value, author_value, isbn_value, genre_value, branch_value)
 
 search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search_button_click)
 search_id.place(x=55, y=25)

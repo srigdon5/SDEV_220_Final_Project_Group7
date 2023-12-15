@@ -1,6 +1,6 @@
-Things to Do
-------------------------------------------
+"~~~~~~~~~~Things to Do~~~~~~~~~~~~"
 
+"""
 1. GUI_Patron
     *The Calendar combobox.get() functions and the date_var are coming up as undefined
     *Unsure as to the cause
@@ -29,3 +29,4 @@ Things to Do
 5. GUI_Movies
     * The function get_genres() does not list out the genres like how get_branch_names() does
         * Once corrected, can be replicated in GUI_Books (Only just now realized that this  function was here)
+"""

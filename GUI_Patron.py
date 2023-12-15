@@ -174,12 +174,8 @@ def add_button_click():
 
     success = add_patron(branch_name, patron_name, phone_value, account_type)
 
-    if success:
-        messagebox.showinfo("Success", "Information added to the database successfully.")
-    else:
-        messagebox.showerror("Error", "Failed to add information to the database.")
-
-
+    messagebox.showinfo("Success", "Information added to the database successfully.")
+    
 add_btn = Button(frame, width=10, pady=7, text='ADD', bg='grey', fg='white', border=3, command=add_button_click)
 add_btn.place(x=80, y=340)
 

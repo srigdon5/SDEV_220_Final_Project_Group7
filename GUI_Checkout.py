@@ -7,7 +7,7 @@ from tkinter import PhotoImage
 import os
 from tkinter import ttk
 import tkinter as tk
-
+from library_back import Item, Patron, check_out
 
 """
 Program: GUI_Checkout.py
@@ -98,7 +98,10 @@ def checkout_button_click():
     if not validate_customer_id(customer_value):
         messagebox.showerror("Error", "Customer ID must be valid integer.")
         return
+    
+    check_out(item_value, customer_value)
 
+    messagebox.showinfo("Success", "Enjoy your time with this item.")
 
 remove_btn = Button(frame, width=10, pady=7, text='CHECKOUT', bg='grey', fg='white', border=3,
                     command=checkout_button_click)
