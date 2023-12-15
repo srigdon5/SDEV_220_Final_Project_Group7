@@ -124,12 +124,16 @@ branch_drop.place(x=95, y=292)
 """"---------------------------------SHOW FILTERED ITEMS---------------------------------"""
 info_frame = Frame(width=500, highlightbackground="black", highlightthickness=1, height=280, bg="white")
 my_scrollbar = Scrollbar(info_frame, orient=VERTICAL)
+my_scrollbar_horizontal = Scrollbar(info_frame, orient=HORIZONTAL)
 
-my_listbox = Listbox(info_frame, width=80, yscrollcommand=my_scrollbar.set, selectmode=SINGLE)
+my_listbox = Listbox(info_frame, width=80, yscrollcommand=my_scrollbar.set, xscrollcommand=my_scrollbar_horizontal.set, selectmode=SINGLE)
 
 my_scrollbar.config(command=my_listbox.yview)
 my_scrollbar.pack(side=RIGHT, fill=Y)
 info_frame.place(x=140, y=450)
+
+my_scrollbar_horizontal.config(command=my_listbox.xview)
+my_scrollbar_horizontal.pack(side=BOTTOM, fill=X)
 
 my_listbox.pack(pady=15)
 
@@ -169,7 +173,7 @@ def search_button_click():
     genre_value = genre_drop.get()
     isan_value = isan_entry.get()
     runtime_value = runtime_entry.get()
-    branch_value = branch_drop.grab_current()
+    branch_value = branch_drop.current()
 
     if not title_value.strip() and genre_value == "" and not isan_value.strip() and not runtime_value.strip():
         messagebox.showerror("Error", "All fields cannot be empty.")
@@ -196,6 +200,17 @@ def search_button_click():
         
     if isan_value == "":
         isan_value = None
+    
+    if runtime_value == "":
+        runtime_value = None
+        
+    if branch_value == 0:
+        branch_value == None
+        
+    search_results = search_movies(title=title_value, genre=genre_value, isan=isan_value, runtime=runtime_value, branch=branch_value)
+    my_listbox.delete(0, END)
+    for item in search_results:
+        my_listbox.insert(END, f"ID: {item[0]} | Title: {item[1]} | Medium: {item[2]} | Runtime: {item[3]} minutes| Branch: {item[4]} | Status: {item[5]}")
         
 search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search_button_click)
 search_id.place(x=55, y=25)

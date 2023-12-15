@@ -141,6 +141,7 @@ def search_movies(title=None, genre=None, isan=None, runtime=None, branch=None):
             .filter(Branch.branch_id == branch if branch else True) # looks for exact branch 
             .all()  # Call the method to execute the query
         )
+    print(query)
     return query
 
 
