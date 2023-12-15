@@ -6,11 +6,8 @@ import ast
 import subprocess
 import os
 from tkinter import PhotoImage
-<<<<<<< HEAD
-from library_back import Item, Patron, search_books, get_genres, get_branch_names
-=======
 from library_back import get_branch_names, get_genres, search_movies
->>>>>>> f6a8951959f66820fc38d2b6b77b8980cab0797a
+
 
 """
 Program: GUI_Movies.py
