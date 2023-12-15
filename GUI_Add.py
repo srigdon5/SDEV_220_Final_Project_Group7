@@ -20,7 +20,7 @@ Form validation ensures that the user provides valid inputs, and the ADD button 
 
 root = Tk()
 root.title('EVPL Management System - Add Item')
-root.geometry('400x465+300+200')
+root.geometry('400x525+300+200')
 root.configure(bg="#fff")
 root.resizable(False, False)
 root.iconbitmap("assets\\images\\myIcon.ico")
@@ -29,7 +29,7 @@ background = PhotoImage(file='assets\\images\\design.png')
 background_label = Label(root, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
-frame = Frame(root, width=397, highlightbackground="black", highlightthickness=3, height=452, bg='#fff')
+frame = Frame(root, width=397, highlightbackground="black", highlightthickness=3, height=512, bg='#fff')
 
 frame.place(x=1, y=10)
 """-----------------------------------------TITLE----------------------------------------------"""
@@ -90,17 +90,31 @@ genre_entry.insert(0, "Add genre")
 genre_entry.bind("<FocusIn>", lambda event: genre_entry.delete(0, tk.END) if genre_entry.get() == "Add genre" else None)
 
 genre_entry.bind("<FocusOut>", lambda event: genre_entry.insert(0, "Add genre") if not genre_entry.get() else None)
+"""-----------------------------------------ITEM_ID----------------------------------------------"""
+id_label = Label(text="ID:", fg='black', bg='white', font=('Arial', 12))
+id_label.place(x=40, y=250)
+
+id_var = tk.StringVar()
+id_var.set('Enter Item ID')
+
+id_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
+id_entry.place(x=140, y=237)
+id_entry.insert(0, 'Enter Item ID')
+
+id_entry.bind("<FocusIn>", lambda event: id_entry.delete(0, tk.END) if id_entry.get() == 'Enter Item ID' else None)
+
+id_entry.bind("<FocusOut>", lambda event: id_entry.insert(0, 'Enter Item ID') if not id_entry.get() else None)
 
 """-----------------------------------------BRANCH----------------------------------------------"""
 Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
-Branch_label.place(x=40, y=250)
+Branch_label.place(x=40, y=300)
 
 branch_drop = ttk.Combobox(frame, values=["", "Central", "East", "West", "North Park", "Oaklyn",
                                           "Red Bank", "Stringtown", "West", "McCollough",
                                           "Washington Square-McCollough"], width=30)
 
 branch_drop.current(0)
-branch_drop.place(x=140, y=237)
+branch_drop.place(x=140, y=287)
 """-----------------------------------------PAGES----------------------------------------------"""
 
 
@@ -134,7 +148,7 @@ runtime_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('M
 runtime_entry.place(x=140, y=337)
 
 
-"""-----------------------------------------ID TYPE----------------------------------------------"""
+"""-----------------------------------------ISBN/ISAN----------------------------------------------"""
 
 
 def validate_isbn(value):
@@ -157,7 +171,7 @@ def validate_id_type(*args):
         return None
 
 
-ID_Type_label = Label(text="ID Type:", fg='black', bg='white', font=('Arial', 12))
+ID_Type_label = Label(text="ISBN/ISAN:", fg='black', bg='white', font=('Arial', 12))
 ID_Type_label.place(x=40, y=200)
 
 id_var = tk.StringVar()
