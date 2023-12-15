@@ -150,28 +150,8 @@ def return_selected():
 """----------------------------------ITEM IMAGE---------------------------------------- """
 img = PhotoImage(file='assets\\images\\books_small.png')
 img_label = Label(image=img, bg='#f0f0f0')
-img_label.place(x=750, y=160)
+img_label.place(x=750, y=200)
 
-"""---------------------------------Branch, IBSN, Status--------------------------------"""
-
-item_branch = Label(frame, text="Branch:", fg='black', bg='white', font=('Arial', 12))
-item_branch.place(x=775, y=50)
-
-item_isbn = Label(frame, text="ISBN:", fg='black', bg='white', font=('Arial', 12))
-item_isbn.place(x=775, y=100)
-
-item_status = Label(frame, text="Status:", fg='black', bg='white', font=('Arial', 12))
-item_status.place(x=775, y=150)
-
-"""----------------------------------Title, Author, Pages-------------------------------------"""
-item_title = Label(frame, text='Title:', bg='white', fg='black', font=('Arial', 12))
-item_title.place(x=638, y=215)
-
-item_author = Label(frame, text="Author(s):", fg='black', bg='white', font=('Arial', 12))
-item_author.place(x=638, y=265)
-
-item_pages = Label(frame, text="Page(s):", fg='black', bg='white', font=('Arial', 12))
-item_pages.place(x=638, y=315)
 
 """----------------------------------CHECKOUT ITEM(S)---------------------------------------- """
 
