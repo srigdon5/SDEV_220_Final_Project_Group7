@@ -217,7 +217,7 @@ def add_button_click():
     
     #Calling the appropriate Add function
     if id_value == "ISBN":
-        add_book()
+        add_book(branch_value, id_value, title_value, genre_value,)
 
 add_btn = Button(frame, width=10, pady=7, text='ADD', bg='grey', fg='white', border=3, command=add_button_click)
 add_btn.place(x=80, y=400)
