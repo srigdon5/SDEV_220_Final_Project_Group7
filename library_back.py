@@ -297,11 +297,27 @@ def check_out(item_id, patron_id):
         if not item or item.status == 'checked out':
             return False
         
+        # check limit
+        account_type = patron.account_type
+        amount_checked_out = session.query(func.count(Item)).filter(Item.patron_id == patron_id).scalar()
+        
+        if account_type == "Adult" and amount_checked_out >= 5:
+            return False
+        elif account_type == "Child" and amount_checked_out >= 3:
+            return False
+        
         # change status
         item.status = 'checked out'
         
         # add patron
         item.patron_id = patron_id
+        
+        # recount and lock account on limits
+        amount_checked_out += 1
+        if account_type == "Adult" and amount_checked_out >= 5:
+            patron.limit_reached = True
+        elif account_type == "Child" and amount_checked_out >= 3:
+            patron.limit_reached = True
         
         session.commit()
         
@@ -310,8 +326,9 @@ def check_out(item_id, patron_id):
 def return_item(item_id, patron_id):
     Session = sessionmaker(bind=engine)
     with Session() as session:
-        # retrieve the item
+        # retrieve the item and partron
         item = session.query(Item).filter(Item.item_id == item_id).first()
+        patron = session.query(Patron).filter(Patron.patron_id == patron_id).first()
         if not item or item.status == 'available':
             return False
         
@@ -320,6 +337,14 @@ def return_item(item_id, patron_id):
         
         # remove patron
         item.patron_id = None
+        
+        # check if below limit
+        account_type = patron.account_type
+        amount_checked_out = session.query(func.count(Item)).filter(Item.patron_id == patron_id).scalar()
+        if account_type == "Adult" and amount_checked_out < 5:
+            patron.limit_reached = False
+        elif account_type == "Child" and amount_checked_out < 3:
+            patron.limit_reached = False
         
         session.commit()
 
@@ -386,6 +411,3 @@ def get_genres():
         genres = session.query(Item.genre).distinct().all()
         genres = [genre[0] for genre in genres]
         return genres # returns a list of genres
-    
-get_branch_names()
-get_genres()
