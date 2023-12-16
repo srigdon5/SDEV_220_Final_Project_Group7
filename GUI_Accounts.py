@@ -234,6 +234,24 @@ def return_selected():
     for select in reversed(my_listbox.curselection()):
         my_listbox.delete(select)
 
+def show_item_details(selected_item):
+    popup_window = Toplevel(window)
+    popup_window.title("Item Details")
+    popup_window.geometry('400x300')
+
+    item_details = selected_item.split('|')
+    for detail in item_details:
+        Label(popup_window, text=detail.strip(), padx=10, pady=5).pack()
+
+def return_selected():
+    selected_item_index = my_listbox.curselection()
+    if selected_item_index:
+        selected_item = my_listbox.get(selected_item_index[0])
+        show_item_details(selected_item)
+        
+
+my_listbox.bind('<ButtonRelease-1>', lambda event: return_selected())
+
 
 """----------------------------------ITEM IMAGE---------------------------------------- """
 img = PhotoImage(file='assets\\images\\books.png')
