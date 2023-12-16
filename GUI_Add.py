@@ -20,7 +20,7 @@ Form validation ensures that the user provides valid inputs, and the ADD button 
 
 root = Tk()
 root.title('EVPL Management System - Add Item')
-root.geometry('400x525+300+200')
+root.geometry('400x585+300+200')
 root.configure(bg="#fff")
 root.resizable(False, False)
 root.iconbitmap("assets\\images\\myIcon.ico")
@@ -29,7 +29,7 @@ background = PhotoImage(file='assets\\images\\design.png')
 background_label = Label(root, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
-frame = Frame(root, width=397, highlightbackground="black", highlightthickness=3, height=512, bg='#fff')
+frame = Frame(root, width=397, highlightbackground="black", highlightthickness=3, height=582, bg='#fff')
 
 frame.place(x=1, y=10)
 """-----------------------------------------TITLE----------------------------------------------"""
@@ -97,14 +97,10 @@ def validate_pages(value):
 
 
 page_label = Label(text="Page(s):", fg='black', bg='white', font=('Arial', 12))
-page_label.place(x=40, y=300)
+page_label.place(x=40, y=350)
 
 pages_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
-pages_entry.place(x=140, y=287)
-
-"""-----------------------------------------MEDIUM-----------------------------------------------"""
-
-
+pages_entry.place(x=140, y=337)
 
 
 """-----------------------------------------RUNTIME----------------------------------------------"""
@@ -120,10 +116,21 @@ def validate_runtime(value):
 
 
 run_label = Label(text="Runtime:", fg='black', bg='white', font=('Arial', 12))
-run_label.place(x=40, y=350)
+run_label.place(x=40, y=400)
 
 runtime_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
-runtime_entry.place(x=140, y=337)
+runtime_entry.place(x=140, y=387)
+"""-----------------------------------------MEDIUM-----------------------------------------------"""
+
+
+medium_label = Label(text="Medium:", fg='black', bg='white', font=('Arial', 12))
+medium_label.place(x=40, y=450)
+
+medium = ttk.Combobox(frame, values=["", "paperback", "hard cover", "dvd", "blu-ray"], width=30)
+
+medium.current(0)
+medium.place(x=140, y=437)
+
 
 
 """-----------------------------------------ISBN/ISAN----------------------------------------------"""
@@ -142,9 +149,11 @@ def validate_id_type(*args):
     if selected_id_type == "ISBN":
         pages_entry.config(state='normal')  # Enable pages entry
         runtime_entry.config(state='disabled')  # Disable runtime entry
+        medium['values'] = ["", "paperback", "hard cover"]
     elif selected_id_type == "ISAN":
         pages_entry.config(state='disabled')  # Disable pages entry
         runtime_entry.config(state='normal')  # Enable runtime entry
+        medium['values'] = ["", "dvd", "blu-ray"]
     else:
         return None
 
@@ -201,7 +210,7 @@ def add_button_click():
         add_movie(branch_value, item_value, title_value, genre_value, runtime_value, medium_value)
 
 add_btn = Button(frame, width=10, pady=7, text='ADD', bg='grey', fg='white', border=3, command=add_button_click)
-add_btn.place(x=80, y=400)
+add_btn.place(x=80, y=500)
 
 
 def abortproc():
@@ -209,6 +218,6 @@ def abortproc():
 
 
 cancel_btn = Button(frame, width=10, pady=7, text='CANCEL', bg='grey', fg='white', border=3, command=abortproc)
-cancel_btn.place(x=230, y=400)
+cancel_btn.place(x=230, y=500)
 """----------------------------------------------------"""
 root.mainloop()
