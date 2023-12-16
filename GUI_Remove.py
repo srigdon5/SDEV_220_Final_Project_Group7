@@ -101,9 +101,9 @@ def remove_button_click():
     confirmation_window.destroy()
 
 
-def confirm_removal(item_id):
+def confirm_removal(item_value):
     # Perform the actual removal of the item (you'll need to implement this)
-    removal = remove_item(item_id)
+    removal = remove_item(item_value)
     if removal == True:
         messagebox.showinfo("Success", "Item removed successfully.")
     else:
