@@ -84,7 +84,7 @@ genre_drop.place(x=95, y=143)
 
 
 def validate_id_type(value):
-    return len(value) <= 12
+    return len(value) == 22
 
 
 isan_label = Label(text="ISAN:", fg='black', bg='white', font=('Arial', 12))
@@ -97,11 +97,7 @@ isan_entry.place(x=95, y=192)
 
 
 def validate_runtime(value):
-    try:
-        float(value)
-        return True
-    except ValueError:
-        return False
+    return value.isdigit()
 
 
 run_label = Label(text="Runtime:", fg='black', bg='white', font=('Arial', 12))
@@ -200,20 +196,20 @@ def search_button_click():
     runtime_value = runtime_entry.get()
     branch_value = branch_drop.current()
 
-    if not title_value.strip() and genre_value == "" and not isan_value.strip() and not runtime_value.strip():
+    if not title_value.strip() and genre_value == "" and not isan_value.strip() and not runtime_value.strip() and branch_value == 0:
         messagebox.showerror("Error", "All fields cannot be empty.")
         return
 
     if title_value.strip() and not validate_title(title_value):
-        messagebox.showerror("Error", "Title must be 50 characters or less.")
+        messagebox.showerror("Error", "Title must be 300 characters or less.")
         return
 
     if isan_value.strip() and not validate_id_type(isan_value):
-        messagebox.showerror("Error", "Valid ISAN must be 12 characters long.")
+        messagebox.showerror("Error", "Valid ISAN must be 22 characters long.")
         return
 
     if runtime_value.strip() and not validate_runtime(runtime_value):
-        messagebox.showerror("Error", "Runtime must be a valid floating-point number.")
+        messagebox.showerror("Error", "Runtime must be a valid integer.")
         return
     
     # set values to None if blank
