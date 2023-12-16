@@ -74,9 +74,6 @@ def validate_customer_id(value):
     return value.isdigit()
 
 
-user_var = tk.StringVar()
-
-
 customer_entry = Entry(frame, width=25, fg='black', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 customer_entry.place(x=60, y=95)
 
@@ -129,7 +126,6 @@ def search():
                 my_listbox.insert(END, f"Item Name: {inventory[0]}")
 
         customer_entry.delete(0, 'end')
-        customer_entry.insert(0, 'Enter a User ID')
 
 
 search_id = Button(frame, width=20, pady=7, text='Search', bg='grey', fg='white', border=3, command=search)
