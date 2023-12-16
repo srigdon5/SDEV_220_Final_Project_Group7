@@ -36,38 +36,18 @@ frame = Frame(root, width=397, highlightbackground="black", highlightthickness=3
 
 
 frame.place(x=1, y=10)
-"""-----------------------------------------Patron ID----------------------------------------------"""
-
-
-def validate_id(value):
-    return value.isdigit()
-
-
-id_label = Label(text="Patron ID:", fg='black', bg='white', font=('Arial', 12))
-id_label.place(x=40, y=50)
-
-id_var = tk.StringVar()
-id_var.set("Add Patron ID")
-
-id_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
-id_entry.place(x=145, y=37)
-id_entry.insert(0, "Add Patron ID")
-
-id_entry.bind("<FocusIn>", lambda event: id_entry.delete(0, tk.END) if id_entry.get() == "Add Patron ID" else None)
-
-id_entry.bind("<FocusOut>", lambda event: id_entry.insert(0, "Add Patron ID") if not id_entry.get() else None)
 
 
 """-----------------------------------------BRANCH----------------------------------------------"""
 
 Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
-Branch_label.place(x=40, y=100)
+Branch_label.place(x=40, y=50)
 
 branches = get_branch_names()
 branches.insert(0, "")
 branch_name = ttk.Combobox(frame, values=branches, width=30)
 branch_name.current(0)
-branch_name.place(x=145, y=87)
+branch_name.place(x=145, y=37)
 
 
 """----------------------------------First_Name---------------------------------------"""
@@ -78,13 +58,13 @@ def validate_name(value):
 
 
 fname_label = Label(text="First Name:", fg='black', bg='white', font=('Arial', 12))
-fname_label.place(x=40, y=150)
+fname_label.place(x=40, y=100)
 
 fname_var = tk.StringVar()
 fname_var.set('First Name')
 
 fname_entry = Entry(frame, width=25, fg='black', border=1, bg='white', font=('Microsoft Yahei UI Light', 11))
-fname_entry.place(x=145, y=137)
+fname_entry.place(x=145, y=87)
 fname_entry.insert(0, 'First Name')
 
 fname_entry.bind("<FocusIn>", lambda event: fname_entry.delete(0, tk.END) if fname_entry.get() == 'First Name' else None)
@@ -94,13 +74,13 @@ fname_entry.bind("<FocusOut>", lambda event: fname_entry.insert(0, 'First Name')
 """-----------------------------------------Last Name----------------------------------------------"""
 
 lname_label = Label(text="Last Name:", fg='black', bg='white', font=('Arial', 12))
-lname_label.place(x=40, y=200)
+lname_label.place(x=40, y=150)
 
 lname_var = tk.StringVar()
 lname_var.set('Last Name')
 
 lname_entry = Entry(frame, width=25, fg='black', border=1, bg='white', font=('Microsoft Yahei UI Light', 11))
-lname_entry.place(x=145, y=187)
+lname_entry.place(x=145, y=137)
 lname_entry.insert(0, 'Last Name')
 
 lname_entry.bind("<FocusIn>", lambda event: lname_entry.delete(0, tk.END) if lname_entry.get() == 'Last Name' else None)
@@ -123,13 +103,13 @@ def validate_phone(value):
     
 
 phone_label = Label(text="Phone:", fg='black', bg='white', font=('Arial', 12))
-phone_label.place(x=40, y=250)
+phone_label.place(x=40, y=200)
 
 phone_var = tk.StringVar()
 phone_var.set('Phone Number (xxx.xxx.xxxx)')
 
 phone_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
-phone_entry.place(x=145, y=237)
+phone_entry.place(x=145, y=187)
 phone_entry.insert(0, 'Phone Number (xxx.xxx.xxxx)')
 
 phone_entry.bind("<FocusIn>", lambda event: phone_entry.delete(0, tk.END) if phone_entry.get() == 'Phone Number (xxx.xxx.xxxx)' else None)
@@ -139,12 +119,12 @@ phone_entry.bind("<FocusOut>", lambda event: phone_entry.insert(0, 'Phone Number
 """-----------------------------------------Account Type----------------------------------------------"""
 
 acct_label = Label(text="Account Type:", fg='black', bg='white', font=('Arial', 12))
-acct_label.place(x=40, y=300)
+acct_label.place(x=40, y=250)
 
 
 account_type = ttk.Combobox(frame, values=["Adult", "Child"], width=30)
 account_type.current(0)
-account_type.place(x=145, y=287)
+account_type.place(x=145, y=237)
 
 
 """-----------------------------------------ADD/CANCEL----------------------------------------------"""
