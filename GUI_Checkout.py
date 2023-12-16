@@ -99,9 +99,11 @@ def checkout_button_click():
         messagebox.showerror("Error", "Customer ID must be valid integer.")
         return
     
-    check_out(item_value, customer_value)
-
-    messagebox.showinfo("Success", "Enjoy your time with this item.")
+    success = check_out(item_value, customer_value)
+    if success is None:
+        messagebox.showinfo("Success", "Enjoy your time with this item.")
+    else:
+        messagebox.showerror("Error", "Book already checked out or patron does not exist")
 
 remove_btn = Button(frame, width=10, pady=7, text='CHECKOUT', bg='grey', fg='white', border=3,
                     command=checkout_button_click)
