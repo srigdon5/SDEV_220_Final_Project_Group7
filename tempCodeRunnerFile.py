@@ -127,15 +127,15 @@ phone_label = Label(text="Phone:", fg='black', bg='white', font=('Arial', 12))
 phone_label.place(x=40, y=250)
 
 phone_var = tk.StringVar()
-phone_var.set('Phone Number (xxx.xxx.xxxx)')
+phone_var.set('Phone Number')
 
 phone_entry = Entry(frame, width=25, fg='grey', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 phone_entry.place(x=145, y=237)
 phone_entry.insert(0, 'Phone Number (xxx.xxx.xxxx)')
 
-phone_entry.bind("<FocusIn>", lambda event: phone_entry.delete(0, tk.END) if phone_entry.get() == 'Phone Number (xxx.xxx.xxxx)' else None)
+phone_entry.bind("<FocusIn>", lambda event: phone_entry.delete(0, tk.END) if phone_entry.get() == 'Phone Number' else None)
 
-phone_entry.bind("<FocusOut>", lambda event: phone_entry.insert(0, 'Phone Number (xxx.xxx.xxxx)') if not phone_entry.get() else None)
+phone_entry.bind("<FocusOut>", lambda event: phone_entry.insert(0, 'Phone Number') if not phone_entry.get() else None)
 
 """-----------------------------------------Account Type----------------------------------------------"""
 
