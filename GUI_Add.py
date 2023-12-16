@@ -36,7 +36,7 @@ frame.place(x=1, y=10)
 
 
 def validate_title(value):
-    return len(value) <= 50
+    return len(value) <= 300
 
 
 Title_label = Label(text="Title:", fg='black', bg='white', font=('Arial', 12))
@@ -51,7 +51,7 @@ title_entry.place(x=140, y=37)
 
 
 def validate_author(value):
-    return len(value) <= 50
+    return len(value) <= 100
 
 
 Author_label = Label(text="Author:", fg='black', bg='white', font=('Arial', 12))
@@ -107,11 +107,7 @@ pages_entry.place(x=140, y=337)
 
 
 def validate_runtime(value):
-    try:
-        float(value)
-        return True
-    except ValueError:
-        return False
+    return value.isdigit()
 
 
 run_label = Label(text="Runtime:", fg='black', bg='white', font=('Arial', 12))
@@ -125,7 +121,7 @@ runtime_entry.place(x=140, y=387)
 medium_label = Label(text="Medium:", fg='black', bg='white', font=('Arial', 12))
 medium_label.place(x=40, y=450)
 
-medium = ttk.Combobox(frame, values=["", "paperback", "hard cover", "dvd", "blu-ray"], width=30)
+medium = ttk.Combobox(frame, values=["", "ebook", "paperback", "hard cover", "large print", "dvd", "blu-ray"], width=30)
 
 medium.current(0)
 medium.place(x=140, y=437)
@@ -135,11 +131,11 @@ medium.place(x=140, y=437)
 
 
 def validate_isbn(value):
-    return len(value) <= 13
+    return len(value) == 13
 
 
 def validate_isan(value):
-    return len(value) <= 12
+    return len(value) == 22
 
 
 def validate_id_type(*args):
@@ -147,7 +143,7 @@ def validate_id_type(*args):
     if selected_id_type == "ISBN":
         pages_entry.config(state='normal')  # Enable pages entry
         runtime_entry.config(state='disabled')  # Disable runtime entry
-        medium['values'] = ["", "paperback", "hard cover"]
+        medium['values'] = ["", "ebook", "paperback", "hard cover", "large print"]
     elif selected_id_type == "ISAN":
         pages_entry.config(state='disabled')  # Disable pages entry
         runtime_entry.config(state='normal')  # Enable runtime entry
@@ -156,7 +152,7 @@ def validate_id_type(*args):
         return None
 
 
-ID_Type_label = Label(text="ISBN/ISAN:", fg='black', bg='white', font=('Arial', 12))
+ID_Type_label = Label(text="ID Type:", fg='black', bg='white', font=('Arial', 12))
 ID_Type_label.place(x=40, y=200)
 
 id_var = tk.StringVar()
@@ -178,36 +174,36 @@ def add_button_click():
     title_value = title_entry.get()
     author_value = author_entry.get()
     genre_value = genre_entry.get()
-    id_value = id_drop.grab_current()
-    item_value = id_entry.get()
+    id_type = id_drop.get()
+    id_value = id_entry.get()
     branch_value = branch_drop.current()
     pages_value = pages_entry.get()
     runtime_value = runtime_entry.get()
-    medium_value = medium.current()
+    medium_value = medium.get()
 
     # Perform ADD button functionality here
     if not validate_title(title_value):
-        messagebox.showerror("Error", "Title must be 50 characters or less.")
+        messagebox.showerror("Error", "Title must be 300 characters or less.")
         return
-    if id_value == "ISBN":
+    if id_type == "ISBN":
         if not validate_author(author_value):
-            messagebox.showerror("Error", "Author must be 50 characters or less.")
+            messagebox.showerror("Error", "Author must be 100 characters or less.")
             return
         if not validate_pages(pages_value):
             messagebox.showerror("Error", "Pages must be valid integer.")
             return
-    if id_value == "ISAN":
+    if id_type == "ISAN":
         if not validate_runtime(runtime_value):
-            messagebox.showerror("Error", "Runtime must be a valid floating-point number.")
+            messagebox.showerror("Error", "Runtime must be a valid integer.")
             return
     
     #Calling the appropriate Add function
-    if id_value == "ISBN":
-        add_book(branch_value, item_value, title_value, genre_value, medium_value, pages_value, author_value)
-        messagebox.showerror("Success", "Your book was added to the inventory.")
+    if id_type == "ISBN":
+        add_book(branch_id=branch_value, isbn=id_value, title=title_value, genre=genre_value, medium=medium_value, pages=pages_value, author_name=author_value)
+        messagebox.showinfo("Success", "Your book was added to the inventory.")
     else:
-        add_movie(branch_value, item_value, title_value, genre_value, runtime_value, medium_value)
-        messagebox.showerror("Success", "Your movie was added to the inventory.")
+        add_movie(branch_id=branch_value, isan=id_value, title=title_value, genre=genre_value, runtime=runtime_value, medium=medium_value)
+        messagebox.showinfo("Success", "Your movie was added to the inventory.")
 
 add_btn = Button(frame, width=10, pady=7, text='ADD', bg='grey', fg='white', border=3, command=add_button_click)
 add_btn.place(x=80, y=500)

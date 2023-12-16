@@ -208,10 +208,15 @@ def add_book(branch_id, isbn, title, genre, medium, pages, author_name):
         session.commit()
         session.refresh(new_item)
         
-        # add book specific details
-        new_book = Book(isbn=isbn, author_id=author_id, medium=medium, pages=pages)
-        session.add(new_book)
-        session.commit()
+        # check if book already exists
+        existing_book = session.query(Book).filter(Book.isbn == isbn).first()
+        if existing_book:
+            return
+        else:
+            # add book specific details
+            new_book = Book(isbn=isbn, author_id=author_id, medium=medium, pages=pages)
+            session.add(new_book)
+            session.commit()
 
 
 # Add movie
@@ -224,10 +229,15 @@ def add_movie(branch_id, isan, title, genre, runtime, medium):
         session.commit()
         session.refresh(new_item)
         
-        # add movie details
-        new_movie = Movie(isan=isan, runtime=runtime, medium=medium)
-        session.add(new_movie)
-        session.commit()
+        # check for existing movie
+        existing_movie = session.query(Movie).filter(Movie.isan == isan).first()
+        if existing_movie:
+            return
+        else:
+            # add movie details
+            new_movie = Movie(isan=isan, runtime=runtime, medium=medium)
+            session.add(new_movie)
+            session.commit()
 
 
 # Remove Item
