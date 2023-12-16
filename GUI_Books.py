@@ -138,10 +138,32 @@ my_scrollbar_horizontal.pack(side=BOTTOM, fill=X)
 
 my_listbox.pack(pady=15)
 
+
 def return_selected():
     for items in reversed(my_listbox.curselection()):
         my_listbox.delete(items)
 
+
+def show_item_details(selected_item):
+    # Create a popup window
+    popup_window = Toplevel(window)
+    popup_window.title("Item Details")
+    popup_window.geometry('400x300')
+
+    item_details = selected_item.split('|')
+
+    for detail in item_details:
+        Label(popup_window, text=detail.strip(), padx=10, pady=5).pack()
+
+
+def on_item_single_click(event):
+    selected_item_index = my_listbox.curselection()
+    if selected_item_index:
+        selected_item = my_listbox.get(selected_item_index[0])
+        show_item_details(selected_item)
+
+
+my_listbox.bind('<ButtonRelease-1>', on_item_single_click)
 
 """----------------------------------ITEM IMAGE---------------------------------------- """
 img = PhotoImage(file='assets\\images\\books_small.png')
@@ -170,11 +192,13 @@ return_button.place(x=625, y=500)
 
 
 def search_button_click():
+    my_listbox.delete(0, END)
+
     title_value = title_entry.get()
     author_value = author_entry.get()
-    genre_value = genre_drop.get() 
+    genre_value = genre_drop.get()
     isbn_value = isbn_entry.get()
-    branch_value = branch_drop.current() 
+    branch_value = branch_drop.get()  # Get the value, not the index
 
     # Validate inputs
     if not title_value.strip() and not author_value.strip() and not isbn_value.strip() and genre_value == "" and branch_value == "":
@@ -193,25 +217,15 @@ def search_button_click():
         messagebox.showerror("Error", "Valid ISBN must be 13 characters long.")
         return
 
-    # turn empty strings to None for search function
-    if title_value == "":
-        title_value = None
-    
-    if author_value == "":
-        author_value = None
-    
-    if genre_value == "":
-        genre_value = None    
-    
-    if isbn_value == "":
-        isbn_value = None
-        
-    if branch_value == 0:
-        branch_value = None
+    # Check if all fields are None, indicating that they are empty
+    if all(field is None for field in (title_value, author_value, genre_value, isbn_value, branch_value)):
+        messagebox.showerror("Error", "All fields cannot be empty.")
+        return
     
     search_results = search_books(title=title_value, author=author_value, genre=genre_value, isbn=isbn_value, branch_id=branch_value)
     for item in search_results:
         my_listbox.insert(END, f"ID: {item[0]} | Title: {item[1]} | Author: {item[2]} | Medium: {item[3]} | Pages: {item[4]} | Branch {item[5]} | Availability: {item[6]}")
+
 
 search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search_button_click)
 search_id.place(x=55, y=25)

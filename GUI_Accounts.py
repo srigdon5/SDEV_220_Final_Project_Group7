@@ -74,16 +74,9 @@ def validate_customer_id(value):
     return value.isdigit()
 
 
-user_var = tk.StringVar()
-user_var.set('Enter a User ID')
-
 customer_entry = Entry(frame, width=25, fg='black', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 customer_entry.place(x=60, y=95)
-customer_entry.insert(0, 'Enter a User ID')
 
-customer_entry.bind("<FocusIn>", lambda event: customer_entry.delete(0, tk.END) if customer_entry.get() == 'Enter a User ID' else None)
-
-customer_entry.bind("<FocusOut>", lambda event: customer_entry.insert(0, 'Enter a User ID') if not customer_entry.get() else None)
 
 """----------------------------------SEARCH---------------------------------------"""
 
@@ -95,10 +88,6 @@ def search():
     if not validate_customer_id(customer_value):
         messagebox.showerror("Error", "Customer ID must be valid integer.")
         return
-
-    # Check if the current content is the placeholder text
-    if user_id == 'Enter a User ID':
-        user_id = ''  # Set it to an empty string for searching
 
     if user_id:
         customer_info = get_patron_by_id(user_id)
@@ -137,7 +126,6 @@ def search():
                 my_listbox.insert(END, f"Item Name: {inventory[0]}")
 
         customer_entry.delete(0, 'end')
-        customer_entry.insert(0, 'Enter a User ID')
 
 
 search_id = Button(frame, width=20, pady=7, text='Search', bg='grey', fg='white', border=3, command=search)
@@ -245,6 +233,24 @@ for item in my_list:
 def return_selected():
     for select in reversed(my_listbox.curselection()):
         my_listbox.delete(select)
+
+def show_item_details(selected_item):
+    popup_window = Toplevel(window)
+    popup_window.title("Item Details")
+    popup_window.geometry('400x300')
+
+    item_details = selected_item.split('|')
+    for detail in item_details:
+        Label(popup_window, text=detail.strip(), padx=10, pady=5).pack()
+
+def return_selected():
+    selected_item_index = my_listbox.curselection()
+    if selected_item_index:
+        selected_item = my_listbox.get(selected_item_index[0])
+        show_item_details(selected_item)
+        
+
+my_listbox.bind('<ButtonRelease-1>', lambda event: return_selected())
 
 
 """----------------------------------ITEM IMAGE---------------------------------------- """

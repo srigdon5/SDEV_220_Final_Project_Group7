@@ -114,7 +114,6 @@ def validate_runtime(value):
         return False
 
 
-
 run_label = Label(text="Runtime:", fg='black', bg='white', font=('Arial', 12))
 run_label.place(x=40, y=400)
 
@@ -130,7 +129,6 @@ medium = ttk.Combobox(frame, values=["", "paperback", "hard cover", "dvd", "blu-
 
 medium.current(0)
 medium.place(x=140, y=437)
-
 
 
 """-----------------------------------------ISBN/ISAN----------------------------------------------"""
