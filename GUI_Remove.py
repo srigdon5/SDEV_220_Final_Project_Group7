@@ -79,22 +79,17 @@ def remove_button_click():
         messagebox.showerror("Error", "Item ID must be a valid integer.")
         return
 
-    # Fetch item details (title and branches) based on item ID (you'll need to implement this)
-    item_details = fetch_item_details(item_value)
-
-    if item_details:
-        confirmation_message = f"Are you sure you want to remove the item '{item_details['title']}' from branches: {', '.join(item_details['branches'])}?"
+    confirmation_message = f"Are you sure you want to remove this item?"
         
-        confirmation = messagebox.askquestion("Confirm Remove", confirmation_message)
+    confirmation = messagebox.askquestion("Confirm Remove", confirmation_message)
 
-        if confirmation == 'yes':
-            # User confirmed, proceed with removal
-            confirm_removal(item_value)
-        else:
-            # User canceled the removal
-            messagebox.showinfo("Cancelled", "Item removal was cancelled.")
+    if confirmation == 'yes':
+        # User confirmed, proceed with removal
+        confirm_removal(item_value)
     else:
-        messagebox.showerror("Error", "Item not found.")
+        # User canceled the removal
+        messagebox.showinfo("Cancelled", "Item removal was cancelled.")
+    
     # Create a confirmation popup window
     confirmation_window = Toplevel(root)
     confirmation_window.title("Confirm Remove")
