@@ -104,7 +104,7 @@ def remove_button_click():
 def confirm_removal(item_value):
     # Perform the actual removal of the item (you'll need to implement this)
     removal = remove_item(item_value)
-    if removal == True:
+    if not removal == False:
         messagebox.showinfo("Success", "Item removed successfully.")
     else:
         messagebox.showerror("Error", "Item not found.")
