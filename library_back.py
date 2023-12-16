@@ -122,7 +122,6 @@ def search_books(title=None, author=None, genre=None, isbn=None, branch_id=None)
             .filter(Item.branch_id == branch_id if branch_id else True)  # looks for exact branch, only active is value not None
             .all()  # Call the method to execute the query
         )
-        print(query)
     return query
 
 
@@ -141,7 +140,6 @@ def search_movies(title=None, genre=None, isan=None, runtime=None, branch=None):
             .filter(Branch.branch_id == branch if branch else True) # looks for exact branch 
             .all()  # Call the method to execute the query
         )
-    print(query)
     return query
 
 
