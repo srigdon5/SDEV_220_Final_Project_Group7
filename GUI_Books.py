@@ -222,6 +222,7 @@ def search_button_click():
     
     search_results = search_books(title=title_value, author=author_value, genre=genre_value, isbn=isbn_value, branch_id=branch_value)
     for item in search_results:
+        my_listbox.destroy(0, END)
         my_listbox.insert(END, f"ID: {item[0]} | Title: {item[1]} | Author: {item[2]} | Medium: {item[3]} | Pages: {item[4]} | Branch: {item[5]} | Availability: {item[6]}")
 
 
