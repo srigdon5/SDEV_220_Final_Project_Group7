@@ -206,8 +206,10 @@ def add_button_click():
     #Calling the appropriate Add function
     if id_value == "ISBN":
         add_book(branch_value, item_value, title_value, genre_value, medium_value, pages_value, author_value)
+        messagebox.showerror("Success", "Your book was added to the inventory.")
     else:
         add_movie(branch_value, item_value, title_value, genre_value, runtime_value, medium_value)
+        messagebox.showerror("Success", "Your movie was added to the inventory.")
 
 add_btn = Button(frame, width=10, pady=7, text='ADD', bg='grey', fg='white', border=3, command=add_button_click)
 add_btn.place(x=80, y=500)
