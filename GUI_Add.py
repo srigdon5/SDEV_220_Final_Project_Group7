@@ -182,10 +182,10 @@ def add_button_click():
     genre_value = genre_entry.get()
     id_value = id_drop.grab_current()
     item_value = id_entry.get()
-    branch_value = branch_drop.grab_current()
+    branch_value = branch_drop.current()
     pages_value = pages_entry.get()
     runtime_value = runtime_entry.get()
-    medium_value = medium.grab_current()
+    medium_value = medium.current()
 
     # Perform ADD button functionality here
     if not validate_title(title_value):
