@@ -192,13 +192,11 @@ return_button.place(x=625, y=500)
 
 
 def search_button_click():
-    my_listbox.delete(0, END)
-
     title_value = title_entry.get()
     author_value = author_entry.get()
     genre_value = genre_drop.get()
     isbn_value = isbn_entry.get()
-    branch_value = branch_drop.get()  # Get the value, not the index
+    branch_value = branch_drop.current()
 
     # Validate inputs
     if not title_value.strip() and not author_value.strip() and not isbn_value.strip() and genre_value == "" and branch_value == "":
@@ -224,7 +222,7 @@ def search_button_click():
     
     search_results = search_books(title=title_value, author=author_value, genre=genre_value, isbn=isbn_value, branch_id=branch_value)
     for item in search_results:
-        my_listbox.insert(END, f"ID: {item[0]} | Title: {item[1]} | Author: {item[2]} | Medium: {item[3]} | Pages: {item[4]} | Branch {item[5]} | Availability: {item[6]}")
+        my_listbox.insert(END, f"ID: {item[0]} | Title: {item[1]} | Author: {item[2]} | Medium: {item[3]} | Pages: {item[4]} | Branch: {item[5]} | Availability: {item[6]}")
 
 
 search_id = Button(frame, width=30, pady=7, text='Search', bg='grey', fg='white', border=3, command=search_button_click)
