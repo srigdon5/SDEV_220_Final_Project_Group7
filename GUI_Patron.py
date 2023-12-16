@@ -21,7 +21,7 @@ Form validation ensures that the user provides valid inputs, and the ADD button 
 
 root = Tk()
 root.title('EVPL Management System - Add Patron')
-root.geometry('400x420+300+200')
+root.geometry('370x390+300+200')
 root.configure(bg="#fff")
 root.resizable(False, False)
 root.iconbitmap("assets\\images\\myIcon.ico")
@@ -32,7 +32,7 @@ background_label = Label(root, image=background)
 background_label.place(x=12, y=0, relwidth=1, relheight=1)
 
 
-frame = Frame(root, width=397, highlightbackground="black", highlightthickness=3, height=405, bg='#fff')
+frame = Frame(root, width=397, highlightbackground="black", highlightthickness=3, height=370, bg='#fff')
 
 
 frame.place(x=1, y=10)
@@ -154,7 +154,7 @@ def add_button_click():
     messagebox.showinfo("Success", "Patron Added")
     
 add_btn = Button(frame, width=10, pady=7, text='ADD', bg='grey', fg='white', border=3, command=add_button_click)
-add_btn.place(x=80, y=340)
+add_btn.place(x=80, y=310)
 
 
 def abortproc():
@@ -162,6 +162,6 @@ def abortproc():
 
 
 cancel_btn = Button(frame, width=10, pady=7, text='CANCEL', bg='grey', fg='white', border=3, command=abortproc)
-cancel_btn.place(x=230, y=340)
+cancel_btn.place(x=230, y=310)
 """----------------------------------------------------"""
 root.mainloop()
