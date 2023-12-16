@@ -155,14 +155,16 @@ def show_movie_details(selected_movie):
         Label(popup_window, text=detail.strip(), padx=10, pady=5).pack()
 
 
-def on_movie_double_click(event):
+def on_movie_single_click(event):
     selected_movie_index = my_listbox.curselection()
     if selected_movie_index:
         selected_movie = my_listbox.get(selected_movie_index[0])
         show_movie_details(selected_movie)
 
 
-my_listbox.bind('<Double-1>', on_movie_double_click)
+
+my_listbox.bind('<ButtonRelease-1>', on_movie_single_click)
+
 """----------------------------------ITEM IMAGE---------------------------------------- """
 img = PhotoImage(file='assets\\images\\movies.png')
 img_label = Label(image=img, bg='#f0f0f0')

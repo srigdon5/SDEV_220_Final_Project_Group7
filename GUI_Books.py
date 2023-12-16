@@ -156,14 +156,15 @@ def show_item_details(selected_item):
         Label(popup_window, text=detail.strip(), padx=10, pady=5).pack()
 
 
-def on_item_double_click(event):
+def on_item_single_click(event):
     selected_item_index = my_listbox.curselection()
     if selected_item_index:
         selected_item = my_listbox.get(selected_item_index[0])
         show_item_details(selected_item)
 
 
-my_listbox.bind('<Double-1>', on_item_double_click)
+my_listbox.bind('<ButtonRelease-1>', on_item_single_click)
+
 """----------------------------------ITEM IMAGE---------------------------------------- """
 img = PhotoImage(file='assets\\images\\books_small.png')
 img_label = Label(image=img, bg='#f0f0f0')
