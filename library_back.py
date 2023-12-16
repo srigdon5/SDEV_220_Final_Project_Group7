@@ -327,7 +327,7 @@ def return_item(item_id, patron_id):
         
         # check if below limit
         account_type = patron.account_type
-        amount_checked_out = session.query(func.count(Item)).filter(Item.patron_id == patron_id).scalar()
+        amount_checked_out = session.query(func.count(Item.item_id)).filter(Item.patron_id == patron_id).scalar()
         if account_type == "Adult" and amount_checked_out < 5:
             patron.limit_reached = False
         elif account_type == "Child" and amount_checked_out < 3:
