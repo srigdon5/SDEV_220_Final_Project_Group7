@@ -83,30 +83,19 @@ def remove_button_click():
     item_details = fetch_item_details(item_value)
 
     if item_details:
-        # Create a confirmation popup window
-        confirmation_window = Toplevel(root)
-        confirmation_window.title("Confirm Remove")
+        confirmation_message = f"Are you sure you want to remove the item '{item_details['title']}' from branches: {', '.join(item_details['branches'])}?"
+        
+        confirmation = messagebox.askquestion("Confirm Remove", confirmation_message)
 
-        # Display item details in the confirmation window
-        title_label = Label(confirmation_window, text="Title:", font=('Arial', 12))
-        title_label.pack()
-        title_value = Label(confirmation_window, text=item_details["title"])
-        title_value.pack()
-
-        branches_label = Label(confirmation_window, text="Branches:", font=('Arial', 12))
-        branches_label.pack()
-        branches_value = Label(confirmation_window, text=", ".join(item_details["branches"]))
-        branches_value.pack()
-
-        # Add a confirmation button to proceed with removal
-        confirm_button = Button(confirmation_window, text="Confirm", command=lambda: confirm_removal(item_value))
-        confirm_button.pack()
-        # Close the confirmation window
-        confirmation_window.destroy()
-
-
+        if confirmation == 'yes':
+            # User confirmed, proceed with removal
+            confirm_removal(item_value)
+        else:
+            # User canceled the removal
+            messagebox.showinfo("Cancelled", "Item removal was cancelled.")
     else:
         messagebox.showerror("Error", "Item not found.")
+
 
 
 def confirm_removal(item_id):
