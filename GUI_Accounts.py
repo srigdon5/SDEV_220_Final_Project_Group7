@@ -92,10 +92,6 @@ def search():
         messagebox.showerror("Error", "Customer ID must be valid integer.")
         return
 
-    # Check if the current content is the placeholder text
-    if user_id == 'Enter a User ID':
-        user_id = ''  # Set it to an empty string for searching
-
     if user_id:
         customer_info = get_patron_by_id(user_id)
         
