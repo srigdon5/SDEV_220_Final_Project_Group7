@@ -123,7 +123,7 @@ def search():
             my_listbox.insert(END, "No items found for this user.")
         else:
             for inventory in customer_info["checked_out_items"]:
-                my_listbox.insert(END, f"Item Name: {inventory[0]}")
+                my_listbox.insert(END, f"ID: {inventory[0]} | Title: {inventory[1]}")
 
         customer_entry.delete(0, 'end')
 
@@ -217,40 +217,6 @@ my_scrollbar.pack(side=RIGHT, fill=Y)
 info_frame.place(x=140, y=500)
 
 my_listbox.pack(pady=15)
-
-
-my_listbox.insert(END, 'ITEM_ID')
-
-
-my_list = ['ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID',
-           'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID', 'ITEM_ID']
-
-
-for item in my_list:
-    my_listbox.insert(END, item)
-
-
-def return_selected():
-    for select in reversed(my_listbox.curselection()):
-        my_listbox.delete(select)
-
-def show_item_details(selected_item):
-    popup_window = Toplevel(window)
-    popup_window.title("Item Details")
-    popup_window.geometry('400x300')
-
-    item_details = selected_item.split('|')
-    for detail in item_details:
-        Label(popup_window, text=detail.strip(), padx=10, pady=5).pack()
-
-def return_selected():
-    selected_item_index = my_listbox.curselection()
-    if selected_item_index:
-        selected_item = my_listbox.get(selected_item_index[0])
-        show_item_details(selected_item)
-        
-
-my_listbox.bind('<ButtonRelease-1>', lambda event: return_selected())
 
 
 """----------------------------------ITEM IMAGE---------------------------------------- """
