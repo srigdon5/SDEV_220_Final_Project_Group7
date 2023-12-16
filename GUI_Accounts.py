@@ -75,15 +75,11 @@ def validate_customer_id(value):
 
 
 user_var = tk.StringVar()
-user_var.set('Enter a User ID')
+
 
 customer_entry = Entry(frame, width=25, fg='black', border=1, bg="white", font=('Microsoft YaHei UI Light', 11))
 customer_entry.place(x=60, y=95)
-customer_entry.insert(0, 'Enter a User ID')
 
-customer_entry.bind("<FocusIn>", lambda event: customer_entry.delete(0, tk.END) if customer_entry.get() == 'Enter a User ID' else None)
-
-customer_entry.bind("<FocusOut>", lambda event: customer_entry.insert(0, 'Enter a User ID') if not customer_entry.get() else None)
 
 """----------------------------------SEARCH---------------------------------------"""
 
