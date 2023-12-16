@@ -111,19 +111,6 @@ def confirm_removal(item_value):
 
 # Replace these functions with your actual implementation
 
-
-def fetch_item_details(item_id):
-    # Replace with your logic to fetch item details
-    # Return a dictionary containing title and branches
-    # Example: {"title": "Sample Title", "branches": ["Branch1", "Branch2"]}
-    pass
-
-
-def remove_item(item_id):
-    # Replace with your logic to remove the item
-    pass
-
-
 remove_btn = Button(frame, width=10, pady=7, text='REMOVE', bg='grey', fg='white', border=3,
                     command=remove_button_click)
 
