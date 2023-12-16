@@ -175,10 +175,10 @@ def get_patron_by_id(patron_id):
     return result_dict # returns a dict, checked out items is a list of tuples
 
 # Add patron
-def add_patron(branch_id, patron_name, phone_value, account_type):
+def add_patron(branch_id, patron_name, phone, account_type):
     Session = sessionmaker(bind=engine)
     with Session() as session:
-        new_patron = Patron(patron_name=patron_name, branch_id=branch_id, phone=phone_value, account_type=account_type) # create patron object
+        new_patron = Patron(patron_name=patron_name, branch_id=branch_id, phone=phone, account_type=account_type) # create patron object
         session.add(new_patron) # write it to the database
         session.commit() # commit changes
         session.refresh(new_patron) # refresh to get the id

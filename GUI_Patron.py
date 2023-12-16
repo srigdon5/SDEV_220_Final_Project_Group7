@@ -7,7 +7,7 @@ import os
 from tkinter import ttk
 import tkinter as tk
 from tkinter import Tk, Label, ttk, Entry, Button
-from library_back import Item, Patron, add_patron
+from library_back import add_patron, get_branch_names
 
 """
 Program: GUI_Patron.py
@@ -63,10 +63,9 @@ id_entry.bind("<FocusOut>", lambda event: id_entry.insert(0, "Add Patron ID") if
 Branch_label = Label(text="Branch:", fg='black', bg='white', font=('Arial', 12))
 Branch_label.place(x=40, y=100)
 
-
-branch_name = ttk.Combobox(frame, values=["", "Central", "East", "West", "North Park", "Oaklyn",
-                                          "Red Bank", "Stringtown", "West", "McCollough",
-                                          "Washington Square-McCollough"], width=30)
+branches = get_branch_names()
+branches.insert(0, "")
+branch_name = ttk.Combobox(frame, values=branches, width=30)
 branch_name.current(0)
 branch_name.place(x=145, y=87)
 
@@ -75,7 +74,7 @@ branch_name.place(x=145, y=87)
 
 
 def validate_name(value):
-    return len(value) <= 30
+    return len(value) <= 15
 
 
 fname_label = Label(text="First Name:", fg='black', bg='white', font=('Arial', 12))
@@ -153,28 +152,26 @@ account_type.place(x=145, y=287)
 
 def add_button_click():
     # Retrieve values from the Entry widgets
-    patron_value = id_entry.get()
-    branch_value = branch_name.grab_current()
+    branch_value = branch_name.current()
     fname_value = fname_entry.get()
     lname_value = lname_entry.get()
     patron_name = str(fname_value + " " + lname_value)
     phone_value = phone_entry.get()
-    account_value = account_type.grab_current()
+    account_value = account_type.get()
 
     # Perform ADD button functionality here
     if not validate_name(fname_value):
-        messagebox.showerror("Error", "First name must be 30 characters or less.")
+        messagebox.showerror("Error", "First name must be 15 characters or less.")
         return
     if not validate_name(lname_value):
-        messagebox.showerror("Error", "Last name must be 30 characters or less.")
+        messagebox.showerror("Error", "Last name must be 15 characters or less.")
         return
     if not validate_phone(phone_value):
         messagebox.showerror("Error", "Phone number must be a 10-digit numeric value following the example given.")
         return
 
-    success = add_patron(branch_name, patron_name, phone_value, account_type)
-
-    messagebox.showinfo("Success", "Information added to the database successfully.")
+    add_patron(branch_id=branch_value, patron_name=patron_name, phone=phone_value, account_type=account_value)
+    messagebox.showinfo("Success", "Patron Added")
     
 add_btn = Button(frame, width=10, pady=7, text='ADD', bg='grey', fg='white', border=3, command=add_button_click)
 add_btn.place(x=80, y=340)
